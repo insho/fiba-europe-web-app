@@ -108,7 +108,7 @@ xx left join (
                     ,team_name_awayteam
     from fiba_europe_games_master
     where match_id = '{{matchId}}'
-    ) as team_names on xx.match_id = team_names.match_id
+    ) as team_names on cast(xx.match_id as bigint) = cast(team_names.match_id as bigint)
 where xx.match_id = '{{matchId}}'
 and ',,' || '{{periodsString}}' || ',,' like '%,,' || cast(xx.period as text) || ',,%'
 group by 1,2,3

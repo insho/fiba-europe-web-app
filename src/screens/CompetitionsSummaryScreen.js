@@ -201,13 +201,25 @@ export default class CompetitionsScreen extends React.Component {
 
   componentDidMount() {
     //Get list of brands for brand selector dropdown
-    
+    this.setState({
+      ageDropdownList: [{ value: "Adult", label: "Adult" },
+      { value: "U20", label: "U20" },
+      { value: "U18", label: "U18" },
+      { value: "U16", label: "U16" }],
+      selectedAge: { value: "Adult", label: "Adult" },
+      sexDropdownList: [{ value: "female", label: "Female" },
+      { value: "male", label: "Male" }],
+      selectedSex: { value: "male", label: "Male" }      
+    });
+     
+    /*
     $.get(
       API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
         queryName: "CompetitionsDropdownSelectorAge"
       }),
       data => {
-
+        console.log('asdf')
+        console.log(data)
         this.setState({
           ageDropdownList: data,
           selectedAge: data[0]
@@ -231,7 +243,7 @@ export default class CompetitionsScreen extends React.Component {
         });
       }
     );
-
+  */
  
 
 
@@ -366,7 +378,7 @@ export default class CompetitionsScreen extends React.Component {
         competitionGroupSex: this.state.selectedSex.value,
         competitionGroupAge: this.state.selectedAge.value
         }), data => {
-        
+
         if(data.length>=1){
           this.setState({
             tableData: data

@@ -35,16 +35,15 @@ class Menu extends Component {
 
                                         <div ><NavLink className="navlink-header" exact to="/welcome">Welcome Screen</NavLink></div>
 
+                                        <div><div className= "navlink-header" exact to="/machine-learning-summary">Machine Learning</div></div>
+                                        <div ><NavLink className= "navlink-text" exact to="/machine-learning-alg-comps">Alg Comparisons</NavLink></div>
+
 
                                         <div><div className= "navlink-header" exact to="/customerinsightsbabpricingdiscountsscreen">Competitions</div></div>
                                         <div ><NavLink className= "navlink-text" exact to="/competitions-summary">Competitions</NavLink></div>
-                                        <div ><NavLink className= "navlink-text" exact to="/customerinsightsbabpricingdiscountsscreen">Matches</NavLink></div>
-                                        <div ><NavLink className= "navlink-text" exact to="/customerinsightsbabpricingdiscountsscreen">Players</NavLink></div>
+                                        <div ><NavLink className= "navlink-text" exact to="/games-summary">Matches</NavLink></div>
+                                        <div ><NavLink className= "navlink-text" exact to="/players-summary">Players</NavLink></div>
                                                                                 
-
-                                        <div><div className= "navlink-header" exact to="/games-summary">Working Examples</div></div>
-                                        <div ><NavLink className= "navlink-text" exact to="/games-summary">Game Summary</NavLink></div>
-                                        <div><NavLink className= "navlink-text" exact to="/brandsalesscreen">Sales and Returns</NavLink></div>
 
 
 
