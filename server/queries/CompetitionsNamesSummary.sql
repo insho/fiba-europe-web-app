@@ -6,7 +6,7 @@ SELECT competition_group
 			,min(competition_name_age) as competition_name_age
 			,min(competition_name_sex) as competition_name_sex
 			,count(distinct match_id) as match_count
-FROM joe.fiba_europe_game_xref_final
+FROM fiba_europe_game_xref
 WHERE competition_name_sex = '{{leagueSex}}'
 AND competition_name_age = '{{leagueAge}}'
 Group by 1,2

@@ -23,7 +23,7 @@ FROM
   SELECT distinct team
                   ,player
                   ,trim(lower(player)) as match_player
-  from joe.fiba_europe_boxscores_import
+  from fiba_europe_boxscores_master
   where match_id = '324' and player in ('A. Ben Chimol')
 ) as players
 left join
@@ -61,7 +61,7 @@ SELECT match_id
       ,(case when trim(points_scored_type_hometeam) = 'free throw' then 1
               when points_scored_type_hometeam like '%2pt%' then 2
             when points_scored_type_hometeam like '%3pt%' then 3 else null end) as scoring_event_points_scored
-FROM joe.fiba_europe_games_import
+FROM fiba_europe_games_master
 where match_id = '324'
 
 order by row_number

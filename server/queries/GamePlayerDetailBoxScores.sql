@@ -100,7 +100,9 @@ SELECT home_away
 ,sum(coalesce(shots_blocked,0)) as shots_blocked
 ,sum(coalesce(steals,0)) as steals
 ,sum(coalesce(minutes_played,0)) as minutes_played
-from fiba_europe_boxscores_manual_version xx left join (
+-- from fiba_europe_boxscores_manual_version 
+from fiba_europe_boxscores_master
+xx left join (
     SELECT distinct match_id
                     ,team_name_hometeam
                     ,team_name_awayteam

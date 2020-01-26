@@ -1,13 +1,13 @@
 
 
 --- INSERT SHIT FROM IMPORT INTO MASTER
-DELETE FROM joe.fiba_europe_boxscores_master
+DELETE FROM fiba_europe_boxscores_master
 WHERE match_id in (
   SELECT DISTINCT match_id
-  FROM joe.fiba_europe_boxscores_import
+  FROM fiba_europe_boxscores_import
 );
 
-INSERT INTO joe.fiba_europe_boxscores_master
+INSERT INTO fiba_europe_boxscores_master
 
   SELECT match_id
 	,player
@@ -42,22 +42,22 @@ INSERT INTO joe.fiba_europe_boxscores_master
   FROM (
   SELECT *
       ,row_number() OVER (partition by match_id,player,team order by points desc) as safe_rank
-  FROM joe.fiba_europe_boxscores_import
+  FROM fiba_europe_boxscores_import
 ) as s1
 where safe_rank = 1
 order by match_id,team,player
 ;
 
 
-truncate table joe.fiba_europe_boxscores_import;
+truncate table fiba_europe_boxscores_import;
 
-DELETE FROM joe.fiba_europe_games_master
+DELETE FROM fiba_europe_games_master
 WHERE match_id in (
   SELECT DISTINCT match_id
-  FROM joe.fiba_europe_games_import
+  FROM fiba_europe_games_import
 );
 
-INSERT INTO joe.fiba_europe_games_master
+INSERT INTO fiba_europe_games_master
 SELECT match_id
 	,row_number
 	,period
@@ -179,28 +179,28 @@ SELECT match_id
  FROM (
   SELECT *
       ,row_number() over (partition by match_id,row_number) as safe_rank
-  FROM joe.fiba_europe_games_import
+  FROM fiba_europe_games_import
 ) as s1
 where safe_rank = 1
 order by match_id,row_number
 ;
 
 
-truncate table joe.fiba_europe_games_import;
+truncate table fiba_europe_games_import;
 
 
 
 
 
-truncate table joe.fiba_europe_competition_xref;
+truncate table fiba_europe_competition_xref;
 
-INSERT INTO joe.fiba_europe_competition_xref
+INSERT INTO fiba_europe_competition_xref
 SELECT DISTINCT metadata_competition_name
-FROM joe.fiba_europe_games_master
+FROM fiba_europe_games_master
 ORDER BY 1
 ;
 
-UPDATE joe.fiba_europe_competition_xref  SET search_term_sex = coalesce(B.search_term,search_term_sex), league_sex = coalesce(B.league_sex_update,league_sex),insert_date = now()
+UPDATE fiba_europe_competition_xref  SET search_term_sex = coalesce(B.search_term,search_term_sex), league_sex = coalesce(B.league_sex_update,league_sex),insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -209,12 +209,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT metadata_competition_name
-FROM joe.fiba_europe_games_master
+FROM fiba_europe_games_master
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,league_sex
-  FROM joe.fiba_europe_league_sex
+  FROM fiba_europe_league_sex
   where league_sex = 'male'
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
@@ -225,7 +225,7 @@ WHERE fiba_europe_competition_xref.metadata_competition_name = B.metadata_compet
 
 
 
-UPDATE joe.fiba_europe_competition_xref  SET search_term_sex = coalesce(B.search_term,search_term_sex), league_sex = coalesce(B.league_sex_update,league_sex),insert_date = now()
+UPDATE fiba_europe_competition_xref  SET search_term_sex = coalesce(B.search_term,search_term_sex), league_sex = coalesce(B.league_sex_update,league_sex),insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -234,12 +234,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT metadata_competition_name
-FROM joe.fiba_europe_games_master
+FROM fiba_europe_games_master
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,league_sex
-  FROM joe.fiba_europe_league_sex
+  FROM fiba_europe_league_sex
   where league_sex = 'female'
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
@@ -250,7 +250,7 @@ WHERE fiba_europe_competition_xref.metadata_competition_name = B.metadata_compet
 
 
 
-UPDATE joe.fiba_europe_competition_xref  SET search_term_age = B.search_term, league_age = B.league_age,insert_date = now()
+UPDATE fiba_europe_competition_xref  SET search_term_age = B.search_term, league_age = B.league_age,insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -259,12 +259,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT metadata_competition_name
-FROM joe.fiba_europe_games_master
+FROM fiba_europe_games_master
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,age as league_age
-  FROM joe.fiba_europe_league_age
+  FROM fiba_europe_league_age
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
 
@@ -275,7 +275,7 @@ WHERE fiba_europe_competition_xref.metadata_competition_name = B.metadata_compet
 
 
 
-UPDATE joe.fiba_europe_competition_xref  SET matches_count = B.matches_count, teams_count= B.teams_count,insert_date = now()
+UPDATE fiba_europe_competition_xref  SET matches_count = B.matches_count, teams_count= B.teams_count,insert_date = now()
 FROM
   (
 
@@ -287,7 +287,7 @@ FROM
   (
 SELECT metadata_competition_name
       ,count(distinct match_id) as matches_count
-FROM joe.fiba_europe_games_master
+FROM fiba_europe_games_master
 group by 1
     order by 1
   ) as games
@@ -298,11 +298,11 @@ inner join (
     FROM
     (
     SELECT DISTINCT metadata_competition_name,team_name_hometeam as team_name
-    FROM joe.fiba_europe_games_master
+    FROM fiba_europe_games_master
     where metadata_competition_name is not null and team_name_hometeam is not null
     UNION
     SELECT DISTINCT metadata_competition_name,team_name_awayteam as team_name
-    FROM joe.fiba_europe_games_master
+    FROM fiba_europe_games_master
     where metadata_competition_name is not null and team_name_awayteam is not null
     ) team_list
   GROUP BY 1
@@ -318,8 +318,8 @@ WHERE fiba_europe_competition_xref.metadata_competition_name = B.metadata_compet
 -------
 
 
-drop table if exists joe.fiba_europe_game_xref;
-create table joe.fiba_europe_game_xref (
+drop table if exists fiba_europe_game_xref;
+create table fiba_europe_game_xref (
   match_id varchar(256),
   metadata_competition_name varchar(500),
   schedule_date timestamp,
@@ -331,7 +331,7 @@ create table joe.fiba_europe_game_xref (
   insert_date timestamp
 );
 
-INSERT INTO joe.fiba_europe_game_xref
+INSERT INTO fiba_europe_game_xref
   SELECT match_id
         ,metadata_competition_name
 FROM
@@ -340,7 +340,7 @@ SELECT match_id
         ,metadata_competition_name
         ,counT(*)
         ,row_numbeR() OVER (partition by match_id order by count(*) desc) as safe_rank
-FROM joe.fiba_europe_games_master
+FROM fiba_europe_games_master
 group by 1,2
   )  as s1
 where safe_rank = 1
@@ -353,7 +353,7 @@ order by match_id
 
 
 
-UPDATE joe.fiba_europe_game_xref  SET schedule_date = B.schedule_date
+UPDATE fiba_europe_game_xref  SET schedule_date = B.schedule_date
   , page_header_text= B.page_header_text
   , match_location= B.match_location
   , boxscore_url= B.boxscore_url
@@ -464,7 +464,7 @@ FROM (
           ,max(current_score_hometeam) as final_score_hometeam
           ,max(current_score_awayteam) as final_score_awayteam
           ,row_number() OVER () as unique_row_rank_master
-      FROM joe.fiba_europe_games_master
+      FROM fiba_europe_games_master
         --     where trim(lower(team_name_hometeam))  like '%red%'--'ossm pzkosz pomerania'
         --     and   trim(lower(team_name_awayteam)) = 'bc nsa sofia'
       group by 1,2,3,4
@@ -480,7 +480,7 @@ FROM (
           ,boxscore_url
           ,page_id as schedule_page_id
           ,row_number() OVER () as unique_row_rank_schedules
-      FROM joe.fiba_europe_schedules
+      FROM fiba_europe_schedules
       --   WHERE trim(lower(hometeam_name)) like '%' || 'star' || '%'
       --   WHERE hometeam_score = 62 and awayteam_score = 45
     ) as yy
@@ -502,19 +502,19 @@ WHERE fiba_europe_game_xref.match_id = B.match_id;
 -- SELECT page_header_text
 --       ,count(match_id) as match_ids
 --       ,count(schedule_date) as match_ids_with_dates
--- FROM joe.fiba_europe_game_xref
+-- FROM fiba_europe_game_xref
 -- group by 1
 -- having count(match_id)>=20 and (case when count(match_id)>0 then count(schedule_date)/cast(count(match_id) as float) else 0 end) >.90
 -- order by 1
 -- ;
 
 -- SELECT *
--- FROM joe.fiba_europe_competition_xref
+-- FROM fiba_europe_competition_xref
 -- limit 50
 -- ;
 
-drop table if exists joe.fiba_europe_game_xref_final;
-create table joe.fiba_europe_game_xref_final (
+drop table if exists fiba_europe_game_xref_final;
+create table fiba_europe_game_xref_final (
   match_id varchar(250),
   competition_group varchar(250),
 	competition_name varchar(500),
@@ -538,7 +538,7 @@ create table joe.fiba_europe_game_xref_final (
 );
 
 
-INSERT INTO joe.fiba_europe_game_xref_final
+INSERT INTO fiba_europe_game_xref_final
 SELECT match_id
   ,metadata_competition_name as competition_group
 	,page_header_text as competition_name
@@ -567,14 +567,14 @@ SELECT match_id
 			,schedule_page_id
        ,metadata_competition_name
 			,row_number() over (partition by match_id order by insert_date desc) as safe_rank
-FROM joe.fiba_europe_game_xref xx inner join (
+FROM fiba_europe_game_xref xx inner join (
 
 
 SELECT page_header_text as page_header_text_limitor
 --       ,count(match_id) as match_ids
 --       ,count(schedule_date) as match_ids_with_dates
 
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
 group by 1
 having count(match_id)>=20
          and (case when count(match_id)>0 then count(schedule_date)/cast(count(match_id) as float) else 0 end) >.90
@@ -588,7 +588,7 @@ where safe_rank = 1
 
 
 
-UPDATE joe.fiba_europe_game_xref_final  SET competition_group_sex_search_term = coalesce(B.search_term,competition_group_sex_search_term), competition_group_sex = coalesce(B.league_sex_update,competition_group_sex),insert_date = now()
+UPDATE fiba_europe_game_xref_final  SET competition_group_sex_search_term = coalesce(B.search_term,competition_group_sex_search_term), competition_group_sex = coalesce(B.league_sex_update,competition_group_sex),insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -597,12 +597,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT metadata_competition_name
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,league_sex
-  FROM joe.fiba_europe_league_sex
+  FROM fiba_europe_league_sex
   where league_sex = 'male'
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
@@ -613,7 +613,7 @@ WHERE fiba_europe_game_xref_final.competition_group = B.metadata_competition_nam
 
 
 
-UPDATE joe.fiba_europe_game_xref_final  SET competition_group_sex_search_term = coalesce(B.search_term,competition_group_sex_search_term), competition_group_sex = coalesce(B.league_sex_update,competition_group_sex),insert_date = now()
+UPDATE fiba_europe_game_xref_final  SET competition_group_sex_search_term = coalesce(B.search_term,competition_group_sex_search_term), competition_group_sex = coalesce(B.league_sex_update,competition_group_sex),insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -622,12 +622,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT metadata_competition_name
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,league_sex
-  FROM joe.fiba_europe_league_sex
+  FROM fiba_europe_league_sex
   where league_sex = 'female'
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
@@ -638,7 +638,7 @@ WHERE fiba_europe_game_xref_final.competition_group = B.metadata_competition_nam
 
 
 
-UPDATE joe.fiba_europe_game_xref_final  SET competition_group_age_search_term = B.search_term, competition_group_age = B.league_age,insert_date = now()
+UPDATE fiba_europe_game_xref_final  SET competition_group_age_search_term = B.search_term, competition_group_age = B.league_age,insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -647,12 +647,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT metadata_competition_name
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,age as league_age
-  FROM joe.fiba_europe_league_age
+  FROM fiba_europe_league_age
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
 
@@ -664,7 +664,7 @@ WHERE fiba_europe_game_xref_final.competition_group = B.metadata_competition_nam
 ------ Now do the competition NAME
 
 
-UPDATE joe.fiba_europe_game_xref_final  SET competition_name_sex_search_term = coalesce(B.search_term,competition_name_sex_search_term), competition_name_sex = coalesce(B.league_sex_update,competition_name_sex),insert_date = now()
+UPDATE fiba_europe_game_xref_final  SET competition_name_sex_search_term = coalesce(B.search_term,competition_name_sex_search_term), competition_name_sex = coalesce(B.league_sex_update,competition_name_sex),insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -673,12 +673,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT page_header_text as metadata_competition_name
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,league_sex
-  FROM joe.fiba_europe_league_sex
+  FROM fiba_europe_league_sex
   where league_sex = 'male'
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
@@ -689,7 +689,7 @@ WHERE fiba_europe_game_xref_final.competition_name = B.metadata_competition_name
 
 
 
-UPDATE joe.fiba_europe_game_xref_final  SET competition_name_sex_search_term = coalesce(B.search_term,competition_name_sex_search_term), competition_name_sex = coalesce(B.league_sex_update,competition_name_sex),insert_date = now()
+UPDATE fiba_europe_game_xref_final  SET competition_name_sex_search_term = coalesce(B.search_term,competition_name_sex_search_term), competition_name_sex = coalesce(B.league_sex_update,competition_name_sex),insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -698,12 +698,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT page_header_text as metadata_competition_name
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,league_sex
-  FROM joe.fiba_europe_league_sex
+  FROM fiba_europe_league_sex
   where league_sex = 'female'
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
@@ -714,7 +714,7 @@ WHERE fiba_europe_game_xref_final.competition_name = B.metadata_competition_name
 
 
 
-UPDATE joe.fiba_europe_game_xref_final  SET competition_name_age_search_term = B.search_term, competition_name_age = B.league_age,insert_date = now()
+UPDATE fiba_europe_game_xref_final  SET competition_name_age_search_term = B.search_term, competition_name_age = B.league_age,insert_date = now()
 FROM (
 
   SELECT xx.metadata_competition_name
@@ -723,12 +723,12 @@ FROM (
   FROM
   (
 SELECT DISTINCT page_header_text as metadata_competition_name
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
   ) xx
 left join (
   SELECT DISTINCT lower(search_term) as search_term
          ,age as league_age
-  FROM joe.fiba_europe_league_age
+  FROM fiba_europe_league_age
 ) as yy
   on lower(xx.metadata_competition_name) like '%' || search_term || '%'
 
@@ -737,18 +737,18 @@ WHERE fiba_europe_game_xref_final.competition_name = B.metadata_competition_name
 ;
 
 
-DELETE FROM joe.fiba_europe_game_xref_final where coalesce(competition_group_sex,'male') <> coalesce(competition_name_sex, 'male');
+DELETE FROM fiba_europe_game_xref_final where coalesce(competition_group_sex,'male') <> coalesce(competition_name_sex, 'male');
 
-DELETE FROM joe.fiba_europe_game_xref_final where coalesce(competition_group_age,'Adult') <> coalesce(competition_name_age, 'Adult');
+DELETE FROM fiba_europe_game_xref_final where coalesce(competition_group_age,'Adult') <> coalesce(competition_name_age, 'Adult');
 
-DELETE FROM joe.fiba_europe_game_xref_final where competition_name = '2013 FIBA Africa Championship for Men';
+DELETE FROM fiba_europe_game_xref_final where competition_name = '2013 FIBA Africa Championship for Men';
 
 
-update joe.fiba_europe_game_xref_final set competition_name_sex = coalesce(competition_name_sex,'male');
-update joe.fiba_europe_game_xref_final set competition_name_age = coalesce(competition_name_age,'Adult');
+update fiba_europe_game_xref_final set competition_name_sex = coalesce(competition_name_sex,'male');
+update fiba_europe_game_xref_final set competition_name_age = coalesce(competition_name_age,'Adult');
 
-update joe.fiba_europe_game_xref_final set competition_group_sex = coalesce(competition_group_sex,'male');
-update joe.fiba_europe_game_xref_final set competition_group_age = coalesce(competition_group_age,'Adult');
+update fiba_europe_game_xref_final set competition_group_sex = coalesce(competition_group_sex,'male');
+update fiba_europe_game_xref_final set competition_group_age = coalesce(competition_group_age,'Adult');
 
 
 
@@ -759,9 +759,9 @@ SELECT xx.match_id
 			,team_name_hometeam
 			,team_name_awayteam
 
-FROM joe.fiba_europe_game_xref_final xx LEFT JOIN (
+FROM fiba_europe_game_xref_final xx LEFT JOIN (
   SELECT distinct match_id,team_name_hometeam,team_name_awayteam
-                  from joe.fiba_europe_games_master
+                  from fiba_europe_games_master
 	) yy on xx.match_id = yy.match_id
 where coalesce(competition_group_sex,'male') <> coalesce(competition_name_sex, 'male')
 
@@ -775,9 +775,9 @@ SELECT xx.match_id
 			,team_name_hometeam
 			,team_name_awayteam
 
-FROM joe.fiba_europe_game_xref_final xx LEFT JOIN (
+FROM fiba_europe_game_xref_final xx LEFT JOIN (
   SELECT distinct match_id,team_name_hometeam,team_name_awayteam
-                  from joe.fiba_europe_games_master
+                  from fiba_europe_games_master
 	) yy on xx.match_id = yy.match_id
 where coalesce(competition_group_age,'Adult') <> coalesce(competition_name_age, 'Adult')
 ;

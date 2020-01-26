@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
 var user = process.env.SQL_USER;
 var password = process.env.SQL_PASS;
 var database = "postgres";
-var port = process.env.SQL_PORT;
+var port = 5432; //process.env.SQL_PORT;
 var host = process.env.SQL_IP;
 var client = {
   user: user,
@@ -119,8 +119,7 @@ app.get("/generic_query", function(req, res) {
 
 
 
-app.get("/test_query", function(req, res) {
-  
+app.get("/test_query", function(req, res) {  
   var parameters = {} 
   queryName = 'test_query'
   // console.log("POOO")

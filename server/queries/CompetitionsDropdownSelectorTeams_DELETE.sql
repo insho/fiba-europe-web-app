@@ -7,7 +7,7 @@ FROM
   (
 SELECT metadata_competition_name
       ,count(distinct match_id) as matches_count
-FROM joe.fiba_europe_games_import
+FROM fiba_europe_games_master
 group by 1
   ) as games
 inner join (
@@ -17,11 +17,11 @@ inner join (
     FROM
     (
     SELECT DISTINCT metadata_competition_name,team_name_hometeam as team_name
-    FROM joe.fiba_europe_games_import
+    FROM fiba_europe_games_master
     where metadata_competition_name is not null and team_name_hometeam is not null
     UNION
     SELECT DISTINCT metadata_competition_name,team_name_awayteam as team_name
-    FROM joe.fiba_europe_games_import
+    FROM fiba_europe_games_master
     where metadata_competition_name is not null and team_name_awayteam is not null
     ) team_list
   GROUP BY 1

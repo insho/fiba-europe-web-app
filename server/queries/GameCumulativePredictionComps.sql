@@ -65,7 +65,7 @@ SELECT  match_id
 
         ,row_number() OVER (partition by match_id,period,minute order by 1) as safe_rank
 
-FROM fiba_europe_predictions_import
+FROM fiba_europe_predictions
 WHERE match_id = '{{matchId}}'
 and minute <> 10
 group by 1,2,3
@@ -76,6 +76,3 @@ group by 1,2,3
     and match.minutes_remaining_in_period = predictions.minutes_remaining_in_period
 and predictions.safe_rank = 1
 order by row_number
-
-
-

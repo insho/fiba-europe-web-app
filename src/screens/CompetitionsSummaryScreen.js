@@ -440,7 +440,7 @@ export default class CompetitionsScreen extends React.Component {
           <div className="page-body">
 
             <PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
-z
+
 
             <div className="split-table-container-upper"> 
 

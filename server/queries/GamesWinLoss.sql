@@ -34,9 +34,9 @@ SELECT match_id
               ,(CASE WHEN max(current_score_awayteam) < max(current_score_hometeam) then 1 else null end) as losses
               ,(CASE WHEN max(current_score_awayteam) = max(current_score_hometeam) then 1 else null end) as ties
 
-FROM joe.fiba_europe_games_master games_master inner join (
+FROM fiba_europe_games_master games_master inner join (
 SELECT DISTINCT match_id as inner_match_id
-FROM joe.fiba_europe_game_xref
+FROM fiba_europe_game_xref
 WHERE page_header_text = '2009 EuroBasket'
 ) as limitor on games_master.match_id = limitor.inner_match_id
 
