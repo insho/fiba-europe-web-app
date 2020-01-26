@@ -1,0 +1,43 @@
+#welcome-screen-text-container {
+    position: absolute;
+    /* padding-left:30px; */
+    /* top:0;
+    left:0; 
+    width:90%;  */
+}
+
+.welcome-screen-text {
+    /* padding-left: 30px; */
+}
+
+#welcome-screen-text-main-title {
+    font-size: 56px;
+    padding-top: 40px;
+    font-weight: bold;
+    color: #474646;
+    /* padding-left:14px; */
+
+}
+
+#welcome-screen-text-sub-title {
+    /* pos */
+    /* background-color: blue; */
+    font-size: 24px;
+    padding-top: 16px;
+    padding-bottom: 2px;
+
+    font-weight: bold;
+    /* width:50%; */
+    color: #666666;
+    padding-left:14px;
+    /* text-align: left; */
+}
+
+
+.welcome-screen-paragraph-container {
+    /* pos */
+    /* background-color: blue; */
+    padding-top: 6px;
+    padding-left:14px;
+    /* text-align: left; */
+}

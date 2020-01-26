@@ -1,0 +1,33 @@
+.horizontal-row-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width:80%;
+  /* background-color: purple; */
+}
+
+.axis-input {
+  /* padding-left: 4%; */
+  padding-right: 4%;
+  width:10%;
+}
+
+.axis-input-label {
+  padding-left: 4%;
+  /* padding-right: 4%; */
+  width:25%;
+  font-size: 14px;
+}
+
+.chart-title-large {
+  font-weight: bold;
+}
+
+.chart-title-small {
+  
+  /* font-family: "Open Sans";  */
+  font-size: 14px;
+  /* font-weight: bold; */
+  color: slategrey;
+  /* padding-top: 2px; */
+}

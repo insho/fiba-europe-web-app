@@ -1,0 +1,254 @@
+  
+  .timeseries-chart-container-major {
+    /* padding-top: 10px; */
+    top: 0;
+    left: 0;
+    /* height: 50%; */
+    /* width: 50%;  */
+    flex: 2;
+   
+  }
+  
+  .timeseries-chart-container-minor {
+    /* padding-top: 10px; */
+    top: 0;
+    right: 0;
+    /* height: 100%;
+    width: 100%; */
+    flex: 1;
+   
+  }
+  
+  .vertical-chart-container {
+    display:flex;
+    flex-direction: column;
+
+    width: 90%;
+    padding-left: 10px;
+    justify-content: right;
+
+  }
+
+  .small-chart-flex {
+    flex: 1;
+
+  }
+
+  #timeseries-cumulative-scores {
+    
+    top: 0;
+    left: 0;
+    /* height: 100%;
+    width: 100%; */
+   
+  }
+
+.horizontal-chart-container  {
+  display:flex;
+  flex-direction: row;
+  width: 90%;
+  padding-top: 20px;
+  justify-content: left;
+  
+}
+
+
+  /* button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+  } */
+  
+  .Navigation {
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    width: 150px;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #da3737;
+  }
+  
+  .Navigation a {
+    color: white;
+    cursor: pointer;
+  }
+  
+
+  
+  
+  #overall-consistency-chart-and-data-container {
+    padding-top: 10px;
+    top: 0;
+    left: 0;
+    width: 50%;
+    /* height: 50%; */
+    
+    display: flex;
+    /* justify-content: flex-start; */
+    flex-direction: column;
+    /* text-align: center;  */
+        
+    /* background-color: #388c38 */
+    
+    /* height: 0px; */
+    
+
+    /* height: 10px; */
+    /* min-height: 200px; */
+  }
+  
+  #overall-consistency-chart-container {
+    padding-top: 100px;
+    top: 0;
+    left: 0;
+    height: 35%;
+    /* height: 70px; */
+    /* right:0; */
+    width: 10%;
+   
+    /* background-color: #8c3858 */
+    /* min-height: 30px; */
+  }
+
+  
+  #consistency-by-domain-chart-and-data-container {
+    padding-top: 10px;
+    /* padding-left: 40px; */
+    top: 0;
+    right: 0;
+    width: 30%;
+    /* height: 100%; */
+    
+    /* height: 0px; */
+    /* background-color: #388c38 */
+    /* height: 10px; */
+    /* min-height: 200px; */
+  }
+  
+  
+  
+  #overall-brand-consistency-horizontal-bar {
+    /* width: 100%;
+    height: 100%; */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background-color: #8c3858 */
+  }
+  
+  
+  
+  /* .overall-consistency-score-header {
+    font-family: 'Open Sans';
+    font-size: 24px;
+    color: #434343;
+    padding-right: 10px;
+  } */
+  
+  
+  /* #overall-consistency-score-header-bold-verdict {
+    font-weight: bold;
+  } */
+  
+  /* .overall-consistency-explaination {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #434343;
+  
+  }
+  
+  
+  .overall-consistency-explaination-seed-count { 
+    font-family: "Open Sans"; 
+    font-size: 16px;
+    color: #8c3858;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+   */
+  
+  
+  .simple-inline-container {
+  
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    
+  }
+  
+  .simple-inline-container > p {
+  
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    
+  }
+  
+  /* #simple-inline-container-consistency-score-header {
+    padding-top: 20px;
+  } */
+  
+  
+  .chart-title-large {
+    font-family: "Open Sans"; 
+    font-size: 18px;
+    padding-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .chart-title-small {
+    font-family: "Open Sans"; 
+    font-size: 16px;
+    padding-bottom: 10px;
+    /* font-weight: bold; */
+  }
+  
+  .section-title-large {
+    font-family: "Open Sans"; 
+    font-size: 14px;
+    padding-bottom: 10px;
+    text-align: left;
+    font-weight: bold;
+    padding-top:40px;
+    color: #656565
+  }
+  .section-title-large-no-padding {
+    font-family: "Open Sans"; 
+    font-size: 14px;
+    padding-bottom: 10px;
+    text-align: left;
+    font-weight: bold;
+    
+    color: #656565
+  }
+  
+  
+  
+  
+  /* #chart-title-consistency-x-domain-x-variation {
+    text-align: left;
+  } */
+  
+  
+  .horizontal-chart-grid-row-container {
+    display:flex;
+    flex-direction: row;
+    width: 90%;
+    padding-top: 20px;
+    justify-content: space-evenly;
+    
+  }
+  
+  /* .consistency-by-domain-x-variation-chart-container {
+    width: 25%;
+    padding-left: 14px;
+    padding-right: 14px;
+    height: 15%;
+  }
+   */
+
+ 

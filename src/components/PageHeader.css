@@ -1,0 +1,51 @@
+  
+  .page-header {
+    
+    font-family: "Open Sans"; 
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 20px;
+  }
+
+    
+  .page-sub-header {
+    
+    font-family: "Open Sans"; 
+    font-size: 18px;
+    /* font-weight: bold; */
+    color: slategrey;
+    padding-top: 2px;
+  }
+  
+  .page-sub-header-red { 
+    font-family: "Open Sans"; 
+    font-size: 20px;
+    color: #8c3858;
+    padding-top: 10px;
+  }
+
+  .page-sub-header-grey { 
+    font-family: "Open Sans"; 
+    font-size: 14px;
+    /* color: #8c3858; */
+    /* padding-top: 10px; */
+  }
+
+  
+  
+  .even-split {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+  }
+
+  .page-score {
+       
+    font-family: "Open Sans"; 
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 4px; 
+    align-self: center;
+  }
