@@ -1,6 +1,6 @@
 import React from "react";
 import "./WelcomeScreen.css";
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 import Menu from "./Menu";
 
 export default class WelcomeScreen extends React.Component {

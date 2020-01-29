@@ -6,6 +6,7 @@ import { selectStylesBanner } from "../options/SelectStyles";
 
 import logo from "../images/logo-basketball.png";
 import MenuButton from "./MenuButton";
+import MenuButtonBall from "./MenuButtonBall";
 
 
 class Banner extends Component {
@@ -42,7 +43,7 @@ handleMouseDown(e) {
             <div id="banner-container-inner--left">
               <div id="banner-hamburger-menu-container-row">
                 <div id="banner-hamburger-menu-container-column">
-                  <MenuButton
+                  <MenuButtonBall
                     className="hamburger-menu-button"
                     handleMouseDown={this.handleMouseDown}
                   />
@@ -51,8 +52,8 @@ handleMouseDown(e) {
 
               <div id="banner-logo-container" style={{
                 height: '80%',
-                width: 80,
-                backgroundImage: `url(${logo})`,
+                width: 20,
+                // backgroundImage: `url(${logo})`,
                 backgroundSize: '80%',
                 backgroundPosition: 'center center',
                 backgroundRepeat: 'no-repeat',
