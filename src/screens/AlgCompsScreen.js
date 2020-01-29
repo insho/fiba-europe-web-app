@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import $ from "jquery";
-// import $ from "jquery";
 import Banner from "../components/Banner.js";
 import DropdownSelectorGroup from "../components/DropdownSelectorGroup.js";
 import Menu from "./Menu";
@@ -40,15 +39,15 @@ class AlgCompsScreen extends Component {
    
     this.state = {
       loading: true,
-      compMetric: 'accuracy',
-      compAge: 'adult',
-      compSex: 'male',
+      // selectedMetric: 'accuracy',
+      // selectedAge: 'adult',
+      // selectedSex: 'male',
       compTarget: 'winner_hometeam',
-      ageDropdownList: [{ value: "Adult", label: "Adult" },
+      ageDropdownList: [{ value: "adult", label: "Adult" },
       { value: "U20", label: "U20" },
       { value: "U18", label: "U18" },
       { value: "U16", label: "U16" }],
-      selectedAge: { value: "Adult", label: "Adult" },
+      selectedAge: { value: "adult", label: "Adult" },
       sexDropdownList: [{ value: "female", label: "Female" },
       { value: "male", label: "Male" }],
       selectedSex: { value: "male", label: "Male" } , 
@@ -63,7 +62,7 @@ class AlgCompsScreen extends Component {
       {value: "false discovery rate", label: "false discovery rate"}
       // {value: "r2", label: "r2"},
     ],
-    selectedMetric: { value: "accuracy", label: "accuracy" } 
+    selectedMetric: { value: "accuracy", label: "accuracy" }
 
 
     }
@@ -107,10 +106,11 @@ class AlgCompsScreen extends Component {
 
   componentDidMount() {
     this.setState({loading: false});
+    this.updateCharts();
   }
 
   componentDidUpdate() {
-    this.updateCharts();
+    // this.updateCharts();
    }
 
 
@@ -125,45 +125,45 @@ class AlgCompsScreen extends Component {
 
   updateCharts = () => {
   
+
+    if (this.state.selectedMetric !== undefined 
+      && this.state.selectedMetric !== this.state.previouslySelectedMetric )
+    {
+  
+
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'AlgCompsExample',
-      compMetric: this.state.compMetric,
-      compAge: this.state.compAge,
-      compSex: this.state.compSex,
-      compTarget: 'winner_hometeam'
+      selectedMetric: this.state.selectedMetric.value,
+      selectedAge: this.state.selectedAge.value,
+      selectedSex: this.state.selectedSex.value,
+      selectedTarget: 'winner_hometeam'
     }), data => {
-      console.log(data)
+
       this.setState({
         algCompsLineChartWinnerHometeam: {
           data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_somepredictors', 'metric_rate_severalpredictors', 'metric_rate_manypredictors'], { labels: ["some predictors", "several predictors", "many predictors"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"] })
         }
-
       })
 
     });
+    }
   }
-
 
   handleDropdownSelectorChangeAge = (selectedAge) => {
     if(this.state.previouslySelectedAge === undefined || (this.state.selectedAge!== selectedAge)) {
-      Promise.resolve(this.setState({previouslySelectedAge:this.state.selectedAge,selectedAge})).then(() => {this.fillTable()});;        
+      Promise.resolve(this.setState({previouslySelectedAge:this.state.selectedAge,selectedAge})).then(() => {this.updateCharts()});
     }
   }
 
   handleDropdownSelectorChangeSex = (selectedSex) => {
     if(this.state.previouslySelectedSex === undefined || (this.state.selectedSex!== selectedSex)) {
-      Promise.resolve(this.setState({previouslySelectedSex:this.state.selectedSex,selectedSex})).then(() => {this.fillTable()});;        
-
-      // Promise.resolve(this.setState({previouslySelectedSex:this.state.selectedSex,selectedSex})).then(() => {this.fillAllCharts()}).then(() => {this.fillAllCharts()}).then(() => {this.fillTimeSeriesCharts(); });;        
+      Promise.resolve(this.setState({previouslySelectedSex:this.state.selectedSex,selectedSex})).then(() => {this.updateCharts()});        
     }
   }
 
-
   handleDropdownSelectorChangeMetric = (selectedMetric) => {
     if(this.state.previouslySelectedMetric === undefined || (this.state.selectedMetric!== selectedMetric)) {
-      Promise.resolve(this.setState({previouslySelectedMetric:this.state.selectedMetric,selectedMetric})).then(() => {this.fillTable()});;        
-
-      // Promise.resolve(this.setState({previouslySelectedSex:this.state.selectedSex,selectedSex})).then(() => {this.fillAllCharts()}).then(() => {this.fillAllCharts()}).then(() => {this.fillTimeSeriesCharts(); });;        
+      Promise.resolve(this.setState({previouslySelectedMetric:this.state.selectedMetric,selectedMetric})).then(() => {this.updateCharts()});
     }
   }
 
@@ -183,7 +183,6 @@ The machine learning project itself can be [found here](https://github.com/insho
       <div>
       <Menu menuVisibility={this.state.visible}/>
       
-      
       <div onMouseDown={this.closeMenu}>
 
       <Banner bannerTextMajor = {"Comparing Algorithms"} bannerTextMinor = {"Sub Banner"} 
@@ -200,12 +199,8 @@ The machine learning project itself can be [found here](https://github.com/insho
           <br></br>
 
 
-
-
-
-
           
-<DropdownSelectorGroup  
+    <DropdownSelectorGroup  
       dropDownItemsListSelectorOne={this.state.metricDropdownList} 
       selectedValueSelectorOne = {this.state.selectedMetric} 
       setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeMetric.bind(this)}
@@ -213,24 +208,20 @@ The machine learning project itself can be [found here](https://github.com/insho
       dropDownItemsListSelectorTwo={this.state.sexDropdownList} 
       selectedValueSelectorTwo = {this.state.selectedSex} 
       setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeSex.bind(this)}
-    
 
       dropDownItemsListSelectorThree={this.state.ageDropdownList} 
       selectedValueSelectorThree = {this.state.selectedAge} 
       setParentSelectorStateSelectorThree={this.handleDropdownSelectorChangeAge.bind(this)}        
       toggleParentMenu={this.toggleMenu.bind(this)}/>
 
-
-          <div style={{ "paddingTop": "20px" }}>
+      <div style={{ "paddingTop": "20px" }}>
         
         {this.state.algCompsLineChartWinnerHometeam && (
           <div>
             <div className="chart-title-large" >{"Alg Comps Title"}</div>
 
-
             <Line
               data={this.state.algCompsLineChartWinnerHometeam.data}
-            // options={chartOptions.brandDetailsSalesReturnRateLineChart}
             >
             </Line>
           </div>

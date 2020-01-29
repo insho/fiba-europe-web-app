@@ -19,15 +19,15 @@ age,
 "period",
 minute,
 (CASE 
-WHEN '{{compMetric}}' = 'accuracy' then accuracy 
-WHEN '{{compMetric}}' = 'true positive rate' then true_positive_rate 
-WHEN '{{compMetric}}' = 'true negative rate' then true_negative_rate 
-WHEN '{{compMetric}}' = 'positive predictive value' then positive_predictive_value 
-WHEN '{{compMetric}}' = 'negative predictive value' then negative_predictive_value 
-WHEN '{{compMetric}}' = 'false positive rate' then false_positive_rate 
-WHEN '{{compMetric}}' = 'false negative rate' then false_negative_rate 
-WHEN '{{compMetric}}' = 'false discovery rate' then false_discovery_rate 
-WHEN '{{compMetric}}' = 'r2' then r2 
+WHEN '{{selectedMetric}}' = 'accuracy' then accuracy 
+WHEN '{{selectedMetric}}' = 'true positive rate' then true_positive_rate 
+WHEN '{{selectedMetric}}' = 'true negative rate' then true_negative_rate 
+WHEN '{{selectedMetric}}' = 'positive predictive value' then positive_predictive_value 
+WHEN '{{selectedMetric}}' = 'negative predictive value' then negative_predictive_value 
+WHEN '{{selectedMetric}}' = 'false positive rate' then false_positive_rate 
+WHEN '{{selectedMetric}}' = 'false negative rate' then false_negative_rate 
+WHEN '{{selectedMetric}}' = 'false discovery rate' then false_discovery_rate 
+WHEN '{{selectedMetric}}' = 'r2' then r2 
 ELSE null end) as metric_rate
 -- accuracy,
 -- true_positive_rate,
@@ -38,9 +38,9 @@ ELSE null end) as metric_rate
 -- false_negative_rate,
 -- false_discovery_rate
 FROM fiba_europe_alg_comps
-WHERE age = '{{compAge}}'
-and sex = '{{compSex}}'
-and metric_tag = '{{compTarget}}'
+WHERE age = '{{selectedAge}}'
+and sex = '{{selectedSex}}'
+and metric_tag = '{{selectedTarget}}'
 ) as s1
 GROUP BY 1,2
 ) as s2
