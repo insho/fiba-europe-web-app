@@ -447,3 +447,41 @@
       
       
     
+  /**
+ * Creates a single chart data object from the results of a sql query. 
+ * @param {Object} data - collected data object from sql query
+ * @param {String} labelColumns - array of label column names
+ * @param {Object} otherOptions  - json object containing other parameters with which we can override the default values in the dataset (colors, bordeWidth, etc)
+   */
+  export const assembleChartDataCollectionSingleRowMultipleColumns = (data,labelColumns,otherOptions= {}) =>{
+    const labels = otherOptions.labels;
+    // const dataset = data.map(item => item[rowColumn]);
+    var dataset = []
+    // const map = new Map();
+
+    labelColumns.forEach((item) => {
+          dataset.push(data[0][item])
+       });
+
+    // const colours = data.map((item) => item['current_lead_hometeam'] < 0 ? '#ae4126' : '#64b5f6');
+    return {
+      labels,
+      datasets: [
+        {
+          label: otherOptions.label || "",
+          backgroundColor: otherOptions.backgroundColor || "#64b5f6",
+          borderColor: otherOptions.borderColor || "rgba(80,80,80,.8)",
+          borderWidth: otherOptions.borderWidth || .2, 
+          hoverBackgroundColor: otherOptions.hoverBackgroundColor || "rgba(255,99,132,0.4)",
+          hoverBorderColor: otherOptions.hoverBorderColor ||  "rgba(255,99,132,.8)",
+          hoverBorderWidth: otherOptions.hoverBorderWidth || 1,
+          pointBorderWidth: otherOptions.pointBorderWidth || 1,
+          pointRadius: otherOptions.pointRadius || 1.5,
+          pointStyle: otherOptions.pointStyle || 'square',
+          // pointBorderColor: otherOptions.pointBorderColor || "rgba(255,99,132,.8)",
+          data: dataset,
+          fill: otherOptions.fill || "false"
+        }
+      ]
+    };
+  }

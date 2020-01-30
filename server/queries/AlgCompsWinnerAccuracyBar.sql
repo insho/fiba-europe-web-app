@@ -1,5 +1,10 @@
+/**
+ manypredictors       | 0.752475629520728
+ severalpredictors    | 0.749966066824499
+ somepredictors       | 0.726536570155409
+*/
 SELECT *
-    ,row_number() OVER (order by "period" asc,minutes_remaining desc) as minute
+    -- ,row_number() OVER (order by "period" asc,minutes_remaining desc) as minute
 FROM
 (
 SELECT 
@@ -41,8 +46,9 @@ FROM fiba_europe_alg_comps
 WHERE age = '{{selectedAge}}'
 and sex = '{{selectedSex}}'
 and metric_tag = '{{selectedTarget}}'
+and "period" = '{{period}}'
+and minute = '{{minute}}'
 ) as s1
 GROUP BY 1,2
 ) as s2
-order by "period" asc,minutes_remaining desc
-
+order by "period" asc,minutes_remaining desc;

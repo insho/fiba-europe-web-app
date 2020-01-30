@@ -44,7 +44,10 @@ export const chartOptions = {
           ticks: {
             fontColor: "#656565",
             fontFamily: "Open Sans",
-            fontSize: 10
+            fontSize: 10,
+            beginAtZero: true,
+            min: 0
+          
           }
         }
       ],
@@ -125,6 +128,55 @@ export const chartOptions = {
             fontColor: "#656565",
             fontFamily: "Open Sans",
             fontSize: 10
+          }
+        }
+      ],
+      xAxes: [
+        {
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10,
+            // min: 0,
+            // max: 1,
+            // stepSize: 0.2,
+            // Include a dollar sign in the ticks
+            // callback: function(value, index, values) {
+            //   return value * 100 + "%";
+            // }
+          }
+        }
+      ]
+    }
+  }, 
+  featureImportances: {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    tooltips: {
+
+      // callbacks: {
+      //   label: (tooltipItems, data) => {
+      //     return (tooltipItems.value * 100).toFixed(2) + "%";
+      //   }
+      // }
+    },
+    scales: {
+      yAxes: [
+        {
+          gridLines: {
+            drawBorder: true
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10,
+            min: 0,
+            max: 1
           }
         }
       ],
