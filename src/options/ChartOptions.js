@@ -157,6 +157,9 @@ export const chartOptions = {
     legend: {
       display: false
     },
+    plugins: {
+  labels: false
+    },
     tooltips: {
 
       // callbacks: {
@@ -175,8 +178,8 @@ export const chartOptions = {
             fontColor: "#656565",
             fontFamily: "Open Sans",
             fontSize: 10,
-            min: 0,
-            max: 1
+            min: 0
+            // max: 1
           }
         }
       ],

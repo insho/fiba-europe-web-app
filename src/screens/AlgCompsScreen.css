@@ -52,6 +52,15 @@
   
 }
 
+.feature-importance-chart-container  {
+  display:flex;
+  flex-direction: row;
+  width: 70%;
+  padding-top: 20px;
+  padding-left: 10%;
+  justify-content: left;
+  
+}
 
   /* button {
     margin-top: 20px;

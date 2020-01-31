@@ -53,7 +53,7 @@ handleMouseDown(e) {
                       value={this.props.selectedValueSelectorOne }
                       onChange={this.selectorChangeEventSelectorOne }
                       options={this.props.dropDownItemsListSelectorOne }
-                      styles={selectStylesSecondary}
+                      styles={this.props.selectStyles || selectStylesSecondary}
                     />
                   )}
                 </div>
@@ -74,7 +74,7 @@ handleMouseDown(e) {
                       value={this.props.selectedValueSelectorTwo}
                       onChange={this.selectorChangeEventSelectorTwo}
                       options={this.props.dropDownItemsListSelectorTwo}
-                      styles={selectStylesSecondary}
+                      styles={this.props.selectStyles ||selectStylesSecondary}
                     />
                   )}
                 </div>
@@ -91,7 +91,7 @@ handleMouseDown(e) {
                       value={this.props.selectedValueSelectorThree}
                       onChange={this.selectorChangeEventSelectorThree}
                       options={this.props.dropDownItemsListSelectorThree}
-                      styles={selectStylesSecondary}
+                      styles={this.props.selectStyles ||selectStylesSecondary}
                     />
                   )}
                 </div>

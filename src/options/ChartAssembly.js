@@ -445,7 +445,7 @@
         // };
       }
       
-      
+
     
   /**
  * Creates a single chart data object from the results of a sql query. 
@@ -455,6 +455,7 @@
    */
   export const assembleChartDataCollectionSingleRowMultipleColumns = (data,labelColumns,otherOptions= {}) =>{
     const labels = otherOptions.labels;
+
     // const dataset = data.map(item => item[rowColumn]);
     var dataset = []
     // const map = new Map();
@@ -462,6 +463,29 @@
     labelColumns.forEach((item) => {
           dataset.push(data[0][item])
        });
+
+
+    //SORT THE LABELS AND DATA
+    // var labelColumns = ["Bob","Tom","Larry"];
+    // var values =  ["10", "20", "30"];
+
+    //1) combine the arrays:
+    var list = [];
+    for (var j = 0; j < labelColumns.length; j++) 
+        list.push({'label': labelColumns[j], 'value': dataset[j]});
+
+    //2) sort:
+    list.sort(function(a, b) {
+        return ((a.value > b.value) ? -1 : ((a.value == b.value) ? 0 : 1));
+        //Sort could be modified to, for example, sort on the value 
+        // if the label is the same.
+    });
+
+    //3) separate them back out:
+    for (var k = 0; k < list.length; k++) {
+        labelColumns[k] = list[k].label;
+        dataset[k] = list[k].value;
+    }
 
     // const colours = data.map((item) => item['current_lead_hometeam'] < 0 ? '#ae4126' : '#64b5f6');
     return {

@@ -15,7 +15,7 @@ class PageHeader extends Component {
               <div className="page-sub-header-grey">{this.props.matchScheduleDateText}</div>
             </div>
 
-
+            {this.props.showMatchInfo  && (
             <div style={{ "paddingTop": "2px", "display": "flex", "align": "center", "flex-direction": "row", "flex": "3", "flex-wrap": "wrap", "justify-content": "center", "width": "80%", "align": "right", "padding-right":"0px" }}>
 
               <div style={{ "paddingTop": "2px", "display": "flex", "flex-direction": "column", "justify-content": "center", "flex": "2", "flex-wrap": "wrap" }}>
@@ -39,6 +39,7 @@ class PageHeader extends Component {
 
 
             </div>
+            )}
           </div>
 
 
