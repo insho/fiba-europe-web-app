@@ -6,7 +6,7 @@ import CompetitionsSummaryScreen from "./screens/CompetitionsSummaryScreen";
 import GameSummaryScreen from "./screens/GameSummaryScreen";
 import AlgCompsScreen from "./screens/AlgCompsScreen";
 // import BrandConsistencyScreen from "./screens/BrandConsistencyScreen";
-
+import AlgOverviewScreen from "./screens/AlgOverviewScreen";
 
 export default class App extends Component {
 
@@ -23,6 +23,7 @@ export default class App extends Component {
         <Route path="/competitions-summary" component={ CompetitionsSummaryScreen }/>
         <Route path="/games-summary" component={ GameSummaryScreen }/>
         <Route path="/machine-learning-alg-comps" component={ AlgCompsScreen }/>
+        <Route path="/machine-learning-alg-summary" component={ AlgOverviewScreen }/>
         
         
         
