@@ -35,7 +35,7 @@ class Menu extends Component {
                                         <div ><NavLink className="navlink-header" exact to="/welcome">Welcome Screen</NavLink></div>
 
                                         <div><div className= "navlink-header" exact to="/machine-learning-summary">Machine Learning</div></div>
-                                        <div ><NavLink className= "navlink-text" exact to="/machine-learning-summary">Overview</NavLink></div>
+                                        <div ><NavLink className= "navlink-text" exact to="/machine-learning-alg-summary">Overview</NavLink></div>
                                         <div ><NavLink className= "navlink-text" exact to="/machine-learning-alg-comps">Alg Comparisons</NavLink></div>
 
                                         <div><div className= "navlink-header" exact to="/competitions-summary">Competitions</div></div>

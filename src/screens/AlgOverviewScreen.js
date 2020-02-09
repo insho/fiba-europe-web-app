@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import "../App.css";
 import "./GameSummaryScreen.css";
 import { selectStylesTertiary } from "../options/SelectStyles";
+import { NavLink } from "react-router-dom";
 
 import { HashLoader } from 'react-spinners';
 // import ScrollView from 'react-native';
@@ -276,7 +277,7 @@ class AlgOverviewScreen extends Component {
     }
   }
 
-markdown = "I've created and tested three algorithms for each metric (winner, points scored, etc), using different sets of features. They are the following:\n\n\n\n\n\
+markdown = "I've created and tested three algorithms for each metric (winner, points scored, etc), using different sets of input features. They are the following:\n\n\n\n\n\
 * **A. \"Some Features**\"\n\n\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is the simplest algorithm, involving only two features:\n\n";
 
@@ -288,7 +289,7 @@ current_score_awayteam\n\
 ";
 
 markdown1b = "* **B. \"Several Features**\"\n\n\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is a bit more complex, involving the two features from alg A, as well as 12 others:\"\n\n";
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is a bit more complex, involving the two features from alg A, as well as 12 others:\n\n";
 
 
 markdown2 = "\
@@ -388,9 +389,27 @@ free_throw_shots_missed_awayteam\n\
 "
 
 markdownFeatureImportance = "Feature Importances indicate the importance/relevance of the input features to the target (output) feature for which the model predicts\n\n\
-The feature importances plotted below are for algs predicting the winner of the match, at the period and minute specified below:"
+The feature importances plotted below are for algs predicting whether the home team won the match, at the specified period and minute:"
 
-// The code for this app [is here](https://github.com/insho/fiba-europe-web-app)\n\n\n\
+markdownTuning1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For the purpose of this exercise I refrained from properly tuning any of the algorithms. I opted instead to input the following hyperparameters:\n\n"
+markdownTuning2Code = "```python \
+{n_estimators: 200,\n\
+ max_depth: 10,\n\
+ # Rule of thumb for min_samples_split is to take ~0.5-1% of total values in the dataset\n\
+ min_samples_split: int(round(len(dataset)*.007,0)),\n\
+ # Rule of thumb for min_samples_leaf is for it to be about 1/10 of the min_samples_split\n\
+ min_samples_leaf:  int(round(len(dataset)*.0007,0)),\n\
+ subsample: .8,\n\
+ max_features: \"sqrt\",\n\
+ learning_rate:.005}\n\
+ ```";
+
+ markdownFurtherInfo = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Further info regarding the creation of the algorithms can be found here:\n\n\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Creating, Testing and Comparing Machine Learning Algorithms](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part4_making_algs.ipynb)**"
+
+ markdownConclusion1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As one would expect, the most important feature in predicting whether the home team won a match is the home team's current score. The second most important is the away team's current score. This is true for all three algorithms.\n\n\ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We can see that, particularly early in the match, there is a virtual tie between home team and away team current score for Alg A and B. Alg C, on the other hand, clearly favors the home team's current score far more than any other factor, almost twice as much (!) as the away team's final score. I am a bit wary of this result. My first thought is that something eronious is occurring, as the addition of several other less important inputs (like 'players with two fouls for the home team' for example) would cause 'current score home team' to suddenly be so disproportionaly imporant. Alg B certainly does not exhibit this kind of difference. "
+
+
+ // The code for this app [is here](https://github.com/insho/fiba-europe-web-app)\n\n\n\
 // The machine learning project itself can be [found here](https://github.com/insho/fiba-europe-basketball-project). It involved four main parts:\n\n\
 // 1. **[Acquiring the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part1_acquiring_data.ipynb)**\n\
 // 2. **[Processing the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part2_process_data.ipynb)**\n\
@@ -407,7 +426,7 @@ The feature importances plotted below are for algs predicting the winner of the 
       
       <div onMouseDown={this.closeMenu}>
 
-      <Banner bannerTextMajor = {"Comparing Algorithms"} bannerTextMinor = {"Sub Banner"} 
+      <Banner bannerTextMajor = {"Algorithms Overview"}  
       toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 
@@ -483,11 +502,43 @@ The feature importances plotted below are for algs predicting the winner of the 
 
 <div style={{ width: '60%', paddingLeft: '2%'}}>
 
+
+<PageHeader header="Alg Tuning & Hyper Parameters" subHeader={""}/>
+
+<div >
+           <ReactMarkdown source={this.markdownTuning1}/> 
+           </div>
+
+           <div >
+           <ReactMarkdown source={this.markdownTuning2Code} style={{paddingLeft: '10vw', maxHeight: '35vh', width: '70vw',paddingTop: '5px', paddingBottom: '5vh'}}/> 
+           </div>
+
+           <ReactMarkdown source={this.markdownFurtherInfo} style={{maxHeight: '35vh', width: '70vw',paddingTop: '5px', paddingBottom: '5vh'}}/> 
+           
+
+           <div className="chart-divider" />
+  <hr
+    style={{
+      color: "#ced6d4",
+      backgroundColor: "#e7e7e7",
+      height: '.1',
+      paddingLeft: '2%',
+            paddingRight: '2%'
+      // paddingTop: "5%",
+      //       paddingBottom: "5%"
+
+    }}
+  />
+
 <PageHeader header="Feature Importances" subHeader={""}/>
 
 {/* <div className="chart-title-large" >{"Feature Importances"}</div> */}
 {/* <div className="chart-title-small">{"Feature Importances indicate the importance/relevance of the input features to the target (output) feature for which the model predicts"}</div>
 <div className="chart-title-small">{"The feature importances plotted below are for algs predicting the winner of the match, at the period and minute specified below:"}</div> */}
+
+
+
+
 
 <div >
            <ReactMarkdown source={this.markdownFeatureImportance}/> 
@@ -577,7 +628,14 @@ options={chartOptions.featureImportances}
 )}
 
 
+<div style={{paddingTop: "10px"}}>
+           <ReactMarkdown source={this.markdownConclusion1}/> 
+           </div>
 
+{/* <div className="horizontal-chart-container" style={{paddingTop: "10px"}}> */}
+{/* <ReactMarkdown source={"We can see how the algorithms fared against a test data set here, on the 'Alg Comparisons' page"}/> */}
+<NavLink  exact to="/machine-learning-alg-comps">We can see how the algorithms fared against a test data set here, on the 'Alg Comparisons' page</NavLink>
+{/* </div> */}
 
           </div>
           

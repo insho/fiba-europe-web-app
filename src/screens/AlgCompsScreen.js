@@ -461,7 +461,7 @@ markdownFinalScoreAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, whe
       
       <div onMouseDown={this.closeMenu}>
 
-      <Banner bannerTextMajor = {"Comparing Algorithms"} bannerTextMinor = {"Sub Banner"} 
+      <Banner bannerTextMajor = {"Comparing Algorithms"} 
       toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 
