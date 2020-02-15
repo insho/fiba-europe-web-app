@@ -1,24 +1,17 @@
 import React from "react";
 import $ from "jquery";
 import "../App.css";
-// import "./CompetitionsSummaryScreen.css";
-import DropdownSelectorGroup from "../components/DropdownSelectorGroup.js";
-import { selectStylesSecondary, selectStylesTertiary } from "../options/SelectStyles";
-
-import "./AlgOverviewScreen.css";
+import "./CompetitionsSummaryScreen.css";
 import Banner from "../components/Banner.js";
 import HorizontalTextwithBoldedSection from "../components/HorizontalTextwithBoldedSection"
 import PageHeader from "../components/PageHeader"
 import { chartOptions } from "../options/ChartOptions.js";
-import { HorizontalBar,Bar,Line } from "react-chartjs-2";
+import { HorizontalBar } from "react-chartjs-2";
 import Menu from "./Menu";
-import ReactTable from 'react-table';
-import { assembleChartDataCollectionSimple,
-  assembleChartDataCollectionSimpleMultiple,
-  assembleChartDataCollectionGrouped,
-  assembleChartDataCollectionStacked,
-  assembleChartDataCollectionSimplewithColors
- } from "../options/ChartAssembly";
+import ReactTable from 'react-table-6';
+import 'react-table-6/react-table.css';
+// import {useTable} from 'react-table';
+import { assembleChartDataCollectionSimple } from "../options/ChartAssembly";
 import HorizontalChartandtitleContainer from "../components/HorizontalChartandTitleContainer";
 // import executeQuery from "/Users/joe/src/testapp_dd2/server/index.js"
 const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
@@ -164,31 +157,13 @@ function searchDropdownListArrayforObjectwithValue(dropdownListArray, props, par
 
 
 
-export default class CompetitionsSummaryScreen extends React.Component {
+export default class CompetitionDetailScreen extends React.Component {
 
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      visible: false,
-      periodDropdownList: [{value: "1", label: "Period 1"},
-      {value: "2", label: "Period 2"},
-      {value: "3", label: "Period 3"},
-      {value: "4", label: "Period 4"}
-    ],
-    selectedPeriod: { value: "1", label: "Period 1" },
-
-    minuteDropdownList: [{value: "1", label: "Minute 1"},
-    {value: "2", label: "Minute 2"},
-    {value: "3", label: "Minute 3"},
-    {value: "4", label: "Minute 4"},
-    {value: "5", label: "Minute 5"},
-    {value: "6", label: "Minute 6"},
-    {value: "7", label: "Minute 7"},
-    {value: "8", label: "Minute 8"},
-    {value: "9", label: "Minute 9"},
-    {value: "10", label: "Minute 10"}],
-  selectedMinute: { value: "3", label: "Minute 3" }
+      visible: false
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -236,42 +211,7 @@ export default class CompetitionsSummaryScreen extends React.Component {
       selectedAge: { value: "Adult", label: "Adult" },
       sexDropdownList: [{ value: "female", label: "Female" },
       { value: "male", label: "Male" }],
-      selectedSex: { value: "male", label: "Male" },
-            metricDropdownList: [{value: "accuracy", label: "Overall Accuracy"},
-      {value: "true positive rate", label: "True Positive Rate"},
-      {value: "true negative rate", label: "True Negative Rate"},
-      {value: "positive predictive value", label: "Positive Predictive Value"},
-      {value: "negative predictive value", label: "Negative Predictive Value"},
-      {value: "false positive rate", label: "False Positive Rate"},
-      {value: "false negative rate", label: "False Negative Rate"},
-      {value: "false discovery rate", label: "False Discovery Rate"}
-      // {value: "r2", label: "r2"},
-    ],
-    selectedMetric: { value: "accuracy", label: "Overall Accuracy" },
-    
-    periodDropdownList: [{value: "1", label: "Period 1"},
-      {value: "2", label: "Period 2"},
-      {value: "3", label: "Period 3"},
-      {value: "4", label: "Period 4"}
-    ],
-    selectedPeriod: { value: "1", label: "Period 1" },
-
-    minuteDropdownList: [{value: "1", label: "Minute 1"},
-    {value: "2", label: "Minute 2"},
-    {value: "3", label: "Minute 3"},
-    {value: "4", label: "Minute 4"},
-    {value: "5", label: "Minute 5"},
-    {value: "6", label: "Minute 6"},
-    {value: "7", label: "Minute 7"},
-    {value: "8", label: "Minute 8"},
-    {value: "9", label: "Minute 9"},
-    {value: "10", label: "Minute 10"}],
-  selectedMinute: { value: "3", label: "Minute 3" } ,
-  predictorDropdownList: [{value: "somepredictors", label: "Alg A (some)"},
-  {value: "severalpredictors", label: "Alg B (several)"},
-  {value: "manypredictors", label: "Alg C (many)"}],
-  selectedPredictor: {value: "somepredictors", label: "Alg A (some)"}
-     
+      selectedSex: { value: "male", label: "Male" }      
     });
      
     /*
@@ -280,6 +220,8 @@ export default class CompetitionsSummaryScreen extends React.Component {
         queryName: "CompetitionsDropdownSelectorAge"
       }),
       data => {
+        console.log('asdf')
+        console.log(data)
         this.setState({
           ageDropdownList: data,
           selectedAge: data[0]
@@ -324,7 +266,7 @@ export default class CompetitionsSummaryScreen extends React.Component {
       this.state.previouslySelectedSex === undefined &&
       this.state.selectedAge && this.state.selectedSex) {
 
-       Promise.resolve(this.setState({previouslySelectedAge:this.state.selectedAge,previouslyselectedSex:this.state.selectedSex})).then(() => {this.fillTable(); }).then(() => {this.fillCharts(); });
+       Promise.resolve(this.setState({previouslySelectedAge:this.state.selectedAge,previouslyselectedSex:this.state.selectedSex})).then(() => {this.fillTable(); });
 
   
    }
@@ -400,16 +342,16 @@ export default class CompetitionsSummaryScreen extends React.Component {
   //   return chartCollection;
   // }
 
-  // handleDropdownSelectorChange = selectedBrand => {
-  //   Promise.resolve(
-  //     this.setState({
-  //       previouslySelectedBrand: this.state.selectedBrand,
-  //       selectedBrand
-  //     })
-  //   ).then(() => {
-  //     this.fillTable();
-  //   });
-  // };
+  handleDropdownSelectorChange = selectedBrand => {
+    Promise.resolve(
+      this.setState({
+        previouslySelectedBrand: this.state.selectedBrand,
+        selectedBrand
+      })
+    ).then(() => {
+      this.fillTable();
+    });
+  };
 
 
 
@@ -427,23 +369,6 @@ export default class CompetitionsSummaryScreen extends React.Component {
     }
   }
 
-  handleDropdownSelectorChangePeriod = (selectedPeriod) => {
-    if(this.state.previouslySelectedPeriod === undefined || (this.state.selectedPeriod!== selectedPeriod)) {
-      Promise.resolve(this.setState({previouslySelectedPeriod:this.state.selectedPeriod,selectedPeriod})).then(() => {this.fillCharts()});
-    }
-  }
-
-  handleDropdownSelectorChangeMinute = (selectedMinute) => {
-    if(this.state.previouslySelectedMinute === undefined || (this.state.selectedMinute!== selectedMinute)) {
-      Promise.resolve(this.setState({previouslySelectedMinute:this.state.selectedMinute,selectedMinute})).then(() => {this.fillCharts()});
-    }
-  }
-
-  handleDropdownSelectorChangePredictor = (selectedPredictor) => {
-    if(this.state.previouslySelectedPredictor === undefined || (this.state.selectedPredictor!== selectedPredictor)) {
-      Promise.resolve(this.setState({previouslySelectedPredictor:this.state.selectedPredictor,selectedPredictor})).then(() => {this.fillCharts()});
-    }
-  }
 
 
   
@@ -509,67 +434,6 @@ export default class CompetitionsSummaryScreen extends React.Component {
     }
   }
 
-  fillCharts() {
-    if (this.state.selectedSex != null && this.state.selectedAge != null) {
-      
-      $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: 'CompetitionsOverviewMatchCount',
-        competitionGroupSex: this.state.selectedSex.value,
-        competitionGroupAge: this.state.selectedAge.value
-        }), data => {
-          this.setState({
-            competitionMatchCountBarChart: {
-                  data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'matches','color_number',{backgroundColor: ['#57A0E0','#50CEF4','#A1E6F4','#81c784']})
-                },
-            competitionFinalScoreBarChart: {
-              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'med_final_score_hometeam','color_number',{backgroundColor: ['#57A0E0','#50CEF4','#A1E6F4','#81c784']})
-            }
-    
-
-                
-          })
-    });
-
-    }
-
-    if (this.state.selectedPredictor != null ) {
-    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
-      selectedMetric: 'r2',
-      selectedTarget: 'final_score_hometeam',
-      // selectedAge: this.state.selectedAge.value,
-      // selectedSex: this.state.selectedSex.value,
-      selectedPredictor: this.state.selectedPredictor.value
-    }), data => {
-    
-      this.setState({
-        algCompsLineChartFinalScoreHometeam: {
-          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_male', 'metric_rate_adult_female', 'metric_rate_youth_male','metric_rate_youth_female'], { labels: ["Adult Male", "Adult Female", "Youth Male","Youth Female"], backgroundColors: ["#64b5f6","#656565", "#ae4126","#fcd303"], borderColors: ["#64b5f6","#656565", "#ae4126","#fcd303"]})
-        }
-      })
-    
-    });
-
-    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
-      selectedMetric: 'accuracy',
-      selectedTarget: 'winner_hometeam',
-      // selectedAge: this.state.selectedAge.value,
-      // selectedSex: this.state.selectedSex.value,
-      selectedPredictor: this.state.selectedPredictor.value
-    }), data => {
-    
-      this.setState({
-        algCompsLineChartWinnerHometeam: {
-          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_male', 'metric_rate_adult_female', 'metric_rate_youth_male','metric_rate_youth_female'], { labels: ["Adult Male", "Adult Female", "Youth Male","Youth Female"], backgroundColors: ["#64b5f6","#656565", "#ae4126","#fcd303"], borderColors: ["#64b5f6","#656565", "#ae4126","#fcd303"]})
-        }
-      })
-    
-    });
-  }
-  }
-  
-
   render() {
     return (
       <div>
@@ -587,98 +451,14 @@ export default class CompetitionsSummaryScreen extends React.Component {
         setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)}        
         toggleParentMenu={this.toggleMenu.bind(this)}/>
 
+          <div className="page-body">
 
-<PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
-
-
-<div>
-{this.state.competitionMatchCountBarChart && (
-<div className="feature-importance-chart-container" style={{maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
-
-<div className="chart-title-large" >{"Matches"}</div>
-
-<Bar
-  data={this.state.competitionMatchCountBarChart.data}
-  // options={chartOptions.featureImportances}
-  options={this.state.competitionMatchCountBarChart.chartOptions}
->
-</Bar>
-</div>
-)}
+            <PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
 
 
-{this.state.competitionFinalScoreBarChart && (
-<div className="feature-importance-chart-container" style={{maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
-
-<div className="chart-title-large" >{"Median Final Score"}</div>
-
-<Bar
-  data={this.state.competitionFinalScoreBarChart.data}
-  // options={chartOptions.featureImportances}
-  options={this.state.competitionFinalScoreBarChart.chartOptions}
->
-</Bar>
-</div>
-)}
+            <div className="split-table-container-upper"> 
 
 
-
-<div>
-  <DropdownSelectorGroup 
-dropDownItemsListSelectorOne={this.state.periodDropdownList} 
-selectedValueSelectorOne = {this.state.selectedPeriod} 
-setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePeriod.bind(this)}
-
-dropDownItemsListSelectorTwo={this.state.minuteDropdownList} 
-selectedValueSelectorTwo = {this.state.selectedMinute} 
-setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeMinute.bind(this)}
-// dropDownItemsListSelectorThree={this.state.ageDropdownList} 
-// selectedValueSelectorThree = {this.state.selectedAge} 
-// setParentSelectorStateSelectorThree={this.handleDropdownSelectorChangeAge.bind(this)}        
-selectedSyles = {selectStylesTertiary}
-toggleParentMenu={this.toggleMenu.bind(this)}/>       
-</div>
-</div>
-
-
-
-
-<DropdownSelectorGroup 
-dropDownItemsListSelectorOne={this.state.predictorDropdownList} 
-selectedValueSelectorOne = {this.state.selectedPredictor} 
-setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
-
-
-selectedSyles = {selectStylesTertiary}
-toggleParentMenu={this.toggleMenu.bind(this)}/>   
-
-{this.state.algCompsLineChartFinalScoreHometeam && (
-          <div>
-            <div className="chart-title-large" >{"Algorithm R2 - Predicting Final Score Home Team"}</div>
-            {/* <div className="chart-title-small" >{"Adult Male Matches"}</div> */}
-            {/* {this.state.selectedMetric && (<div className="chart-title-small" >{this.state.selectedMetric.label}</div>)} */}
-      
-
-            <Line data={this.state.algCompsLineChartFinalScoreHometeam.data}>
-            </Line>
-          </div>
-        )}
-
-{this.state.algCompsLineChartWinnerHometeam && (
-          <div>
-            <div className="chart-title-large" >{"Algorithm Accuracy - Predicting Winner"}</div>
-            <div className="chart-title-small" >{"Accuracy"}</div>
-            {/* {this.state.selectedMetric && (<div className="chart-title-small" >{this.state.selectedMetric.label}</div>)} */}
-      
-
-            <Line data={this.state.algCompsLineChartWinnerHometeam.data}>
-            </Line>
-          </div>
-        )}
-
-            <div > 
-
-{/* 
             <ReactTable
               data={this.state.tableData}
               columns={columns}
@@ -686,19 +466,86 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
               // defaultPageSize={1}
               className="-striped -highlight"
               style={{color: "#656565ff"}}
-
-            /> */}
+            />
 
             </div>
 
 
 
+            <div className="simple-inline-container">
+
+              <div id="overall-consistency-chart-and-data-container">
+
+                <div id="overall-consistency-chart-container">
+                  {this.state.horizontalBarchartOverallConsistency && (
+                    <HorizontalBar
+                      id="overall-brand-consistency-horizontal-bar"
+                      data={
+                        this.state.horizontalBarchartOverallConsistency.data
+                      }
+                      options={
+                        this.state.horizontalBarchartOverallConsistency
+                          .chartOptions
+                      }
+                    />
+                  )}
+                </div>
+               
+                <HorizontalTextwithBoldedSection textPrefix="Overall Consistency: " textPrefixStyle={{ 'font-size': "24px"}}
+               textBolded={this.state.consistencyScoreText} textBoldedStyle={{ 'font-size': "28px", "padding-left": "6px", "font-weight": "bold"}}/> 
+
+               <HorizontalTextwithBoldedSection textPrefix="Consistency Based on" 
+               textBolded={this.state.seedsCountText} textBoldedStyle={{ 'font-size': "16px", color: "#8c3858", "padding-left": "6px", "padding-right": "6px"}}
+               textSuffix="Seeds in Users' Fit Profiles" /> 
+              
+              </div>
+              
+
+              <div id="consistency-by-domain-chart-and-data-container"> 
+                
+                <div
+                  className="section-title-large-no-padding"
+                  id="chart-title-consistency-x-domain"
+                >
+                  {this.state.horizontalBarchartConsistencyXProductDomain &&
+                    "Consistency x Product Category"}
+                </div>
+                
+                <div style={{height:"90%"}} >
+                  {this.state.horizontalBarchartConsistencyXProductDomain && (
+                    <HorizontalBar 
+                      
+                      data={
+                        this.state.horizontalBarchartConsistencyXProductDomain
+                          .data
+                      }
+                      options={
+                        this.state.horizontalBarchartConsistencyXProductDomain
+                          .chartOptions
+                      }
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="section-title-large">
+              {this.state
+                .horizontalBarchartConsistencyXProductDomainXVariationChartCollection &&
+                "Fit Consistency x Size Type"}
+            </div>
 
 
-         
+
+            <div className="section-title-large">
+              {this.state
+                .horizontalBarchartConsistencyXProductDomainXScaleTypeChartCollection &&
+                "Fit Consistency x Scale Type"}
+            </div>
+
 
            
-
+          </div>
         </div>
       </div>
     );

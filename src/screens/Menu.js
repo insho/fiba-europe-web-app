@@ -39,8 +39,9 @@ class Menu extends Component {
                                         <div ><NavLink className= "navlink-text" exact to="/machine-learning-alg-comps">Alg Comparisons</NavLink></div>
 
                                         <div><div className= "navlink-header" exact to="/competitions-summary">Competitions</div></div>
-                                        <div ><NavLink className= "navlink-text" exact to="/competitions-summary">Competitions</NavLink></div>
-                                        <div ><NavLink className= "navlink-text" exact to="/games-summary">Matches</NavLink></div>
+                                        <div ><NavLink className= "navlink-text" exact to="/competitions-summary">Competitions Overview</NavLink></div>
+                                        <div ><NavLink className= "navlink-text" exact to="/competitions-detail">Competition Detail</NavLink></div>                                        
+                                        <div ><NavLink className= "navlink-text" exact to="/games-summary">Match Detail</NavLink></div>
                                         <div ><NavLink className= "navlink-text" exact to="/players-summary">Players</NavLink></div>
                                                                                 
 

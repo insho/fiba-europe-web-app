@@ -33,6 +33,45 @@
     };
   }
 
+
+/**
+ * Creates a single chart data object from the results of a sql query. 
+ * @param {Object} data - collected data object from sql query
+ * @param {String} labelColumn - name of column which will be the labels of each chart
+ * @param {String} rowColumn  - name of column which will be the values of each chart
+ * @param {Object} otherOptions  - json object containing other parameters with which we can override the default values in the dataset (colors, bordeWidth, etc)
+   */
+  export const assembleChartDataCollectionSimplewithColors = (data,labelColumn,rowColumn,colorColumn,otherOptions= {}) =>{
+    const labels = data.map(item => item[labelColumn]);
+    const dataset = data.map(item => item[rowColumn]);
+    //  takes a number from 0 to length of number of color blocks
+
+    const colorNumbers = data.map(item => otherOptions.backgroundColor[item[colorColumn]]);
+    
+
+    // const colours = data.map((item) => item['current_lead_hometeam'] < 0 ? '#ae4126' : '#64b5f6');
+    return {
+      labels,
+      datasets: [
+        {
+          label: otherOptions.label || "",
+          backgroundColor: colorNumbers || "#8c8a8a",
+          borderColor: otherOptions.borderColor || "rgba(80,80,80,.8)",
+          borderWidth: otherOptions.borderWidth || .2, 
+          hoverBackgroundColor: otherOptions.hoverBackgroundColor || "rgba(255,99,132,0.4)",
+          hoverBorderColor: otherOptions.hoverBorderColor ||  "rgba(255,99,132,.8)",
+          hoverBorderWidth: otherOptions.hoverBorderWidth || 1,
+          pointBorderWidth: otherOptions.pointBorderWidth || 1,
+          pointRadius: otherOptions.pointRadius || 1.5,
+          pointStyle: otherOptions.pointStyle || 'square',
+          // pointBorderColor: otherOptions.pointBorderColor || "rgba(255,99,132,.8)",
+          data: dataset,
+          fill: otherOptions.fill || "false"
+        }
+      ]
+    };
+  }
+
 /**
  * Creates a single chart data object from the results of a sql query. 
  * @param {Object} data - collected data object from sql query

@@ -236,7 +236,6 @@ class AlgOverviewScreen extends Component {
       selectedSex: this.state.selectedSex.value,
       selectedTarget: 'winner_hometeam'
     }), data => {
-
       this.setState({
         algCompsLineChartWinnerHometeam: {
           data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_somepredictors', 'metric_rate_severalpredictors', 'metric_rate_manypredictors'], { labels: ["some predictors", "several predictors", "many predictors"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"] })

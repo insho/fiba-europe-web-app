@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";
+import React, { Component } from "react";
 import $ from "jquery";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -40,7 +41,7 @@ function createAPIEndpointParamString(paramObject) {
 
 
 
-export default class GameSummaryScreen extends React.Component {
+class GameSummaryScreen extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -759,3 +760,4 @@ export default class GameSummaryScreen extends React.Component {
     );
   }
 }
+export default GameSummaryScreen;          

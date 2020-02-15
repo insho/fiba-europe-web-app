@@ -6,7 +6,9 @@ import "./GameSummaryScreen.css";
 import { chartOptions } from "../options/ChartOptions.js";
 import { Pie, Bar, Line, HorizontalBar } from "react-chartjs-2";
 import 'react-web-tabs/dist/react-web-tabs.css';
-import ReactTable from 'react-table';
+// import ReactTable from 'react-table';
+import ReactTable from 'react-table-6';
+import 'react-table-6/react-table.css';
 import { ChartModule } from 'chartjs-plugin-labels';
 // import { ChartModule } from 'angular2-chartjs';
 
