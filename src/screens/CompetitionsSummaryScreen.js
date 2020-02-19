@@ -4,7 +4,7 @@ import "../App.css";
 // import "./CompetitionsSummaryScreen.css";
 import DropdownSelectorGroup from "../components/DropdownSelectorGroup.js";
 import { selectStylesSecondary, selectStylesTertiary } from "../options/SelectStyles";
-
+import ReactMarkdown from 'react-markdown';
 import "./AlgOverviewScreen.css";
 import Banner from "../components/Banner.js";
 import HorizontalTextwithBoldedSection from "../components/HorizontalTextwithBoldedSection"
@@ -12,7 +12,9 @@ import PageHeader from "../components/PageHeader"
 import { chartOptions } from "../options/ChartOptions.js";
 import { HorizontalBar,Bar,Line } from "react-chartjs-2";
 import Menu from "./Menu";
-import ReactTable from 'react-table';
+import ReactTable from 'react-table-6';
+import 'react-table-6/react-table.css';
+
 import { assembleChartDataCollectionSimple,
   assembleChartDataCollectionSimpleMultiple,
   assembleChartDataCollectionGrouped,
@@ -63,31 +65,43 @@ const columns = [{
   width: 50
   // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
 }, {
+  Header: 'Age',
+  accessor: 'age',
+  // Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
+  width: 80
+}, {
+  Header: 'Sex',
+  accessor: 'sex',
+  // Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
+  width: 80
+}, {
   Header: 'Competition',
-  accessor: 'competition_group',
-  Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
+  accessor: 'competition',
+  Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition} </a>,
   width: 300
 }, {
-  Header: 'First Match Date',
+  Header: 'First Match',
   accessor: 'from_date',
-  Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
+  // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
 }, 
 {
-    Header: 'Last Match Date',
+    Header: 'Last Match',
     accessor: 'to_date'
     
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
-{
-    Header: 'Events',
-    accessor: 'event_count',
-    // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
+// {
+//     Header: 'Events',
+//     accessor: 'event_count',
+//     width: 80
+//     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
-},
+// },
 {
     Header: 'Matches',
-    accessor: 'match_count',
+    accessor: 'matches',
+    width: 80
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
@@ -97,41 +111,6 @@ const columns = [{
 }
 ]
 
-
-/**
- * Gets the corresponding color and text for a given brand's size consistency score.
- * The score goes from 0 to 1, where 0 is totally inconsistent, and 1 is totall constistent.
- * There are four levels of consistency: very inconsistent, inconsistent, consistent and very consistent
- * @param {number} size_consistency
- */
-// function getSizeConsistencyData(size_consistency) {
-//   if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_VERY_CONSISTENT) {
-//     return {
-//       text: "Very Consistent",
-//       color: SIZE_CONSISTENCY_COLOR_VERY_CONSISTENT
-//     };
-//   } else if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_CONSISTENT) {
-//     return {
-//       text: "Consistent",
-//       color: SIZE_CONSISTENCY_COLOR_CONSISTENT
-//     };
-//   } else if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_INCONSISTENT) {
-//     return {
-//       text: "Inconsistent",
-//       color: SIZE_CONSISTENCY_COLOR_INCONSISTENT
-//     };
-//   } else if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_VERY_INCONSISTENT) {
-//     return {
-//       text: "Very Inconsistent",
-//       color: SIZE_CONSISTENCY_COLOR_VERY_INCONSISTENT
-//     };
-//   } else {
-//     return {
-//       text: "",
-//       color: "#e9e9e9"
-//     };
-//   }
-// }
 
 /**
  * If a dropdown value is passed to the current screen from a url param (like a brand_id, for example), check to see if
@@ -196,6 +175,32 @@ export default class CompetitionsSummaryScreen extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this);
   }
 
+
+getTrProps = (state, rowInfo, instance) => {
+    function getTRColor(age,sex){
+      if(age == 'adult') {
+        if(sex == 'male') {
+          return '#ffb81266'
+        }
+        return '#57A0E066'
+      }
+
+      if(sex == 'male') {
+        return '#81c78466'
+      }
+      return '#f7163c66'
+
+    }
+    if (rowInfo) {
+      return {
+        style: {
+          background: getTRColor(rowInfo.row.age,rowInfo.row.sex),
+          // color: 'white'
+        }
+      }
+    }
+    return {};
+  }
 
 
   toggleMenu() {
@@ -274,37 +279,6 @@ export default class CompetitionsSummaryScreen extends React.Component {
      
     });
      
-    /*
-    $.get(
-      API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: "CompetitionsDropdownSelectorAge"
-      }),
-      data => {
-        this.setState({
-          ageDropdownList: data,
-          selectedAge: data[0]
-          // selectedAge: searchDropdownListArrayforObjectwithValue(data,this.props,'competition_name')
-        });
-      }
-    );
-     
-
-    $.get(
-      API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: "CompetitionsDropdownSelectorSex"
-      }),
-      data => {
-
-        this.setState({
-          sexDropdownList: data,
-          selectedSex: data[0]
-          // selectedSex: searchDropdownListArrayforObjectwithValue(data,this.props,'competition_name')
-
-        });
-      }
-    );
-  */
- 
 
 
   }
@@ -331,85 +305,6 @@ export default class CompetitionsSummaryScreen extends React.Component {
    
    
   }
-
-  /**
-   * Creates an array of chart objects from the results of a sql query. One chart is created for
-   * each distinct value specified in the groupColumn.
-   *
-   * Use this to return several individual charts (one for each groupColumnv value) from the contents of one sql query.
-   *
-   * @param {Object} data - collected data object from sql query
-   * @param {String} labelColumn - name of column which will be the labels of each chart
-   * @param {String} rowColumn  - name of column which will be the values of each chart
-   * @param {String} groupColumn - column by which we will group our charts. For example:
-   * if the product_domain is our groupColumn, and there are two distinct product_domain values
-   * in our dataset, this will create two sets of charts, one for each of the product_domains in our data.
-   */
-  // assembleChartDataCollectionGroupedArray(
-  //   data,
-  //   labelColumn,
-  //   rowColumn,
-  //   groupColumn
-  // ) {
-  //   var chartCollection = [];
-
-  //   // TODO - Make this global
-  //   function groupBy(list, keyGetter) {
-  //     const map = new Map();
-  //     list.forEach(item => {
-  //       const key = keyGetter(item);
-  //       const collection = map.get(key);
-  //       if (!collection) {
-  //         map.set(key, [item]);
-  //       } else {
-  //         collection.push(item);
-  //       }
-  //     });
-  //     return map;
-  //   }
-
-  //   const grouped = groupBy(data, dataRow => dataRow[groupColumn]);
-
-  //   /* Get set of unique values for our group column (i.e. if group column is product_domain, get unique set of product domains)*/
-  //   const unique_group_column_values = [
-  //     ...new Set(data.map(item => item[groupColumn]))
-  //   ];
-
-  //   for (var i in unique_group_column_values) {
-  //     const dataset = grouped.get(unique_group_column_values[i]);
-  //     const colors = dataset.map(
-  //       item => getSizeConsistencyData(item[rowColumn]).color
-  //     );
-
-  //     chartCollection.push({
-  //       domain: unique_group_column_values[i],
-  //       chartData: {
-  //         data: assembleChartDataCollectionSimple(
-  //           dataset,
-  //           labelColumn,
-  //           "size_consistency",
-  //           {
-  //             label: "Brand Consistency x " + unique_group_column_values[i],
-  //             backgroundColor: colors
-  //           }
-  //         )
-  //       },
-  //       chartOptions: chartOptions.horizontalBarchartOverallConsistency
-  //     });
-  //   }
-  //   return chartCollection;
-  // }
-
-  // handleDropdownSelectorChange = selectedBrand => {
-  //   Promise.resolve(
-  //     this.setState({
-  //       previouslySelectedBrand: this.state.selectedBrand,
-  //       selectedBrand
-  //     })
-  //   ).then(() => {
-  //     this.fillTable();
-  //   });
-  // };
 
 
 
@@ -451,9 +346,10 @@ export default class CompetitionsSummaryScreen extends React.Component {
     if (this.state.selectedSex != null && this.state.selectedAge != null) {
 
       $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: 'CompetitionsGroupsSummary',
-        competitionGroupSex: this.state.selectedSex.value,
-        competitionGroupAge: this.state.selectedAge.value
+        // queryName: 'CompetitionsGroupsSummary',
+        queryName: 'CompetitionsOverviewMatchCount'
+        // competitionGroupSex: this.state.selectedSex.value,
+        // competitionGroupAge: this.state.selectedAge.value
         }), data => {
 
         if(data.length>=1){
@@ -464,48 +360,6 @@ export default class CompetitionsSummaryScreen extends React.Component {
         }
     });
 
-      //Query Data for Brand Consistency Data - Main (overall consistency charts)
-
-      //Request and Handle Brand Consistency Data x Product Domain x Variation
-
-      // $.get(
-      //   API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      //     queryName: "BrandConsistencyDataXProductDomainXVariation",
-      //     brandId: this.state.selectedBrand.value,
-      //     minConsideredThresholdToAssessConsistency: MIN_CONSIDERED_THRESHOLD_TO_ASSES_CONSISTENCY
-      //   }),
-      //   data => {
-      //     this.setState({
-      //       horizontalBarchartConsistencyXProductDomainXVariationChartCollection: this.assembleChartDataCollectionGroupedArray(
-      //         data,
-      //         "variation",
-      //         "size_consistency",
-      //         "product_domain"
-      //       )
-      //     });
-      //     // console.log(Object.keys(this.state.horizontalBarchartConsistencyXProductDomainXVariationChartCollection))
-      //   }
-      // );
-
-      //Request and Handle Brand Consistency Data x Product Domain x Scale Type
-
-      // $.get(
-      //   API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      //     queryName: "BrandConsistencyDataXProductDomainXScaleType",
-      //     brandId: this.state.selectedBrand.value,
-      //     minConsideredThresholdToAssessConsistency: MIN_CONSIDERED_THRESHOLD_TO_ASSES_CONSISTENCY
-      //   }),
-      //   data => {
-      //     this.setState({
-      //       horizontalBarchartConsistencyXProductDomainXScaleTypeChartCollection: this.assembleChartDataCollectionGroupedArray(
-      //         data,
-      //         "scale_type",
-      //         "size_consistency",
-      //         "product_domain"
-      //       )
-      //     });
-      //   }
-      // );
     }
   }
 
@@ -513,16 +367,16 @@ export default class CompetitionsSummaryScreen extends React.Component {
     if (this.state.selectedSex != null && this.state.selectedAge != null) {
       
       $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: 'CompetitionsOverviewMatchCount',
-        competitionGroupSex: this.state.selectedSex.value,
-        competitionGroupAge: this.state.selectedAge.value
+        queryName: 'CompetitionsOverviewMatchCount'
+        // competitionGroupSex: this.state.selectedSex.value,
+        // competitionGroupAge: this.state.selectedAge.value
         }), data => {
           this.setState({
             competitionMatchCountBarChart: {
-                  data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'matches','color_number',{backgroundColor: ['#57A0E0','#50CEF4','#A1E6F4','#81c784']})
+                  data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'matches','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
                 },
             competitionFinalScoreBarChart: {
-              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'med_final_score_hometeam','color_number',{backgroundColor: ['#57A0E0','#50CEF4','#A1E6F4','#81c784']})
+              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'med_final_score_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
             }
     
 
@@ -544,7 +398,7 @@ export default class CompetitionsSummaryScreen extends React.Component {
     
       this.setState({
         algCompsLineChartFinalScoreHometeam: {
-          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_male', 'metric_rate_adult_female', 'metric_rate_youth_male','metric_rate_youth_female'], { labels: ["Adult Male", "Adult Female", "Youth Male","Youth Female"], backgroundColors: ["#64b5f6","#656565", "#ae4126","#fcd303"], borderColors: ["#64b5f6","#656565", "#ae4126","#fcd303"]})
+          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_female', 'metric_rate_adult_male', 'metric_rate_youth_female','metric_rate_youth_male'], { labels: ["Adult Female", "Adult Male", "Youth Female","Youth Male"], backgroundColors: ['#57A0E0','#ffb812','#f7163c','#81c784'], borderColors: ['#57A0E0','#ffb812','#f7163c','#81c784']})
         }
       })
     
@@ -561,7 +415,7 @@ export default class CompetitionsSummaryScreen extends React.Component {
     
       this.setState({
         algCompsLineChartWinnerHometeam: {
-          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_male', 'metric_rate_adult_female', 'metric_rate_youth_male','metric_rate_youth_female'], { labels: ["Adult Male", "Adult Female", "Youth Male","Youth Female"], backgroundColors: ["#64b5f6","#656565", "#ae4126","#fcd303"], borderColors: ["#64b5f6","#656565", "#ae4126","#fcd303"]})
+          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_female', 'metric_rate_adult_male', 'metric_rate_youth_female','metric_rate_youth_male'], { labels: ["Adult Female", "Adult Male", "Youth Female","Youth Male"], backgroundColors: ['#57A0E0','#ffb812','#f7163c','#81c784'], borderColors: ['#57A0E0','#ffb812','#f7163c','#81c784']})
         }
       })
     
@@ -569,6 +423,9 @@ export default class CompetitionsSummaryScreen extends React.Component {
   }
   }
   
+
+markdown1_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To create the predictive algorithms I used around 40,000 matches, belonging to about 5,000 \"competitions\". A competition, in this context, could mean anything from immediately recognizable leagues like \"Euroleague Men\'s Final\" to lower-level B and C league matches from Georgia (match and league names denoted in Georgian script)\n\n";
+markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms themselves were created using this large pool of matches, for presentation purposes in this app, I have limited the pool to just a few competitions, ones that are well known, representing a variety of age, sex and skill levels. They are listed below:\n\n";
 
   render() {
     return (
@@ -578,116 +435,250 @@ export default class CompetitionsSummaryScreen extends React.Component {
         
         <div onMouseDown={this.closeMenu}>
 
-        <Banner bannerTextMajor = {"Competitions"} bannerTextMinor = {"Sub Banner"} 
-        dropDownItemsListSelectorOne={this.state.sexDropdownList} 
-        selectedValueSelectorOne = {this.state.selectedSex} 
-        setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeSex.bind(this)}
-        dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
-        selectedValueSelectorTwo = {this.state.selectedAge} 
-        setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)}        
+        <Banner bannerTextMajor = {"Competitions"} 
+        // dropDownItemsListSelectorOne={this.state.sexDropdownList} 
+        // selectedValueSelectorOne = {this.state.selectedSex} 
+        // setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeSex.bind(this)}
+        // dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
+        // selectedValueSelectorTwo = {this.state.selectedAge} 
+        // setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)}        
         toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 
 <PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
 
 
-<div>
-{this.state.competitionMatchCountBarChart && (
-<div className="feature-importance-chart-container" style={{maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
+<div style={{paddingLeft: '2%', overflowX: false, overflowY: false, width: '80%'}}>
 
-<div className="chart-title-large" >{"Matches"}</div>
+<ReactMarkdown source={this.markdown1_intro} style={{paddingTop: '10px'}}/> 
+<ReactMarkdown source={this.markdown2_intro} style={{paddingTop: '10px', paddingBottom: '10px'}}/> 
+</div>
+
+
+<ReactTable
+  data={this.state.tableData}
+  columns={columns}
+  showPagination={false}
+  defaultPageSize={15}
+  className="-striped -highlight"
+  style={{color: "#656565ff"}}
+  getTrProps={this.getTrProps}
+
+/>
+
+
+<div style={{minHeight:'100vh',paddingTop: '2%'}}>
+{this.state.competitionMatchCountBarChart && (
+<div style={{paddingLeft: '2%',maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
+
+<div className="chart-title-large" >{"Number of Matches"}</div>
 
 <Bar
   data={this.state.competitionMatchCountBarChart.data}
   // options={chartOptions.featureImportances}
-  options={this.state.competitionMatchCountBarChart.chartOptions}
->
-</Bar>
+  // options={this.state.competitionMatchCountBarChart.chartOptions}
+  options={{
+    legend: {
+      display: false
+    }, plugins: {
+      labels: false
+    }, scales: {
+      xAxes: [
+        {
+          stacked: true,
+          gridLines: {
+            drawBorder: true
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10
+          }
+        }
+      ],
+      yAxes: [
+        {
+          stacked: true,
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10,
+            // min: 0,
+            // max: 1,
+            // stepSize: 0.2,
+            // Include a dollar sign in the ticks
+            // callback: function(value, index, values) {
+            //   return value * 100 + "%";
+            // }
+          }
+        }
+      ]
+    }
+
+  }}
+  />
+
 </div>
 )}
+</div>
+
+<div style={{minHeight:'100vh',paddingTop: '2%'}}>
 
 
 {this.state.competitionFinalScoreBarChart && (
-<div className="feature-importance-chart-container" style={{maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
+<div  style={{paddingLeft: '2%',paddingTop: '2%',maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
 
 <div className="chart-title-large" >{"Median Final Score"}</div>
 
 <Bar
   data={this.state.competitionFinalScoreBarChart.data}
   // options={chartOptions.featureImportances}
-  options={this.state.competitionFinalScoreBarChart.chartOptions}
+  // options={this.state.competitionFinalScoreBarChart.chartOptions}
+  options={{
+    legend: {
+      display: false
+    }, plugins: {
+      labels: false
+    }, scales: {
+      xAxes: [
+        {
+          stacked: true,
+          gridLines: {
+            drawBorder: true
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10
+          }
+        }
+      ],
+      yAxes: [
+        {
+          stacked: true,
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10,
+            // min: 0,
+            // max: 1,
+            // stepSize: 0.2,
+            // Include a dollar sign in the ticks
+            // callback: function(value, index, values) {
+            //   return value * 100 + "%";
+            // }
+          }
+        }
+      ]
+    }
+
+  }}
 >
 </Bar>
 </div>
 )}
 
+</div>
 
+
+
+<div className="chart-divider" />
+  <hr
+    style={{
+      color: "#ced6d4",
+      backgroundColor: "#e7e7e7",
+      height: '.1',
+      paddingLeft: '2%',
+      paddingRight: '2%',
+      paddingRight: '5%'
+      // paddingTop: "5%",
+      //       paddingBottom: "5%"
+
+    }}
+  />
+
+{/* <div> */}
+            {/* <div className="chart-title-large" >{"Algorithm Accuracy"}</div> */}
+            <PageHeader header="Algorithm Accuracy" />
+
+      {/* </div> */}
 
 <div>
   <DropdownSelectorGroup 
-dropDownItemsListSelectorOne={this.state.periodDropdownList} 
-selectedValueSelectorOne = {this.state.selectedPeriod} 
-setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePeriod.bind(this)}
+// dropDownItemsListSelectorOne={this.state.periodDropdownList} 
+// selectedValueSelectorOne = {this.state.selectedPeriod} 
+// setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePeriod.bind(this)}
 
-dropDownItemsListSelectorTwo={this.state.minuteDropdownList} 
-selectedValueSelectorTwo = {this.state.selectedMinute} 
-setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeMinute.bind(this)}
+// dropDownItemsListSelectorTwo={this.state.minuteDropdownList} 
+// selectedValueSelectorTwo = {this.state.selectedMinute} 
+// setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeMinute.bind(this)}
 // dropDownItemsListSelectorThree={this.state.ageDropdownList} 
 // selectedValueSelectorThree = {this.state.selectedAge} 
 // setParentSelectorStateSelectorThree={this.handleDropdownSelectorChangeAge.bind(this)}        
+
+dropDownItemsListSelectorOne={this.state.predictorDropdownList} 
+selectedValueSelectorOne = {this.state.selectedPredictor} 
+setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
+
 selectedSyles = {selectStylesTertiary}
-toggleParentMenu={this.toggleMenu.bind(this)}/>       
+toggleParentMenu={this.toggleMenu.bind(this)}
+style={{paddingBottom:'2%'}}/>       
 </div>
-</div>
 
 
-
-
-<DropdownSelectorGroup 
+{/* <DropdownSelectorGroup 
 dropDownItemsListSelectorOne={this.state.predictorDropdownList} 
 selectedValueSelectorOne = {this.state.selectedPredictor} 
 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
 
 
 selectedSyles = {selectStylesTertiary}
-toggleParentMenu={this.toggleMenu.bind(this)}/>   
+toggleParentMenu={this.toggleMenu.bind(this)}/>    */}
+<div style={{ width: '85vw',paddingTop: '20px', paddingBottom: '5vh'}}>
+
+{this.state.algCompsLineChartWinnerHometeam && (
+          <div style={{paddingBottom:'2%'}}>
+            <div className="chart-title-large" >{"Predicting Winner"}</div>
+            <div className="chart-title-small" >{"Accuracy %"}</div>
+            {/* {this.state.selectedMetric && (<div className="chart-title-small" >{this.state.selectedMetric.label}</div>)} */}
+      
+            {/* <div style={{maxHeight: '45vh', width: '85vw',paddingTop: '20px', paddingBottom: '5vh'}}> */}
+
+            <Line data={this.state.algCompsLineChartWinnerHometeam.data}
+            options={{
+              responsive: true,
+              maintainAspectRatio: true,
+            }}>
+            </Line>
+            {/* </div> */}
+          </div >
+        )}
+
 
 {this.state.algCompsLineChartFinalScoreHometeam && (
           <div>
-            <div className="chart-title-large" >{"Algorithm R2 - Predicting Final Score Home Team"}</div>
+            <div className="chart-title-large" >{"Predicting Final Score Home Team"}</div>
+            <div className="chart-title-small" >{"R2 %"}</div>
+            
             {/* <div className="chart-title-small" >{"Adult Male Matches"}</div> */}
             {/* {this.state.selectedMetric && (<div className="chart-title-small" >{this.state.selectedMetric.label}</div>)} */}
       
-
-            <Line data={this.state.algCompsLineChartFinalScoreHometeam.data}>
+            <Line data={this.state.algCompsLineChartFinalScoreHometeam.data} >
             </Line>
+            {/* </div> */}
           </div>
         )}
 
-{this.state.algCompsLineChartWinnerHometeam && (
-          <div>
-            <div className="chart-title-large" >{"Algorithm Accuracy - Predicting Winner"}</div>
-            <div className="chart-title-small" >{"Accuracy"}</div>
-            {/* {this.state.selectedMetric && (<div className="chart-title-small" >{this.state.selectedMetric.label}</div>)} */}
-      
-
-            <Line data={this.state.algCompsLineChartWinnerHometeam.data}>
-            </Line>
-          </div>
-        )}
-
+</div>
             <div > 
 
-{/* 
-            <ReactTable
-              data={this.state.tableData}
-              columns={columns}
-              showPagination={false}
-              // defaultPageSize={1}
-              className="-striped -highlight"
-              style={{color: "#656565ff"}}
 
-            /> */}
 
             </div>
 
