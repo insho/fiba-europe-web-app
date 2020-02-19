@@ -40,7 +40,7 @@ class Menu extends Component {
 
                                         <div><div className= "navlink-header" exact to="/competitions-summary">Competitions</div></div>
                                         <div ><NavLink className= "navlink-text" exact to="/competitions-summary">Competitions Overview</NavLink></div>
-                                        <div ><NavLink className= "navlink-text" exact to="/competitions-detail">Competition Detail</NavLink></div>                                        
+                                        <div ><NavLink className= "navlink-text" exact to="/competition-detail">Competition Detail</NavLink></div>                                        
                                         <div ><NavLink className= "navlink-text" exact to="/games-summary">Match Detail</NavLink></div>
                                         <div ><NavLink className= "navlink-text" exact to="/players-summary">Players</NavLink></div>
                                                                                 

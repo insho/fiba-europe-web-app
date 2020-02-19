@@ -54,11 +54,11 @@ FROM
 	,count(distinct (case when age = 'youth' and sex = 'male' then match_id else null end)) as matches_youth_male
 	,count(distinct (case when age = 'adult' and sex = 'female' then match_id else null end)) as matches_adult_female
 	,count(distinct (case when age = 'youth' and sex = 'female' then match_id else null end)) as matches_youth_female
-	
+	,coalesce(max(win_pct),count(distinct case when final_score_awayteam < final_score_hometeam then match_id else null end)/cast(count(distinct match_id) as float)) as win_pct_hometeam
 	,to_char(min(schedule_date),'YYYY-MM-DD') as from_date
 	,to_char(max(schedule_date),'YYYY-MM-DD') as to_date
 
-FROM core as s1
+FROM core left join fiba_europe_comp_winpct pct on core.metadata_competition_name = pct.competition_name
 -- WHERE (case when lower('{{selectedAge}}') = 'all' then 'all' else age end) = lower('{{selectedAge}}')
 -- and  (case when lower('{{selectedSex}}') = 'all' then 'all' else sex end) = lower('{{selectedSex}}')
 group by 1,2,3,4

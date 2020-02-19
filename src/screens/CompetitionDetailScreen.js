@@ -1,17 +1,28 @@
 import React from "react";
 import $ from "jquery";
 import "../App.css";
-import "./CompetitionsSummaryScreen.css";
+// import "./CompetitionDetailScreen.css";
+import DropdownSelectorGroup from "../components/DropdownSelectorGroup.js";
+import { selectStylesSecondary, selectStylesTertiary } from "../options/SelectStyles";
+import ReactMarkdown from 'react-markdown';
+import "./AlgOverviewScreen.css";
 import Banner from "../components/Banner.js";
 import HorizontalTextwithBoldedSection from "../components/HorizontalTextwithBoldedSection"
 import PageHeader from "../components/PageHeader"
 import { chartOptions } from "../options/ChartOptions.js";
-import { HorizontalBar } from "react-chartjs-2";
+import { HorizontalBar,Bar,Line, Pie } from "react-chartjs-2";
 import Menu from "./Menu";
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-// import {useTable} from 'react-table';
-import { assembleChartDataCollectionSimple } from "../options/ChartAssembly";
+
+import { assembleChartDataCollectionSimple,
+  assembleChartDataCollectionSimpleMultiple,
+  assembleChartDataCollectionGrouped,
+  assembleChartDataCollectionStacked,
+  assembleChartDataCollectionSimplewithColors,
+     assemblePivotedPieChart,
+  assemblePivotedPieChartCollection
+ } from "../options/ChartAssembly";
 import HorizontalChartandtitleContainer from "../components/HorizontalChartandTitleContainer";
 // import executeQuery from "/Users/joe/src/testapp_dd2/server/index.js"
 const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
@@ -51,36 +62,35 @@ function numberWithCommas(x) {
 }
 
 const columns = [{
-  Header: '#',
-  accessor: 'row_rank', // String-based value accessors!
-  width: 50
-  // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+  Header: 'Year',
+  accessor: 'schedule_year',
+  // Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
+  width: 80
 }, {
-  Header: 'Competition',
-  accessor: 'competition_group',
-  Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
-  width: 300
-}, {
-  Header: 'First Match Date',
+  Header: 'First Match',
   accessor: 'from_date',
-  Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
+  width: 120
+  // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
 }, 
 {
-    Header: 'Last Match Date',
-    accessor: 'to_date'
+    Header: 'Last Match',
+    accessor: 'to_date',
+    width: 120
     
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
 {
-    Header: 'Events',
-    accessor: 'event_count',
+    Header: 'Teams Involved',
+    accessor: 'teams',
+    width: 180
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
 {
     Header: 'Matches',
-    accessor: 'match_count',
+    accessor: 'matches',
+    width: 140
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
@@ -90,41 +100,6 @@ const columns = [{
 }
 ]
 
-
-/**
- * Gets the corresponding color and text for a given brand's size consistency score.
- * The score goes from 0 to 1, where 0 is totally inconsistent, and 1 is totall constistent.
- * There are four levels of consistency: very inconsistent, inconsistent, consistent and very consistent
- * @param {number} size_consistency
- */
-// function getSizeConsistencyData(size_consistency) {
-//   if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_VERY_CONSISTENT) {
-//     return {
-//       text: "Very Consistent",
-//       color: SIZE_CONSISTENCY_COLOR_VERY_CONSISTENT
-//     };
-//   } else if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_CONSISTENT) {
-//     return {
-//       text: "Consistent",
-//       color: SIZE_CONSISTENCY_COLOR_CONSISTENT
-//     };
-//   } else if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_INCONSISTENT) {
-//     return {
-//       text: "Inconsistent",
-//       color: SIZE_CONSISTENCY_COLOR_INCONSISTENT
-//     };
-//   } else if (size_consistency >= SIZE_CONSISTENCY_BOUNDARY_VERY_INCONSISTENT) {
-//     return {
-//       text: "Very Inconsistent",
-//       color: SIZE_CONSISTENCY_COLOR_VERY_INCONSISTENT
-//     };
-//   } else {
-//     return {
-//       text: "",
-//       color: "#e9e9e9"
-//     };
-//   }
-// }
 
 /**
  * If a dropdown value is passed to the current screen from a url param (like a brand_id, for example), check to see if
@@ -163,14 +138,31 @@ export default class CompetitionDetailScreen extends React.Component {
     super(props, context);
 
     this.state = {
-      visible: false
+      visible: false,
+      periodDropdownList: [{value: "1", label: "Period 1"},
+      {value: "2", label: "Period 2"},
+      {value: "3", label: "Period 3"},
+      {value: "4", label: "Period 4"}
+    ],
+    selectedPeriod: { value: "1", label: "Period 1" },
+
+    minuteDropdownList: [{value: "1", label: "Minute 1"},
+    {value: "2", label: "Minute 2"},
+    {value: "3", label: "Minute 3"},
+    {value: "4", label: "Minute 4"},
+    {value: "5", label: "Minute 5"},
+    {value: "6", label: "Minute 6"},
+    {value: "7", label: "Minute 7"},
+    {value: "8", label: "Minute 8"},
+    {value: "9", label: "Minute 9"},
+    {value: "10", label: "Minute 10"}],
+  selectedMinute: { value: "3", label: "Minute 3" }
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
   }
-
 
 
   toggleMenu() {
@@ -211,42 +203,65 @@ export default class CompetitionDetailScreen extends React.Component {
       selectedAge: { value: "Adult", label: "Adult" },
       sexDropdownList: [{ value: "female", label: "Female" },
       { value: "male", label: "Male" }],
-      selectedSex: { value: "male", label: "Male" }      
+      selectedSex: { value: "male", label: "Male" },
+            metricDropdownList: [{value: "accuracy", label: "Overall Accuracy"},
+      {value: "true positive rate", label: "True Positive Rate"},
+      {value: "true negative rate", label: "True Negative Rate"},
+      {value: "positive predictive value", label: "Positive Predictive Value"},
+      {value: "negative predictive value", label: "Negative Predictive Value"},
+      {value: "false positive rate", label: "False Positive Rate"},
+      {value: "false negative rate", label: "False Negative Rate"},
+      {value: "false discovery rate", label: "False Discovery Rate"}
+      // {value: "r2", label: "r2"},
+    ],
+    selectedMetric: { value: "accuracy", label: "Overall Accuracy" },
+    
+    periodDropdownList: [{value: "1", label: "Period 1"},
+      {value: "2", label: "Period 2"},
+      {value: "3", label: "Period 3"},
+      {value: "4", label: "Period 4"}
+    ],
+    selectedPeriod: { value: "1", label: "Period 1" },
+
+    minuteDropdownList: [{value: "1", label: "Minute 1"},
+    {value: "2", label: "Minute 2"},
+    {value: "3", label: "Minute 3"},
+    {value: "4", label: "Minute 4"},
+    {value: "5", label: "Minute 5"},
+    {value: "6", label: "Minute 6"},
+    {value: "7", label: "Minute 7"},
+    {value: "8", label: "Minute 8"},
+    {value: "9", label: "Minute 9"},
+    {value: "10", label: "Minute 10"}],
+  selectedMinute: { value: "3", label: "Minute 3" } ,
+  predictorDropdownList: [{value: "somepredictors", label: "Alg A (some)"},
+  {value: "severalpredictors", label: "Alg B (several)"},
+  {value: "manypredictors", label: "Alg C (many)"}],
+  selectedPredictor: {value: "somepredictors", label: "Alg A (some)"},
+  competitionDropdownList: [
+    {value: "EuroBasket - DIVISION A", label: "EuroBasket - DIVISION A"},
+    {value: "EuroBasket Women - DIVISION B", label: "EuroBasket Women - DIVISION B"},
+    {value: "U16 Men - DIVISION B", label: "U16 Men - DIVISION B"},
+    {value: "EuroChallenge", label: "EuroChallenge"},
+    {value: "U20 Women - DIVISION B", label: "U20 Women - DIVISION B"},
+    {value: "EuroLeague Women", label: "EuroLeague Women"},
+    {value: "EuroCup Women", label: "EuroCup Women"},
+    {value: "U18 Men - DIVISION A", label: "U18 Men - DIVISION A"},
+    {value: "U18 Women - DIVISION B", label: "U18 Women - DIVISION B"},
+    {value: "EuroBasket Women - DIVISION A", label: "EuroBasket Women - DIVISION A"},
+    {value: "South American League", label: "South American League"},
+    {value: "U16 Men Div. C", label: "U16 Men Div. C"},
+    {value: "U18 Men - DIVISION B", label: "U18 Men - DIVISION B"},
+    {value: "U16 Women - DIVISION B", label: "U16 Women - DIVISION B"},
+    {value: "Division C Men", label: "Division C Men"}
+  ],
+  selectedCompetition: {value: "EuroCup Women", label: "EuroCup Women"}
+
+  
+  
+
     });
      
-    /*
-    $.get(
-      API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: "CompetitionsDropdownSelectorAge"
-      }),
-      data => {
-        console.log('asdf')
-        console.log(data)
-        this.setState({
-          ageDropdownList: data,
-          selectedAge: data[0]
-          // selectedAge: searchDropdownListArrayforObjectwithValue(data,this.props,'competition_name')
-        });
-      }
-    );
-     
-
-    $.get(
-      API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: "CompetitionsDropdownSelectorSex"
-      }),
-      data => {
-
-        this.setState({
-          sexDropdownList: data,
-          selectedSex: data[0]
-          // selectedSex: searchDropdownListArrayforObjectwithValue(data,this.props,'competition_name')
-
-        });
-      }
-    );
-  */
- 
 
 
   }
@@ -266,92 +281,13 @@ export default class CompetitionDetailScreen extends React.Component {
       this.state.previouslySelectedSex === undefined &&
       this.state.selectedAge && this.state.selectedSex) {
 
-       Promise.resolve(this.setState({previouslySelectedAge:this.state.selectedAge,previouslyselectedSex:this.state.selectedSex})).then(() => {this.fillTable(); });
+       Promise.resolve(this.setState({previouslySelectedAge:this.state.selectedAge,previouslyselectedSex:this.state.selectedSex})).then(() => {this.fillTable(); }).then(() => {this.fillCharts(); });
 
   
    }
    
    
   }
-
-  /**
-   * Creates an array of chart objects from the results of a sql query. One chart is created for
-   * each distinct value specified in the groupColumn.
-   *
-   * Use this to return several individual charts (one for each groupColumnv value) from the contents of one sql query.
-   *
-   * @param {Object} data - collected data object from sql query
-   * @param {String} labelColumn - name of column which will be the labels of each chart
-   * @param {String} rowColumn  - name of column which will be the values of each chart
-   * @param {String} groupColumn - column by which we will group our charts. For example:
-   * if the product_domain is our groupColumn, and there are two distinct product_domain values
-   * in our dataset, this will create two sets of charts, one for each of the product_domains in our data.
-   */
-  // assembleChartDataCollectionGroupedArray(
-  //   data,
-  //   labelColumn,
-  //   rowColumn,
-  //   groupColumn
-  // ) {
-  //   var chartCollection = [];
-
-  //   // TODO - Make this global
-  //   function groupBy(list, keyGetter) {
-  //     const map = new Map();
-  //     list.forEach(item => {
-  //       const key = keyGetter(item);
-  //       const collection = map.get(key);
-  //       if (!collection) {
-  //         map.set(key, [item]);
-  //       } else {
-  //         collection.push(item);
-  //       }
-  //     });
-  //     return map;
-  //   }
-
-  //   const grouped = groupBy(data, dataRow => dataRow[groupColumn]);
-
-  //   /* Get set of unique values for our group column (i.e. if group column is product_domain, get unique set of product domains)*/
-  //   const unique_group_column_values = [
-  //     ...new Set(data.map(item => item[groupColumn]))
-  //   ];
-
-  //   for (var i in unique_group_column_values) {
-  //     const dataset = grouped.get(unique_group_column_values[i]);
-  //     const colors = dataset.map(
-  //       item => getSizeConsistencyData(item[rowColumn]).color
-  //     );
-
-  //     chartCollection.push({
-  //       domain: unique_group_column_values[i],
-  //       chartData: {
-  //         data: assembleChartDataCollectionSimple(
-  //           dataset,
-  //           labelColumn,
-  //           "size_consistency",
-  //           {
-  //             label: "Brand Consistency x " + unique_group_column_values[i],
-  //             backgroundColor: colors
-  //           }
-  //         )
-  //       },
-  //       chartOptions: chartOptions.horizontalBarchartOverallConsistency
-  //     });
-  //   }
-  //   return chartCollection;
-  // }
-
-  handleDropdownSelectorChange = selectedBrand => {
-    Promise.resolve(
-      this.setState({
-        previouslySelectedBrand: this.state.selectedBrand,
-        selectedBrand
-      })
-    ).then(() => {
-      this.fillTable();
-    });
-  };
 
 
 
@@ -369,16 +305,41 @@ export default class CompetitionDetailScreen extends React.Component {
     }
   }
 
+  handleDropdownSelectorChangePeriod = (selectedPeriod) => {
+    if(this.state.previouslySelectedPeriod === undefined || (this.state.selectedPeriod!== selectedPeriod)) {
+      Promise.resolve(this.setState({previouslySelectedPeriod:this.state.selectedPeriod,selectedPeriod})).then(() => {this.fillCharts()});
+    }
+  }
 
+  handleDropdownSelectorChangeMinute = (selectedMinute) => {
+    if(this.state.previouslySelectedMinute === undefined || (this.state.selectedMinute!== selectedMinute)) {
+      Promise.resolve(this.setState({previouslySelectedMinute:this.state.selectedMinute,selectedMinute})).then(() => {this.fillCharts()});
+    }
+  }
 
+  handleDropdownSelectorChangePredictor = (selectedPredictor) => {
+    if(this.state.previouslySelectedPredictor === undefined || (this.state.selectedPredictor!== selectedPredictor)) {
+      Promise.resolve(this.setState({previouslySelectedPredictor:this.state.selectedPredictor,selectedPredictor})).then(() => {this.fillCharts()});
+    }
+  }
+
+  handleDropdownSelectorChangeCompetition = (selectedCompetition) => {
+    if(this.state.previouslySelectedCompetition === undefined || (this.state.selectedCompetition!== selectedCompetition)) {
+      // Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.fillCharts()});
+      Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.fillTable(); }).then(() => {this.fillCharts(); });
+
+    }
+  }
+  
   
   fillTable() {
-    if (this.state.selectedSex != null && this.state.selectedAge != null) {
+    if (this.state.selectedCompetition != null ) {
 
       $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: 'CompetitionsGroupsSummary',
-        competitionGroupSex: this.state.selectedSex.value,
-        competitionGroupAge: this.state.selectedAge.value
+        // queryName: 'CompetitionsGroupsSummary',
+        queryName: 'CompetitionDetail',
+        selectedCompetition: this.state.selectedCompetition.value,
+        // competitionGroupAge: this.state.selectedAge.value
         }), data => {
 
         if(data.length>=1){
@@ -389,50 +350,195 @@ export default class CompetitionDetailScreen extends React.Component {
         }
     });
 
-      //Query Data for Brand Consistency Data - Main (overall consistency charts)
-
-      //Request and Handle Brand Consistency Data x Product Domain x Variation
-
-      // $.get(
-      //   API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      //     queryName: "BrandConsistencyDataXProductDomainXVariation",
-      //     brandId: this.state.selectedBrand.value,
-      //     minConsideredThresholdToAssessConsistency: MIN_CONSIDERED_THRESHOLD_TO_ASSES_CONSISTENCY
-      //   }),
-      //   data => {
-      //     this.setState({
-      //       horizontalBarchartConsistencyXProductDomainXVariationChartCollection: this.assembleChartDataCollectionGroupedArray(
-      //         data,
-      //         "variation",
-      //         "size_consistency",
-      //         "product_domain"
-      //       )
-      //     });
-      //     // console.log(Object.keys(this.state.horizontalBarchartConsistencyXProductDomainXVariationChartCollection))
-      //   }
-      // );
-
-      //Request and Handle Brand Consistency Data x Product Domain x Scale Type
-
-      // $.get(
-      //   API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      //     queryName: "BrandConsistencyDataXProductDomainXScaleType",
-      //     brandId: this.state.selectedBrand.value,
-      //     minConsideredThresholdToAssessConsistency: MIN_CONSIDERED_THRESHOLD_TO_ASSES_CONSISTENCY
-      //   }),
-      //   data => {
-      //     this.setState({
-      //       horizontalBarchartConsistencyXProductDomainXScaleTypeChartCollection: this.assembleChartDataCollectionGroupedArray(
-      //         data,
-      //         "scale_type",
-      //         "size_consistency",
-      //         "product_domain"
-      //       )
-      //     });
-      //   }
-      // );
     }
   }
+
+  fillCharts() {
+    if (this.state.selectedSex != null && this.state.selectedAge != null) {
+      
+      $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+        queryName: 'CompetitionsOverviewMatchCount'
+        // competitionGroupSex: this.state.selectedSex.value,
+        // competitionGroupAge: this.state.selectedAge.value
+        }), data => {
+          this.setState({
+            competitionMatchCountBarChart: {
+                  data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'matches','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+                },
+            competitionFinalScoreBarChart: {
+              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'med_final_score_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+            },
+            competitionWinPctBarChart: {
+              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'win_pct_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+            }
+
+            
+    
+
+                
+          })
+    });
+
+    }
+
+    if (this.state.selectedPredictor != null ) {
+    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+      queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
+      selectedMetric: 'r2',
+      selectedTarget: 'final_score_hometeam',
+      // selectedAge: this.state.selectedAge.value,
+      // selectedSex: this.state.selectedSex.value,
+      selectedPredictor: this.state.selectedPredictor.value
+    }), data => {
+    
+      this.setState({
+        algCompsLineChartFinalScoreHometeam: {
+          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_female', 'metric_rate_adult_male', 'metric_rate_youth_female','metric_rate_youth_male'], { labels: ["Adult Female", "Adult Male", "Youth Female","Youth Male"], backgroundColors: ['#57A0E0','#ffb812','#f7163c','#81c784'], borderColors: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+        }
+      })
+    
+    });
+
+    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+      queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
+      selectedMetric: 'accuracy',
+      selectedTarget: 'winner_hometeam',
+      // selectedAge: this.state.selectedAge.value,
+      // selectedSex: this.state.selectedSex.value,
+      selectedPredictor: this.state.selectedPredictor.value
+    }), data => {
+    
+      this.setState({
+        algCompsLineChartWinnerHometeam: {
+          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_female', 'metric_rate_adult_male', 'metric_rate_youth_female','metric_rate_youth_male'], { labels: ["Adult Female", "Adult Male", "Youth Female","Youth Male"], backgroundColors: ['#57A0E0','#ffb812','#f7163c','#81c784'], borderColors: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+        }
+      })
+    
+    });
+  }
+
+
+
+  $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+    queryName: 'CompetitionMetricsInstanceCounts',
+    selectedCompetition: this.state.selectedCompetition.value
+    // dateRange:this.state.selectedDateRange.value
+  }), data => {
+
+
+    this.setState({
+      cumulativeDefensiveStatsBarChartHomeTeam: {
+        data: assembleChartDataCollectionSimpleMultiple(data, 'period', ['shot_blocked_hometeam', 'defensive_rebounds_hometeam', 'offensive_rebounds_hometeam', 'steals_hometeam'], { labels: ["Blocked Shots", "Defensive Rebounds", "Offensive Rebounds", "Steals"], backgroundColors: ["#656565", "#2fb1eb", "#0973ba", "#0a527e"], borderColors: ["#656565", "#2fb1eb", "#0973ba", "#0a527e"] })
+      },
+      cumulativeDefensiveStatsBarChartAwayTeam: {
+        data: assembleChartDataCollectionSimpleMultiple(data, 'period', ['shot_blocked_awayteam', 'defensive_rebounds_awayteam', 'offensive_rebounds_awayteam', 'steals_awayteam'], { labels: ["Blocked Shots", "Defensive Rebounds", "Offensive Rebounds", "Steals"], backgroundColors: ["#656565", "#2fb1eb", "#0973ba", "#0a527e"], borderColors: ["#656565", "#2fb1eb", "#0973ba", "#0a527e"] })
+      }
+
+    })
+
+  });
+
+  $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+    queryName: 'CompetitionMetricsComp',
+    selectedCompetition: this.state.selectedCompetition.value
+  }), data => {
+
+
+
+    /* Shots Made */
+    const shotsmadeGroupLabels = ['Two Point Shots Made'
+      , 'Three Point Shots Made'
+      , 'Free Throw Shots Made']
+
+    const shotsmadeGroupColumns = ['two_point_shots_made'
+      , 'three_point_shots_made'
+      , 'free_throw_shots_made'
+    ]
+
+    /* Shots Attempted */
+    const shotsAttemptedGroupLabels = ['Two Point Shots'
+      , 'Three Point Shots'
+      , 'Free Throw Shots']
+
+    const shotsAttemptedGroupColumns = ['two_point_shots_attempted'
+      , 'three_point_shots_attempted'
+      , 'free_throw_shots_attempted'
+    ]
+
+
+    /* Shot Percentages */
+    const shotPercentagesGroupLabels = ['Field Goal %'
+      , 'Three Point %'
+      , 'Free Throw %']
+
+    const shotPercentagesGroupColumns = ['field_goal_pct'
+      , 'three_point_pct'
+      , 'free_throw_pct'
+    ]
+
+    /* Assists, Rebounds, Steals */
+    const reboundAssistsGroupLabels = ['Offensive Rebounds'
+      , 'Defensive Rebounds'
+      , 'Assists'
+      , 'Shots Blocked'
+      , 'Steals'
+    ]
+
+    const reboundAssistsGroupColumns = ['offensive_rebounds'
+      , 'defensive_rebounds'
+      , 'assists'
+      , 'shot_blocked'
+      , 'steals'
+    ]
+
+    /* Fouls */
+    const foulsGroupLabels = ['Personal Fouls'
+      , 'Team Fouls'
+    ]
+
+    const foulsGroupColumns = ['personal_fouls_committed'
+      , 'team_fouls_committed'
+    ]
+
+    const segmentColors = ['#64b5f6', '#ae4126']
+
+    var teamPieChartColors = {}
+    teamPieChartColors['home'] = ['#57A0E0', "#50CEF4", "#A1E6F4"];
+    teamPieChartColors['away'] = ['#e05757', '#f45053', '#f4a1a4'];
+
+    // console.log("BBBB")
+    // console.log(assemblePivotedPieChartCollection(data,shotsmadeGroupLabels,shotsmadeGroupColumns,'team',segmentColors))
+    this.setState({
+      gameMetricsCompBarChartShotsMade: {
+        data: assembleChartDataCollectionGrouped(data, shotsmadeGroupLabels, shotsmadeGroupColumns, 'team', segmentColors)
+      },
+      gameMetricsCompBarChartShotPercentages: {
+        data: assembleChartDataCollectionGrouped(data, shotPercentagesGroupLabels, shotPercentagesGroupColumns, 'team', segmentColors)
+      },
+      gameMetricsCompBarChartAssistsRebounds: {
+        data: assembleChartDataCollectionGrouped(data, reboundAssistsGroupLabels, reboundAssistsGroupColumns, 'team', segmentColors)
+      },
+      gameMetricsCompBarChartFouls: {
+        data: assembleChartDataCollectionGrouped(data, foulsGroupLabels, foulsGroupColumns, 'team', segmentColors)
+      },
+      gameMetricsCompPieChartShotsAttempted: {
+
+        data: assemblePivotedPieChartCollection(data, shotsAttemptedGroupLabels, shotsAttemptedGroupColumns, 'team', teamPieChartColors)
+        // data: assemblePivotedPieChartCollection(data,shotsmadeGroupLabels,shotsmadeGroupColumns,'team',['#57A0E0',"#50CEF4","#A1E6F4"])
+      }
+    })
+
+  });
+
+
+  }
+  
+
+markdown1_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To create the predictive algorithms I used around 40,000 matches, belonging to about 5,000 \"competitions\". A competition, in this context, could mean anything from immediately recognizable leagues like \"Euroleague Men\'s Final\" to lower-level B and C league matches from Georgia (match and league names denoted in Georgian script)\n\n";
+markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms themselves were created using this large pool of matches, for presentation purposes in this app, I have limited the pool to just a few competitions, ones that are well known, representing a variety of age, sex and skill levels. They are listed below:\n\n";
+
+
+markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, this \"show dataset\" has a disproportionately large number of female adult matches. This is primarily to do with readily available competition/date metadata for this segment. You can read more about the metadata issue here, in the \"[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)\" portion of my github write-up.\n\n";
 
   render() {
     return (
@@ -442,110 +548,361 @@ export default class CompetitionDetailScreen extends React.Component {
         
         <div onMouseDown={this.closeMenu}>
 
-        <Banner bannerTextMajor = {"Competitions"} bannerTextMinor = {"Sub Banner"} 
-        dropDownItemsListSelectorOne={this.state.sexDropdownList} 
-        selectedValueSelectorOne = {this.state.selectedSex} 
-        setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeSex.bind(this)}
-        dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
-        selectedValueSelectorTwo = {this.state.selectedAge} 
-        setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)}        
+        <Banner bannerTextMajor = {"Competition Detail"} 
+        bannerTextMinor = {this.state.selectedCompetition && this.state.selectedCompetition.label}
+        // dropDownItemsListSelectorOne={this.state.sexDropdownList} 
+        // selectedValueSelectorOne = {this.state.selectedSex} 
+        // setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeSex.bind(this)}
+        dropDownItemsListSelectorTwo={this.state.competitionDropdownList} 
+        selectedValueSelectorTwo = {this.state.selectedCompetition} 
+        setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeCompetition.bind(this)}        
         toggleParentMenu={this.toggleMenu.bind(this)}/>
 
-          <div className="page-body">
 
-            <PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
-
-
-            <div className="split-table-container-upper"> 
+<PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
 
 
-            <ReactTable
-              data={this.state.tableData}
-              columns={columns}
-              showPagination={false}
-              // defaultPageSize={1}
-              className="-striped -highlight"
-              style={{color: "#656565ff"}}
-            />
+{/* <div style={{paddingLeft: '2%', overflowX: false, overflowY: false, width: '80%'}}>
 
-            </div>
+<ReactMarkdown source={this.markdown1_intro} style={{paddingTop: '10px'}}/> 
+<ReactMarkdown source={this.markdown2_intro} style={{paddingTop: '10px', paddingBottom: '10px'}}/> 
+</div>
+ */}
+
+{this.state.tableData && (<ReactTable
+  data={this.state.tableData}
+  columns={columns}
+  showPagination={false}
+  defaultPageSize={this.state.tableData.length}
+  className="-striped -highlight"
+  style={{color: "#656565ff",paddingLeft: "10px", paddingRight: "10px"}}
+  // getTrProps={this.getTrProps}
+
+/>)}
 
 
+<div className="horizontal-chart-container">
+<div style={{ "flex": "2" }}>
 
-            <div className="simple-inline-container">
 
-              <div id="overall-consistency-chart-and-data-container">
+<div className="vertical-chart-container">
 
-                <div id="overall-consistency-chart-container">
-                  {this.state.horizontalBarchartOverallConsistency && (
+                {this.state.gameMetricsCompBarChartShotsMade && (
+
+                  <div className="timeseries-chart-container-minor">
+                    <div className="chart-title-large" >{"Shots Made"}</div>
                     <HorizontalBar
-                      id="overall-brand-consistency-horizontal-bar"
                       data={
-                        this.state.horizontalBarchartOverallConsistency.data
+                        this.state.gameMetricsCompBarChartShotsMade.data
                       }
                       options={
-                        this.state.horizontalBarchartOverallConsistency
-                          .chartOptions
+                        chartOptions.gameMetricsCompBarChart
                       }
                     />
-                  )}
-                </div>
-               
-                <HorizontalTextwithBoldedSection textPrefix="Overall Consistency: " textPrefixStyle={{ 'font-size': "24px"}}
-               textBolded={this.state.consistencyScoreText} textBoldedStyle={{ 'font-size': "28px", "padding-left": "6px", "font-weight": "bold"}}/> 
+                  </div>
+                )}
 
-               <HorizontalTextwithBoldedSection textPrefix="Consistency Based on" 
-               textBolded={this.state.seedsCountText} textBoldedStyle={{ 'font-size': "16px", color: "#8c3858", "padding-left": "6px", "padding-right": "6px"}}
-               textSuffix="Seeds in Users' Fit Profiles" /> 
-              
-              </div>
-              
+                {this.state.gameMetricsCompBarChartShotPercentages && (
 
-              <div id="consistency-by-domain-chart-and-data-container"> 
-                
-                <div
-                  className="section-title-large-no-padding"
-                  id="chart-title-consistency-x-domain"
-                >
-                  {this.state.horizontalBarchartConsistencyXProductDomain &&
-                    "Consistency x Product Category"}
-                </div>
-                
-                <div style={{height:"90%"}} >
-                  {this.state.horizontalBarchartConsistencyXProductDomain && (
-                    <HorizontalBar 
-                      
+                  <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
+                    <div className="chart-title-large" >{"Shot Percentages"}</div>
+                    <HorizontalBar
+
                       data={
-                        this.state.horizontalBarchartConsistencyXProductDomain
+                        this.state.gameMetricsCompBarChartShotPercentages
                           .data
                       }
                       options={
-                        this.state.horizontalBarchartConsistencyXProductDomain
-                          .chartOptions
+                        chartOptions.gameMetricsCompBarChartPercents
                       }
                     />
-                  )}
-                </div>
+                  </div>
+                )}
+
+
               </div>
+
+</div>
+
+
+
+
+              <div style={{ "flex": "1" }}>
+
+<div className="vertical-chart-container">
+
+  {this.state.gameMetricsCompBarChartAssistsRebounds && (
+
+    <div className="timeseries-chart-container-minor">
+      <div className="chart-title-large" >{"Rebounds, Assists, Steals"}</div>
+      <HorizontalBar
+
+        data={
+          this.state.gameMetricsCompBarChartAssistsRebounds
+            .data
+        }
+        options={
+          chartOptions.gameMetricsCompBarChart
+        }
+      />
+    </div>
+  )}
+
+  {this.state.gameMetricsCompBarChartFouls && (
+
+    <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
+      <div className="chart-title-large" >{this.state.gameMetricsCompBarChartFouls && "Fouls"}</div>
+      <HorizontalBar
+
+        data={
+          this.state.gameMetricsCompBarChartFouls.data
+        }
+        options={
+          chartOptions.gameMetricsCompBarChart
+        }
+      />
+    </div>
+  )}
+
+
+</div>
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div className="chart-title-large" >{"Average Shots Attempted"}</div>
+
+        <div className="horizontal-chart-container" >
+
+          <div style={{ "flex": "1" }}>
+            {this.state.gameMetricsCompPieChartShotsAttempted && this.state.gameMetricsCompPieChartShotsAttempted.data['home'] && (
+
+              <div className="timeseries-chart-container-minor">
+                <div className="chart-title-small" >{"Home Team"}</div>
+                <Pie
+                  data={
+                    this.state.gameMetricsCompPieChartShotsAttempted.data['home']
+                  }
+                  // options={chartOptions.pieChart}
+                  options={{
+                    legend: {
+                      display: true,
+                      position: 'right'
+                    },
+                    plugins: {
+                      labels: [
+                        {
+                          render: 'percentage',
+                          fontSize: 14,
+                          fontColor: '#ffffff'
+                        }
+                      ]
+                    }
+                  }}
+
+
+                />
+              </div>
+            )}
+          </div>
+
+          <div style={{ "flex": "1" }}>
+            {this.state.gameMetricsCompPieChartShotsAttempted && this.state.gameMetricsCompPieChartShotsAttempted.data['away'] && (
+
+              <div className="timeseries-chart-container-minor">
+                <div className="chart-title-small" >{"Away Team"}</div>
+                <Pie
+                  data={
+                    this.state.gameMetricsCompPieChartShotsAttempted.data['away']
+                  }
+                  // options={chartOptions.pieChart}
+                  options={{
+                    legend: {
+                      display: true,
+                      position: 'right'
+                    },
+                    plugins: {
+                      labels: [
+                        {
+                          render: 'percentage',
+                          fontSize: 14,
+                          fontColor: '#ffffff'
+                        }
+                      ]
+                    }
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+        </div>
+
+        <div className="horizontal-chart-container" id="Defensive Plays Block">
+
+          <div style={{ "flex": "2" }}>
+
+            {this.state.cumulativeDefensiveStatsBarChartHomeTeam && (
+
+              <div>
+                <div className="chart-title-large" >{"Avg Defensive Plays - "}{"Home Team"}</div>
+                <Bar
+                  data={this.state.cumulativeDefensiveStatsBarChartHomeTeam.data}
+                  options={{
+                    legend: {
+                      display: true
+                    }, plugins: {
+                      labels: false
+                    }, scales: {
+                      xAxes: [
+                        {
+                          stacked: true,
+                          gridLines: {
+                            drawBorder: true
+                          },
+                          ticks: {
+                            fontColor: "#656565",
+                            fontFamily: "Open Sans",
+                            fontSize: 10
+                          }
+                        }
+                      ],
+                      yAxes: [
+                        {
+                          stacked: false,
+                          gridLines: {
+                            display: false
+                          },
+                          ticks: {
+                            fontColor: "#656565",
+                            fontFamily: "Open Sans",
+                            fontSize: 10,
+                            // min: 0,
+                            // max: 1,
+                            // stepSize: 0.2,
+                            // Include a dollar sign in the ticks
+                            // callback: function(value, index, values) {
+                            //   return value * 100 + "%";
+                            // }
+                          }
+                        }
+                      ]
+                    }
+
+                  }}
+                >
+                </Bar>
+
+              </div>
+
+
+
+            )}
+
+
+          </div>
+
+          <div style={{ "flex": "1" }}> </div>
+        </div>
+
+
+
+
+
+        <div className="horizontal-chart-container" >
+
+<div style={{ "flex": "2" }}>
+
+  {this.state.cumulativeDefensiveStatsBarChartAwayTeam && (
+
+    <div>
+      <div className="chart-title-large" >{"Avg Defensive Plays - "}{'Away Team'}</div>
+      <Bar
+        data={this.state.cumulativeDefensiveStatsBarChartAwayTeam.data}
+        options={{
+          legend: {
+            display: true
+          }, plugins: {
+            labels: false
+          }, scales: {
+            xAxes: [
+              {
+                stacked: true,
+                gridLines: {
+                  drawBorder: true
+                },
+                ticks: {
+                  fontColor: "#656565",
+                  fontFamily: "Open Sans",
+                  fontSize: 10
+                }
+              }
+            ],
+            yAxes: [
+              {
+                stacked: true,
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  fontColor: "#656565",
+                  fontFamily: "Open Sans",
+                  fontSize: 10,
+                  // min: 0,
+                  // max: 1,
+                  // stepSize: 0.2,
+                  // Include a dollar sign in the ticks
+                  // callback: function(value, index, values) {
+                  //   return value * 100 + "%";
+                  // }
+                }
+              }
+            ]
+          }
+
+        }}
+      >
+      </Bar>
+
+    </div>
+
+
+
+  )}
+
+
+</div>
+
+<div style={{ "flex": "1" }}> </div>
+</div>
+
+
+
+
+
+
+
+            <div > 
+
+
+
             </div>
 
-            <div className="section-title-large">
-              {this.state
-                .horizontalBarchartConsistencyXProductDomainXVariationChartCollection &&
-                "Fit Consistency x Size Type"}
-            </div>
 
 
 
-            <div className="section-title-large">
-              {this.state
-                .horizontalBarchartConsistencyXProductDomainXScaleTypeChartCollection &&
-                "Fit Consistency x Scale Type"}
-            </div>
 
+         
 
            
-          </div>
+
         </div>
       </div>
     );

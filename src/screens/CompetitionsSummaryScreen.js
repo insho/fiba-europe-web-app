@@ -77,7 +77,7 @@ const columns = [{
 }, {
   Header: 'Competition',
   accessor: 'competition',
-  Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition} </a>,
+  Cell: ({row}) =><a href={'competition-detail/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition} </a>,
   width: 300
 }, {
   Header: 'First Match',
@@ -377,7 +377,12 @@ getTrProps = (state, rowInfo, instance) => {
                 },
             competitionFinalScoreBarChart: {
               data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'med_final_score_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+            },
+            competitionWinPctBarChart: {
+              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'win_pct_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
             }
+
+            
     
 
                 
@@ -427,6 +432,9 @@ getTrProps = (state, rowInfo, instance) => {
 markdown1_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To create the predictive algorithms I used around 40,000 matches, belonging to about 5,000 \"competitions\". A competition, in this context, could mean anything from immediately recognizable leagues like \"Euroleague Men\'s Final\" to lower-level B and C league matches from Georgia (match and league names denoted in Georgian script)\n\n";
 markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms themselves were created using this large pool of matches, for presentation purposes in this app, I have limited the pool to just a few competitions, ones that are well known, representing a variety of age, sex and skill levels. They are listed below:\n\n";
 
+
+markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, this \"show dataset\" has a disproportionately large number of female adult matches. This is primarily to do with readily available competition/date metadata for this segment. You can read more about the metadata issue here, in the \"[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)\" portion of my github write-up.\n\n";
+
   render() {
     return (
       <div>
@@ -454,6 +462,7 @@ markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms them
 <ReactMarkdown source={this.markdown2_intro} style={{paddingTop: '10px', paddingBottom: '10px'}}/> 
 </div>
 
+<div style={{ display: "flex", "flex-wrap": "wrap", "padding": "10px" }}>
 
 <ReactTable
   data={this.state.tableData}
@@ -465,11 +474,11 @@ markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms them
   getTrProps={this.getTrProps}
 
 />
-
+</div>
 
 <div style={{minHeight:'100vh',paddingTop: '2%'}}>
 {this.state.competitionMatchCountBarChart && (
-<div style={{paddingLeft: '2%',maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
+<div style={{paddingLeft: '2%',maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '1vh'}}>
 
 <div className="chart-title-large" >{"Number of Matches"}</div>
 
@@ -525,7 +534,12 @@ markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms them
 )}
 </div>
 
+<div style={{paddingLeft: '2%', overflowX: false, overflowY: false, width: '80%'}}>
+<ReactMarkdown source={this.markdown3_mfdisparity} style={{paddingTop: '2px'}}/> 
+</div>
+
 <div style={{minHeight:'100vh',paddingTop: '2%'}}>
+
 
 
 {this.state.competitionFinalScoreBarChart && (
@@ -585,6 +599,72 @@ markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms them
 )}
 
 </div>
+
+
+
+<div style={{minHeight:'100vh',paddingTop: '2%'}}>
+
+
+
+{this.state.competitionWinPctBarChart && (
+<div  style={{paddingLeft: '2%',paddingTop: '2%',maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
+
+<div className="chart-title-large" >{"Home Team Win Percentage"}</div>
+
+<Bar
+  data={this.state.competitionWinPctBarChart.data}
+  // options={chartOptions.featureImportances}
+  // options={this.state.competitionFinalScoreBarChart.chartOptions}
+  options={{
+    legend: {
+      display: false
+    }, plugins: {
+      labels: false
+    }, scales: {
+      xAxes: [
+        {
+          stacked: true,
+          gridLines: {
+            drawBorder: true
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10
+          }
+        }
+      ],
+      yAxes: [
+        {
+          stacked: true,
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            fontColor: "#656565",
+            fontFamily: "Open Sans",
+            fontSize: 10,
+            // min: 0,
+            // max: 1,
+            // stepSize: 0.2,
+            // Include a dollar sign in the ticks
+            callback: function(value, index, values) {
+              return value * 100 + "%";
+            }
+          }
+        }
+      ]
+    }
+
+  }}
+>
+</Bar>
+</div>
+)}
+
+</div>
+
+
 
 
 
