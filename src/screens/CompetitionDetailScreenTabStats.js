@@ -15,8 +15,7 @@ import { HorizontalBar,Bar,Line, Pie } from "react-chartjs-2";
 import Menu from "./Menu";
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-import { TabProvider, Tab, TabPanel, TabList, Tabs } from 'react-web-tabs';
-import CompetitionDetailScreenTabStats from "./CompetitionDetailScreenTabStats";
+
 import { assembleChartDataCollectionSimple,
   assembleChartDataCollectionSimpleMultiple,
   assembleChartDataCollectionGrouped,
@@ -64,38 +63,53 @@ function numberWithCommas(x) {
 }
 
 const columns = [{
-  Header: 'Year',
-  accessor: 'schedule_year',
+  Header: 'Date',
+  accessor: 'schedule_date',
   // Cell: ({row}) =><a href={'competitionscreen/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
   width: 80
 }, {
-  Header: 'First Match',
-  accessor: 'from_date',
-  width: 120
+  Header: 'Home Team',
+  accessor: 'team_name_hometeam',
+  width: 180
   // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
 }, 
 {
-    Header: 'Last Match',
-    accessor: 'to_date',
-    width: 120
+    Header: 'Away Team',
+    accessor: 'team_name_awayteam',
+    width: 180
     
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
 {
-    Header: 'Teams Involved',
-    accessor: 'teams',
+    Header: "Field Goal %\n\n(home/away)",
+    accessor: 'field_goal_pct_homeaway',
     width: 180
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
 {
-    Header: 'Matches',
-    accessor: 'matches',
-    width: 140
+    Header: "3PT %\n\n(home/away)",
+    accessor: 'three_point_pct_homeaway',
+    width: 180
     // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
   
 },
+{
+    Header: "Rebounds\n\n(home/away)",
+    accessor: 'total_rebounds_homeaway',
+    width: 180
+    // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
+  
+},
+{
+  Header: "Assists\n\n(home/away)",
+  accessor: 'assists_homeaway',
+  width: 180
+  // Cell: props =>  parseFloat(props.value*100.0).toFixed(2)+"%"
+
+},
+
 {
  accessor: 'competition_group_id',
  show: false
@@ -133,8 +147,9 @@ function searchDropdownListArrayforObjectwithValue(dropdownListArray, props, par
 }
 
 
+class CompetitionDetailScreenTabStats extends Component {
 
-export default class CompetitionDetailScreen extends React.Component {
+// export default class  extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -282,16 +297,9 @@ export default class CompetitionDetailScreen extends React.Component {
     if(this.state.previouslySelectedAge === undefined &&
       this.state.previouslySelectedSex === undefined &&
       this.state.selectedAge && this.state.selectedSex) {
-
        Promise.resolve(this.setState({previouslySelectedAge:this.state.selectedAge,previouslyselectedSex:this.state.selectedSex})).then(() => {this.fillTable(); }).then(() => {this.fillCharts(); });
-
-  
    }
-   
-   
   }
-
-
 
   handleDropdownSelectorChangeAge = (selectedAge) => {
     if(this.state.previouslySelectedAge === undefined || (this.state.selectedAge!== selectedAge)) {
@@ -302,8 +310,6 @@ export default class CompetitionDetailScreen extends React.Component {
   handleDropdownSelectorChangeSex = (selectedSex) => {
     if(this.state.previouslySelectedSex === undefined || (this.state.selectedSex!== selectedSex)) {
       Promise.resolve(this.setState({previouslySelectedSex:this.state.selectedSex,selectedSex})).then(() => {this.fillTable()});;        
-
-      // Promise.resolve(this.setState({previouslySelectedSex:this.state.selectedSex,selectedSex})).then(() => {this.fillAllCharts()}).then(() => {this.fillAllCharts()}).then(() => {this.fillTimeSeriesCharts(); });;        
     }
   }
 
@@ -372,12 +378,7 @@ export default class CompetitionDetailScreen extends React.Component {
             },
             competitionWinPctBarChart: {
               data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'win_pct_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
-            }
-
-            
-    
-
-                
+            }  
           })
     });
 
@@ -388,8 +389,6 @@ export default class CompetitionDetailScreen extends React.Component {
       queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
       selectedMetric: 'r2',
       selectedTarget: 'final_score_hometeam',
-      // selectedAge: this.state.selectedAge.value,
-      // selectedSex: this.state.selectedSex.value,
       selectedPredictor: this.state.selectedPredictor.value
     }), data => {
     
@@ -405,8 +404,6 @@ export default class CompetitionDetailScreen extends React.Component {
       queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
       selectedMetric: 'accuracy',
       selectedTarget: 'winner_hometeam',
-      // selectedAge: this.state.selectedAge.value,
-      // selectedSex: this.state.selectedSex.value,
       selectedPredictor: this.state.selectedPredictor.value
     }), data => {
     
@@ -508,8 +505,6 @@ export default class CompetitionDetailScreen extends React.Component {
     teamPieChartColors['home'] = ['#57A0E0', "#50CEF4", "#A1E6F4"];
     teamPieChartColors['away'] = ['#e05757', '#f45053', '#f4a1a4'];
 
-    // console.log("BBBB")
-    // console.log(assemblePivotedPieChartCollection(data,shotsmadeGroupLabels,shotsmadeGroupColumns,'team',segmentColors))
     this.setState({
       gameMetricsCompBarChartShotsMade: {
         data: assembleChartDataCollectionGrouped(data, shotsmadeGroupLabels, shotsmadeGroupColumns, 'team', segmentColors)
@@ -524,12 +519,9 @@ export default class CompetitionDetailScreen extends React.Component {
         data: assembleChartDataCollectionGrouped(data, foulsGroupLabels, foulsGroupColumns, 'team', segmentColors)
       },
       gameMetricsCompPieChartShotsAttempted: {
-
         data: assemblePivotedPieChartCollection(data, shotsAttemptedGroupLabels, shotsAttemptedGroupColumns, 'team', teamPieChartColors)
-        // data: assemblePivotedPieChartCollection(data,shotsmadeGroupLabels,shotsmadeGroupColumns,'team',['#57A0E0',"#50CEF4","#A1E6F4"])
       }
     })
-
   });
 
 
@@ -540,44 +532,15 @@ markdown1_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To create the predictive 
 markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms themselves were created using this large pool of matches, for presentation purposes in this app, I have limited the pool to just a few competitions, ones that are well known, representing a variety of age, sex and skill levels. They are listed below:\n\n";
 markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, this \"show dataset\" has a disproportionately large number of female adult matches. This is primarily to do with readily available competition/date metadata for this segment. You can read more about the metadata issue here, in the \"[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)\" portion of my github write-up.\n\n";
 
-
-handleTabChange = (selectedTabId) => {
-  // this.setState({selectedTabId: selectedTabId})
-  this.setState({
-    selectedTabId
-  });
-
-  // console.log("tabid:" + selectedTabId + ", STATE selectedTabId: " + this.state.selectedTabId)
-  switch (selectedTabId) {
-    case "one":
-      if (!this.state.tableData) {
-        this.fillGameSummaryCharts();
-      }
-      break;
-    case "two":
-
-
-      if (!this.state.playerSummaryBoxScoresTableData) {
-
-        this.fillPlayerSummaryCharts();
-      }
-      break;
-  }
-
-}
-
-
-
-
   render() {
     return (
       <div>
-        <Menu menuVisibility={this.state.visible}/>
+        {/* <Menu menuVisibility={this.state.visible}/> */}
         
         
-        <div onMouseDown={this.closeMenu}>
+        {/* <div onMouseDown={this.closeMenu}> */}
 
-        <Banner bannerTextMajor = {"Competition Detail"} 
+        {/* <Banner bannerTextMajor = {"Competition Detail"} 
         bannerTextMinor = {this.state.selectedCompetition && this.state.selectedCompetition.label}
         // dropDownItemsListSelectorOne={this.state.sexDropdownList} 
         // selectedValueSelectorOne = {this.state.selectedSex} 
@@ -585,60 +548,10 @@ handleTabChange = (selectedTabId) => {
         dropDownItemsListSelectorTwo={this.state.competitionDropdownList} 
         selectedValueSelectorTwo = {this.state.selectedCompetition} 
         setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeCompetition.bind(this)}        
-        toggleParentMenu={this.toggleMenu.bind(this)}/>
+        toggleParentMenu={this.toggleMenu.bind(this)}/> */}
 
 
-<PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
-
-<TabProvider defaultTab="one" onChange={(tabId) => {this.handleTabChange(tabId) }}>
-              <section className="my-tabs">
-                <TabList className="my-tablist">
-                  <Tab tabFor="one" >Stats</Tab>
-                  <Tab tabFor="two">Machine Learning</Tab>
-                  {/* <Tab tabFor="three">Player Detail</Tab>
-
-                  <Tab tabFor="four" className="my-tab">Advanced Stats</Tab>
-                  <Tab tabFor="five" className="my-tab">Comparisons</Tab>
-                  <Tab tabFor="six" className="my-tab">Machine Learning</Tab> */}
-                </TabList>
-                <div className="wrapper">
-                  <TabPanel tabId="one">
-
-                    <CompetitionDetailScreenTabStats
-                      // tableData={this.state.tableData}
-                      tableData = {this.state.tableData}
-                      cumulativeScoresLineChart={this.state.cumulativeScoresLineChart}
-                      gameMetricsCompBarChartShotsMade={this.state.gameMetricsCompBarChartShotsMade}
-                      gameMetricsCompBarChartShotPercentages={this.state.gameMetricsCompBarChartShotPercentages}
-                      cumulativeLeadLineChart={this.state.cumulativeLeadLineChart}
-                      gameMetricsCompBarChartAssistsRebounds={this.state.gameMetricsCompBarChartAssistsRebounds}
-                      gameMetricsCompBarChartFouls={this.state.gameMetricsCompBarChartFouls}
-                      gameMetricsCompPieChartShotsAttempted={this.state.gameMetricsCompPieChartShotsAttempted}
-                      cumulativeDefensiveStatsBarChartHomeTeam={this.state.cumulativeDefensiveStatsBarChartHomeTeam}
-                      cumulativeDefensiveStatsBarChartAwayTeam={this.state.cumulativeDefensiveStatsBarChartAwayTeam}
-                      teamNameHomeTeam={this.state.teamNameHomeTeam}
-                      teamNameAwayTeam={this.state.teamNameAwayTeam}
-
-                    />
-
-                  </TabPanel>
-                  <TabPanel tabId="two">
-
-                    {/* <GameSummaryScreenTabPlayerSummary
-                      tableData={this.state.playerSummaryBoxScoresTableData}
-                      teamNameHomeTeam={this.state.teamNameHomeTeam}
-                      teamNameAwayTeam={this.state.teamNameAwayTeam}
-                      gameSummaryTabPlayerSummarySelectedPeriods={this.state.gameSummaryTabPlayerSummarySelectedPeriods}
-                      gameSummaryTabPlayerSummarySelectorChanged={this.handleDropdownSelectorChangeGameSummaryTabPlayerSummarySelector.bind(this)}
-                    /> */}
-
-
-                  </TabPanel>
-
-                </div>
-              </section>
-            </TabProvider>
-
+{/* <PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/> */}
 
 
 {/* <div style={{paddingLeft: '2%', overflowX: false, overflowY: false, width: '80%'}}>
@@ -647,32 +560,33 @@ handleTabChange = (selectedTabId) => {
 <ReactMarkdown source={this.markdown2_intro} style={{paddingTop: '10px', paddingBottom: '10px'}}/> 
 </div>
  */}
+ 
 
-{/* {this.state.tableData && (<ReactTable
-  data={this.state.tableData}
+{this.props.tableData && (<ReactTable
+  data={this.props.tableData}
   columns={columns}
   showPagination={false}
-  defaultPageSize={this.state.tableData.length}
+  defaultPageSize={this.props.tableData.length}
   className="-striped -highlight"
   style={{color: "#656565ff",paddingLeft: "10px", paddingRight: "10px"}}
   // getTrProps={this.getTrProps}
 
-/>)} */}
+/>)}
 
 
-{/* <div className="horizontal-chart-container">
+<div className="horizontal-chart-container">
 <div style={{ "flex": "2" }}>
 
 
 <div className="vertical-chart-container">
 
-                {this.state.gameMetricsCompBarChartShotsMade && (
+                {this.props.gameMetricsCompBarChartShotsMade && (
 
                   <div className="timeseries-chart-container-minor">
-                    <div className="chart-title-large" >{"Shots Made"}</div>
+                    <div className="chart-title-large" >{"Avg Shots Made"}</div>
                     <HorizontalBar
                       data={
-                        this.state.gameMetricsCompBarChartShotsMade.data
+                        this.props.gameMetricsCompBarChartShotsMade.data
                       }
                       options={
                         chartOptions.gameMetricsCompBarChart
@@ -681,14 +595,14 @@ handleTabChange = (selectedTabId) => {
                   </div>
                 )}
 
-                {this.state.gameMetricsCompBarChartShotPercentages && (
+                {this.props.gameMetricsCompBarChartShotPercentages && (
 
                   <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
-                    <div className="chart-title-large" >{"Shot Percentages"}</div>
+                    <div className="chart-title-large" >{"Avg Shot Percentages"}</div>
                     <HorizontalBar
 
                       data={
-                        this.state.gameMetricsCompBarChartShotPercentages
+                        this.props.gameMetricsCompBarChartShotPercentages
                           .data
                       }
                       options={
@@ -710,14 +624,14 @@ handleTabChange = (selectedTabId) => {
 
 <div className="vertical-chart-container">
 
-  {this.state.gameMetricsCompBarChartAssistsRebounds && (
+  {this.props.gameMetricsCompBarChartAssistsRebounds && (
 
     <div className="timeseries-chart-container-minor">
-      <div className="chart-title-large" >{"Rebounds, Assists, Steals"}</div>
+      <div className="chart-title-large" >{"Avg Rebounds, Assists, Steals"}</div>
       <HorizontalBar
 
         data={
-          this.state.gameMetricsCompBarChartAssistsRebounds
+          this.props.gameMetricsCompBarChartAssistsRebounds
             .data
         }
         options={
@@ -727,14 +641,14 @@ handleTabChange = (selectedTabId) => {
     </div>
   )}
 
-  {this.state.gameMetricsCompBarChartFouls && (
+  {this.props.gameMetricsCompBarChartFouls && (
 
     <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
-      <div className="chart-title-large" >{this.state.gameMetricsCompBarChartFouls && "Fouls"}</div>
+      <div className="chart-title-large" >{this.props.gameMetricsCompBarChartFouls && "Fouls"}</div>
       <HorizontalBar
 
         data={
-          this.state.gameMetricsCompBarChartFouls.data
+          this.props.gameMetricsCompBarChartFouls.data
         }
         options={
           chartOptions.gameMetricsCompBarChart
@@ -750,15 +664,15 @@ handleTabChange = (selectedTabId) => {
 
 </div>
 
-</div> */}
+</div>
 
 
 
 
 
-{/* <div className="chart-title-large" >{"Average Shots Attempted"}</div> */}
+<div className="chart-title-large" >{"Avg Shots Attempted"}</div>
 
-        {/* <div className="horizontal-chart-container" >
+        <div className="horizontal-chart-container" >
 
           <div style={{ "flex": "1" }}>
             {this.state.gameMetricsCompPieChartShotsAttempted && this.state.gameMetricsCompPieChartShotsAttempted.data['home'] && (
@@ -822,9 +736,9 @@ handleTabChange = (selectedTabId) => {
             )}
           </div>
 
-        </div> */}
+        </div>
 
-        {/* <div className="horizontal-chart-container" id="Defensive Plays Block">
+        <div className="horizontal-chart-container" id="Defensive Plays Block">
 
           <div style={{ "flex": "2" }}>
 
@@ -889,13 +803,13 @@ handleTabChange = (selectedTabId) => {
           </div>
 
           <div style={{ "flex": "1" }}> </div>
-        </div> */}
+        </div>
 
 
 
 
 
-        {/* <div className="horizontal-chart-container" >
+        <div className="horizontal-chart-container" >
 
 <div style={{ "flex": "2" }}>
 
@@ -960,7 +874,7 @@ handleTabChange = (selectedTabId) => {
 </div>
 
 <div style={{ "flex": "1" }}> </div>
-</div> */}
+</div>
 
 
 
@@ -983,7 +897,8 @@ handleTabChange = (selectedTabId) => {
            
 
         </div>
-      </div>
+      // </div>
     );
   }
 }
+export default CompetitionDetailScreenTabStats; 

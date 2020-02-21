@@ -15,7 +15,7 @@ FROM
 			,min(competition_group_age) as competition_group_age
 			,min(competition_group_sex) as competition_group_sex
 			
-FROM fiba_europe_game_xref_final a inner join (
+FROM fiba_europe_game_xref a inner join (
     SELECT DISTINCT match_id from fiba_europe_games_master
 ) b on a.match_id::bigint = b.match_id::bigint
 
