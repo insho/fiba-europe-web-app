@@ -4,8 +4,8 @@ import "../App.css";
 import "./Banner.css";
 import { selectStylesBanner } from "../options/SelectStyles";
 
-import logo from "../images/logo-basketball.png";
-import MenuButton from "./MenuButton";
+// import logo from "../images/logo-basketball.png";
+// import MenuButton from "./MenuButton";
 import MenuButtonBall from "./MenuButtonBall";
 
 
@@ -44,7 +44,7 @@ handleMouseDown(e) {
               <div id="banner-hamburger-menu-container-row">
                 <div id="banner-hamburger-menu-container-column">
                   <MenuButtonBall
-                    className="hamburger-menu-button"
+                    // className="hamburger-menu-button"
                     handleMouseDown={this.handleMouseDown}
                   />
                 </div>
@@ -52,12 +52,13 @@ handleMouseDown(e) {
 
               <div id="banner-logo-container" style={{
                 height: '80%',
-                width: 20,
+                width: 10,
+                
                 // backgroundImage: `url(${logo})`,
                 backgroundSize: '80%',
                 backgroundPosition: 'center center',
                 backgroundRepeat: 'no-repeat',
-                margin: '0 14px'
+                margin: '0 12px'
               }}></div>
 
               <div id="banner-text-container">

@@ -47,7 +47,7 @@ class GameSummaryScreen extends Component {
 
     this.state = {
       visible: false,
-      matchId: '10002',
+      // matchId: '10002',
       selectedTabId: "one"
     };
 
@@ -114,7 +114,7 @@ class GameSummaryScreen extends Component {
     // console.log(periodsString)
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GamePlayerDetailBoxScores',
-      matchId: '10002',
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value),
       periodsString: periodsString
     }), data => {
       // console.log('xxx')
@@ -136,6 +136,35 @@ class GameSummaryScreen extends Component {
 
 
   componentDidMount() {
+    this.setState({
+      competitionDropdownList: [
+        {value: "EuroBasket - DIVISION A", label: "EuroBasket - DIVISION A"},
+        {value: "EuroBasket Women - DIVISION B", label: "EuroBasket Women - DIVISION B"},
+        {value: "U16 Men - DIVISION B", label: "U16 Men - DIVISION B"},
+        {value: "EuroChallenge", label: "EuroChallenge"},
+        {value: "U20 Women - DIVISION B", label: "U20 Women - DIVISION B"},
+        {value: "EuroLeague Women", label: "EuroLeague Women"},
+        {value: "EuroCup Women", label: "EuroCup Women"},
+        {value: "U18 Men - DIVISION A", label: "U18 Men - DIVISION A"},
+        {value: "U18 Women - DIVISION B", label: "U18 Women - DIVISION B"},
+        {value: "EuroBasket Women - DIVISION A", label: "EuroBasket Women - DIVISION A"},
+        {value: "South American League", label: "South American League"},
+        {value: "U16 Men Div. C", label: "U16 Men Div. C"},
+        {value: "U18 Men - DIVISION B", label: "U18 Men - DIVISION B"},
+        {value: "U16 Women - DIVISION B", label: "U16 Women - DIVISION B"},
+        {value: "Division C Men", label: "Division C Men"}
+      ],
+      selectedCompetition: {value: "EuroCup Women", label: "EuroCup Women"},
+      selectedMatch:  {value: "107421", label: "2007-02-08 Cavigal Nice Basket vs Basket Landes"}
+    
+      
+    })
+
+    if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
+      && this.state.selectedCompetition )) {
+        this.changeMatch();
+        // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
+    }
 
     const metadataPromise = this.METADATASMARTMAKING();
 
@@ -151,7 +180,7 @@ class GameSummaryScreen extends Component {
 
     return $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameMetadata',
-      matchId: this.state.matchId || '3781'
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || '3781'
     }), data => {
 
       if (data.length > 0) {
@@ -185,7 +214,7 @@ class GameSummaryScreen extends Component {
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GamePeriodScores_pivot',
-      matchId: '10002'
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value)
       // dateRange:this.state.selectedDateRange.value
     }), data => {
 
@@ -235,33 +264,11 @@ class GameSummaryScreen extends Component {
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameCumulativeStats',
-      matchId: '10002'
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value)
       // dateRange:this.state.selectedDateRange.value
     }), data => {
 
-      // const colours = [...new Set(data.map(item => item['current_lead_hometeam'] >= 0 ?  '#64b5f6' : '#ae4126'))]
       const colours = data.map((item) => item['current_lead_hometeam'] < 0 ? '#ae4126' : '#64b5f6');
-      // const colours = ['#64b5f6','#ae4126' ]
-      // console.log(colours)
-
-      // var cumulativeScoresLineChartData = {}
-      // Promise.resolve(
-
-      //  cumulativeScoresLineChartData = assembleChartDataCollectionSimpleMultiple(data,'minute',['current_score_hometeam','current_score_awayteam'],{labels: [this.state.teamNameHomeTeam,this.state.teamNameAwayTeam],backgroundColors:["#64b5f6","#ae4126"],borderColors:["#64b5f6","#ae4126"]})
-      // ).then(() => {
-      //   console.log(cumulativeScoresLineChartData)
-      //   this.setState({
-      //     cumulativeScoresLineChart: {
-      //        data: cumulativeScoresLineChartData
-      //        }
-
-      //     })
-
-      // });
-      // console.log(data)
-      // console.log(" -----")
-      // const fooo = 
-      // console.log(fooo)
 
       this.setState({
         cumulativeScoresLineChart: {
@@ -287,10 +294,9 @@ class GameSummaryScreen extends Component {
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameMetricsInstanceCounts',
-      matchId: this.state.matchId
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || "107421"
       // dateRange:this.state.selectedDateRange.value
     }), data => {
-
 
       this.setState({
         cumulativeDefensiveStatsBarChartHomeTeam: {
@@ -308,10 +314,8 @@ class GameSummaryScreen extends Component {
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameMetricsComp',
-      matchId: this.state.matchId
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || "107421"
     }), data => {
-
-
 
       /* Shots Made */
       const shotsmadeGroupLabels = ['Two Point Shots Made'
@@ -445,9 +449,10 @@ class GameSummaryScreen extends Component {
       2. There is no prior selected brand 
       If so, set a previously selected brand and update all charts
       */
-    if (this.state.selectedBrand && (this.state.previouslySelectedBrand === undefined
-      && this.state.selectedDateRange && (this.state.previouslySelectedDateRange === undefined))) {
-      Promise.resolve(this.setState({ previouslySelectedBrand: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
+    if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
+      && this.state.selectedCompetition )) {
+        this.changeMatch();
+        // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
     }
 
     /* Product Domain dropdown list is depedent on the brandId. So once brandId dropddown is selected for the first time, then fill product domain dropdown */
@@ -478,7 +483,7 @@ class GameSummaryScreen extends Component {
 
 
   handleDropdownSelectorChangeGameSummaryTabPlayerSummarySelector = (selectedPeriods) => {
-    console.log(this.state.gameSummaryTabPlayerSummarySelectedPeriods)
+    // console.log(this.state.gameSummaryTabPlayerSummarySelectedPeriods)
 
     // if(this.state.gameSummaryTabPlayerSummarySelectedPeriods === undefined || (this.state.gameSummaryTabPlayerSummarySelectedPeriods!== selectedPeriods)) {
 
@@ -505,7 +510,33 @@ class GameSummaryScreen extends Component {
     Promise.resolve(this.setState({ selectedTimeSeriesProductDomains })).then(() => { this.fillTimeSeriesCharts() });
   }
 
+  handleDropdownSelectorChangeCompetition = (selectedCompetition) => {
+    if(this.state.previouslySelectedCompetition === undefined || (this.state.selectedCompetition!== selectedCompetition)) {
+      Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.changeMatch(); }).then(() => {this.fillAllCharts();});
+    }
+  }
 
+  handleDropdownSelectorChangeMatch = (selectedMatch) => {
+    if(this.state.previouslySelectedMatch === undefined || (this.state.selectedMatch!== selectedMatch)) {
+      Promise.resolve(this.setState({previouslySelectedMatch:this.state.selectedMatch,selectedMatch})).then(() => {this.fillAllCharts(); });
+    }
+  }
+
+
+  changeMatch = () => {
+
+    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+      queryName: 'GameDropdownSelector',
+      selectedCompetition: this.state.selectedCompetition.value
+    }), data => {
+
+      this.setState({
+        matchDropdownList: data
+      });
+  
+  
+    });
+  }
 
   fillAllCharts = () => {
 
@@ -639,12 +670,6 @@ class GameSummaryScreen extends Component {
     }
   }
 
-  // toggleMenu() {
-  //     this.setState({
-  //         visible: !this.state.visible
-  //     });
-  //   }
-
 
 
 
@@ -652,25 +677,21 @@ class GameSummaryScreen extends Component {
     return (
 
       <div>
-        <Menu menuVisibility={this.state.visible} />
-        <div onMouseDown={this.closeMenu}  >
-
+       <Menu menuVisibility={this.state.visible}
+      toggleParentMenu={this.toggleMenu.bind(this)}/>
+        <div onMouseDown={this.closeMfenu}>
 
           <Banner bannerTextMajor={"Game Detail"} bannerTextMinor={"Summary"}
-            dropDownItemsListSelectorOne={this.state.brandDropdownList}
-            selectedValueSelectorOne={this.state.selectedBrand}
-            setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeBrand.bind(this)}
-            dropDownItemsListSelectorTwo={this.state.dateRangeDropdownList}
-            selectedValueSelectorTwo={this.state.selectedDateRange}
-            setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeDateRange.bind(this)}
-            toggleParentMenu={this.toggleMenu.bind(this)} />
+            dropDownItemsListSelectorOne={this.state.competitionDropdownList}
+            selectedValueSelectorOne={this.state.selectedCompetition}
+            setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeCompetition.bind(this)}
+            dropDownItemsListSelectorTwo={this.state.matchDropdownList}
+            selectedValueSelectorTwo={this.state.selectedMatch}
+            setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeMatch.bind(this)}
+            toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 
           <div className="page-body" >
-            {/* <div>
-            <div className="page-header" >Brand Detail: Sales</div>
-            <div className="page-sub-header-red">Brand: {this.state.brandDropdownList && this.state.selectedBrand.label}</div>
-            </div> */}
 
             <PageHeader header={this.state.competitionName}
               header2={this.state.competitionNameDetail}
@@ -692,14 +713,9 @@ class GameSummaryScreen extends Component {
             <TabProvider defaultTab="one" onChange={(tabId) => {this.handleTabChange(tabId) }}>
               <section className="my-tabs">
                 <TabList className="my-tablist">
-                  <Tab tabFor="one" >Summary</Tab>
+                  <Tab tabFor="one" >Stats</Tab>
+                  <Tab tabFor="two">Machine Learning</Tab>
 
-                  <Tab tabFor="two">Player Summary</Tab>
-                  <Tab tabFor="three">Player Detail</Tab>
-
-                  <Tab tabFor="four" className="my-tab">Advanced Stats</Tab>
-                  <Tab tabFor="five" className="my-tab">Comparisons</Tab>
-                  <Tab tabFor="six" className="my-tab">Machine Learning</Tab>
                 </TabList>
                 <div className="wrapper">
                   <TabPanel tabId="one">
@@ -724,25 +740,22 @@ class GameSummaryScreen extends Component {
                   <TabPanel tabId="two">
                     {/* <p>Tab 2 content</p> */}
 
-                    <GameSummaryScreenTabPlayerSummary
+                    {/* <GameSummaryScreenTabPlayerSummary
                       tableData={this.state.playerSummaryBoxScoresTableData}
                       teamNameHomeTeam={this.state.teamNameHomeTeam}
                       teamNameAwayTeam={this.state.teamNameAwayTeam}
                       gameSummaryTabPlayerSummarySelectedPeriods={this.state.gameSummaryTabPlayerSummarySelectedPeriods}
                       gameSummaryTabPlayerSummarySelectorChanged={this.handleDropdownSelectorChangeGameSummaryTabPlayerSummarySelector.bind(this)}
-                    />
+                    /> */}
 
-
-                  </TabPanel>
-                  <TabPanel tabId="three">
-                    <p>Tab 3 content</p>
                     <GameSummaryScreenTabMachineLearning
-                    matchId={this.state.matchId}
+                    // matchId={this.state.selectedMatch.value}
                     selectedTabId={this.state.selectedTabId}
-                    // handlePropsThing={this.handlePropsThing.bind(this)}
                     />
 
+
                   </TabPanel>
+
                 </div>
               </section>
             </TabProvider>

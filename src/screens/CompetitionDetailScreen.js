@@ -17,6 +17,7 @@ import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 import { TabProvider, Tab, TabPanel, TabList, Tabs } from 'react-web-tabs';
 import CompetitionDetailScreenTabStats from "./CompetitionDetailScreenTabStats";
+import CompetitionDetailScreenTabMachineLearning from "./CompetitionDetailScreenTabMachineLearning";
 import { assembleChartDataCollectionSimple,
   assembleChartDataCollectionSimpleMultiple,
   assembleChartDataCollectionGrouped,
@@ -328,7 +329,7 @@ export default class CompetitionDetailScreen extends React.Component {
   handleDropdownSelectorChangeCompetition = (selectedCompetition) => {
     if(this.state.previouslySelectedCompetition === undefined || (this.state.selectedCompetition!== selectedCompetition)) {
       // Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.fillCharts()});
-      Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.fillTable(); }).then(() => {this.fillCharts(); });
+      Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.fillTable(); }).then(() => {this.fillCharts(); }).then(() => {this.fillMachineLearningcharts(); });
 
     }
   }
@@ -365,13 +366,13 @@ export default class CompetitionDetailScreen extends React.Component {
         }), data => {
           this.setState({
             competitionMatchCountBarChart: {
-                  data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'matches','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+                  data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'matches','color_number',{backgroundColor: ['#57A0E0']})
                 },
             competitionFinalScoreBarChart: {
-              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'med_final_score_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'med_final_score_hometeam','color_number',{backgroundColor: ['#57A0E0']})
             },
             competitionWinPctBarChart: {
-              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'win_pct_hometeam','color_number',{backgroundColor: ['#57A0E0','#ffb812','#f7163c','#81c784']})
+              data: assembleChartDataCollectionSimplewithColors(data, 'competition', 'win_pct_hometeam','color_number',{backgroundColor: ['#57A0E0']})
             }
 
             
@@ -383,41 +384,7 @@ export default class CompetitionDetailScreen extends React.Component {
 
     }
 
-    if (this.state.selectedPredictor != null ) {
-    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
-      selectedMetric: 'r2',
-      selectedTarget: 'final_score_hometeam',
-      // selectedAge: this.state.selectedAge.value,
-      // selectedSex: this.state.selectedSex.value,
-      selectedPredictor: this.state.selectedPredictor.value
-    }), data => {
-    
-      this.setState({
-        algCompsLineChartFinalScoreHometeam: {
-          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_female', 'metric_rate_adult_male', 'metric_rate_youth_female','metric_rate_youth_male'], { labels: ["Adult Female", "Adult Male", "Youth Female","Youth Male"], backgroundColors: ['#57A0E0','#ffb812','#f7163c','#81c784'], borderColors: ['#57A0E0','#ffb812','#f7163c','#81c784']})
-        }
-      })
-    
-    });
-
-    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-      queryName: 'AlgCompsWinnerAccuracyLinexCompetition',
-      selectedMetric: 'accuracy',
-      selectedTarget: 'winner_hometeam',
-      // selectedAge: this.state.selectedAge.value,
-      // selectedSex: this.state.selectedSex.value,
-      selectedPredictor: this.state.selectedPredictor.value
-    }), data => {
-    
-      this.setState({
-        algCompsLineChartWinnerHometeam: {
-          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_adult_female', 'metric_rate_adult_male', 'metric_rate_youth_female','metric_rate_youth_male'], { labels: ["Adult Female", "Adult Male", "Youth Female","Youth Male"], backgroundColors: ['#57A0E0','#ffb812','#f7163c','#81c784'], borderColors: ['#57A0E0','#ffb812','#f7163c','#81c784']})
-        }
-      })
-    
-    });
-  }
+   
 
 
 
@@ -536,6 +503,48 @@ export default class CompetitionDetailScreen extends React.Component {
   }
   
 
+  fillMachineLearningcharts() {
+
+    if (this.state.selectedPredictor != null && this.state.selectedCompetition) {
+      $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+        queryName: 'AlgCompsWinnerAccuracyLinexCompetitionDetail',
+        selectedMetric: 'r2',
+        selectedTarget: 'final_score_hometeam',
+        selectedCompetition: this.state.selectedCompetition.value,
+        // selectedAge: this.state.selectedAge.value,
+        // selectedSex: this.state.selectedSex.value,
+        selectedPredictor: this.state.selectedPredictor.value
+      }), data => {
+      
+        this.setState({
+          algCompsLineChartFinalScoreHometeam: {
+            data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_somepredictors','metric_rate_severalpredictors','metric_rate_manypredictors'], { labels: ["Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"]})
+          }
+        })
+      
+      });
+  
+      $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+        queryName: 'AlgCompsWinnerAccuracyLinexCompetitionDetail',
+        selectedMetric: 'accuracy',
+        selectedTarget: 'winner_hometeam',
+        selectedCompetition: this.state.selectedCompetition.value,
+        // selectedAge: this.state.selectedAge.value,
+        // selectedSex: this.state.selectedSex.value,
+        selectedPredictor: this.state.selectedPredictor.value
+      }), data => {
+      
+        this.setState({
+          algCompsLineChartWinnerHometeam: {
+            data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['metric_rate_somepredictors','metric_rate_severalpredictors','metric_rate_manypredictors'], { labels: ["Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"]})
+          }
+        })
+      
+      });
+    }
+  }
+
+  
 markdown1_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To create the predictive algorithms I used around 40,000 matches, belonging to about 5,000 \"competitions\". A competition, in this context, could mean anything from immediately recognizable leagues like \"Euroleague Men\'s Final\" to lower-level B and C league matches from Georgia (match and league names denoted in Georgian script)\n\n";
 markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms themselves were created using this large pool of matches, for presentation purposes in this app, I have limited the pool to just a few competitions, ones that are well known, representing a variety of age, sex and skill levels. They are listed below:\n\n";
 markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, this \"show dataset\" has a disproportionately large number of female adult matches. This is primarily to do with readily available competition/date metadata for this segment. You can read more about the metadata issue here, in the \"[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)\" portion of my github write-up.\n\n";
@@ -551,15 +560,15 @@ handleTabChange = (selectedTabId) => {
   switch (selectedTabId) {
     case "one":
       if (!this.state.tableData) {
-        this.fillGameSummaryCharts();
+        this.fillCharts();
       }
       break;
     case "two":
 
 
-      if (!this.state.playerSummaryBoxScoresTableData) {
+      if (!this.state.algCompsLineChartWinnerHometeam) {
 
-        this.fillPlayerSummaryCharts();
+        this.fillMachineLearningcharts();
       }
       break;
   }
@@ -572,8 +581,9 @@ handleTabChange = (selectedTabId) => {
   render() {
     return (
       <div>
-        <Menu menuVisibility={this.state.visible}/>
-        
+        <Menu menuVisibility={this.state.visible}
+      toggleParentMenu={this.toggleMenu.bind(this)}/>
+      
         
         <div onMouseDown={this.closeMenu}>
 
@@ -587,8 +597,11 @@ handleTabChange = (selectedTabId) => {
         setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeCompetition.bind(this)}        
         toggleParentMenu={this.toggleMenu.bind(this)}/>
 
+<div className= "page-body">
+<PageHeader header={(this.state.selectedCompetition && this.state.selectedCompetition.label)} subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
 
-<PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
+ <div style={{paddingTop: '2%'}}/>
+
 
 <TabProvider defaultTab="one" onChange={(tabId) => {this.handleTabChange(tabId) }}>
               <section className="my-tabs">
@@ -618,19 +631,34 @@ handleTabChange = (selectedTabId) => {
                       cumulativeDefensiveStatsBarChartAwayTeam={this.state.cumulativeDefensiveStatsBarChartAwayTeam}
                       teamNameHomeTeam={this.state.teamNameHomeTeam}
                       teamNameAwayTeam={this.state.teamNameAwayTeam}
-
                     />
 
                   </TabPanel>
                   <TabPanel tabId="two">
 
-                    {/* <GameSummaryScreenTabPlayerSummary
-                      tableData={this.state.playerSummaryBoxScoresTableData}
-                      teamNameHomeTeam={this.state.teamNameHomeTeam}
-                      teamNameAwayTeam={this.state.teamNameAwayTeam}
-                      gameSummaryTabPlayerSummarySelectedPeriods={this.state.gameSummaryTabPlayerSummarySelectedPeriods}
-                      gameSummaryTabPlayerSummarySelectorChanged={this.handleDropdownSelectorChangeGameSummaryTabPlayerSummarySelector.bind(this)}
-                    /> */}
+                  <CompetitionDetailScreenTabMachineLearning
+                      // tableData={this.state.tableData}
+                      // tableData = {this.state.tableData}
+                      predictorDropdownList = {this.state.predictorDropdownList}
+                      selectedPredictor = {this.state.selectedPredictor}
+                      // toggleParentMenu={this.toggleMenu.bind(this)}
+                      setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
+
+                      algCompsLineChartWinnerHometeam = {this.state.algCompsLineChartWinnerHometeam}
+                      algCompsLineChartFinalScoreHometeam = {this.state.algCompsLineChartFinalScoreHometeam}
+
+                      // cumulativeScoresLineChart={this.state.cumulativeScoresLineChart}
+                      // gameMetricsCompBarChartShotsMade={this.state.gameMetricsCompBarChartShotsMade}
+                      // gameMetricsCompBarChartShotPercentages={this.state.gameMetricsCompBarChartShotPercentages}
+                      // cumulativeLeadLineChart={this.state.cumulativeLeadLineChart}
+                      // gameMetricsCompBarChartAssistsRebounds={this.state.gameMetricsCompBarChartAssistsRebounds}
+                      // gameMetricsCompBarChartFouls={this.state.gameMetricsCompBarChartFouls}
+                      // gameMetricsCompPieChartShotsAttempted={this.state.gameMetricsCompPieChartShotsAttempted}
+                      // cumulativeDefensiveStatsBarChartHomeTeam={this.state.cumulativeDefensiveStatsBarChartHomeTeam}
+                      // cumulativeDefensiveStatsBarChartAwayTeam={this.state.cumulativeDefensiveStatsBarChartAwayTeam}
+                      // teamNameHomeTeam={this.state.teamNameHomeTeam}
+                      // teamNameAwayTeam={this.state.teamNameAwayTeam}
+                    />
 
 
                   </TabPanel>
@@ -640,328 +668,7 @@ handleTabChange = (selectedTabId) => {
             </TabProvider>
 
 
-
-{/* <div style={{paddingLeft: '2%', overflowX: false, overflowY: false, width: '80%'}}>
-
-<ReactMarkdown source={this.markdown1_intro} style={{paddingTop: '10px'}}/> 
-<ReactMarkdown source={this.markdown2_intro} style={{paddingTop: '10px', paddingBottom: '10px'}}/> 
-</div>
- */}
-
-{/* {this.state.tableData && (<ReactTable
-  data={this.state.tableData}
-  columns={columns}
-  showPagination={false}
-  defaultPageSize={this.state.tableData.length}
-  className="-striped -highlight"
-  style={{color: "#656565ff",paddingLeft: "10px", paddingRight: "10px"}}
-  // getTrProps={this.getTrProps}
-
-/>)} */}
-
-
-{/* <div className="horizontal-chart-container">
-<div style={{ "flex": "2" }}>
-
-
-<div className="vertical-chart-container">
-
-                {this.state.gameMetricsCompBarChartShotsMade && (
-
-                  <div className="timeseries-chart-container-minor">
-                    <div className="chart-title-large" >{"Shots Made"}</div>
-                    <HorizontalBar
-                      data={
-                        this.state.gameMetricsCompBarChartShotsMade.data
-                      }
-                      options={
-                        chartOptions.gameMetricsCompBarChart
-                      }
-                    />
-                  </div>
-                )}
-
-                {this.state.gameMetricsCompBarChartShotPercentages && (
-
-                  <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
-                    <div className="chart-title-large" >{"Shot Percentages"}</div>
-                    <HorizontalBar
-
-                      data={
-                        this.state.gameMetricsCompBarChartShotPercentages
-                          .data
-                      }
-                      options={
-                        chartOptions.gameMetricsCompBarChartPercents
-                      }
-                    />
-                  </div>
-                )}
-
-
-              </div>
-
-</div>
-
-
-
-
-              <div style={{ "flex": "1" }}>
-
-<div className="vertical-chart-container">
-
-  {this.state.gameMetricsCompBarChartAssistsRebounds && (
-
-    <div className="timeseries-chart-container-minor">
-      <div className="chart-title-large" >{"Rebounds, Assists, Steals"}</div>
-      <HorizontalBar
-
-        data={
-          this.state.gameMetricsCompBarChartAssistsRebounds
-            .data
-        }
-        options={
-          chartOptions.gameMetricsCompBarChart
-        }
-      />
-    </div>
-  )}
-
-  {this.state.gameMetricsCompBarChartFouls && (
-
-    <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
-      <div className="chart-title-large" >{this.state.gameMetricsCompBarChartFouls && "Fouls"}</div>
-      <HorizontalBar
-
-        data={
-          this.state.gameMetricsCompBarChartFouls.data
-        }
-        options={
-          chartOptions.gameMetricsCompBarChart
-        }
-      />
-    </div>
-  )}
-
-
-</div>
-
-
-
-</div>
-
-</div> */}
-
-
-
-
-
-{/* <div className="chart-title-large" >{"Average Shots Attempted"}</div> */}
-
-        {/* <div className="horizontal-chart-container" >
-
-          <div style={{ "flex": "1" }}>
-            {this.state.gameMetricsCompPieChartShotsAttempted && this.state.gameMetricsCompPieChartShotsAttempted.data['home'] && (
-
-              <div className="timeseries-chart-container-minor">
-                <div className="chart-title-small" >{"Home Team"}</div>
-                <Pie
-                  data={
-                    this.state.gameMetricsCompPieChartShotsAttempted.data['home']
-                  }
-                  // options={chartOptions.pieChart}
-                  options={{
-                    legend: {
-                      display: true,
-                      position: 'right'
-                    },
-                    plugins: {
-                      labels: [
-                        {
-                          render: 'percentage',
-                          fontSize: 14,
-                          fontColor: '#ffffff'
-                        }
-                      ]
-                    }
-                  }}
-
-
-                />
-              </div>
-            )}
-          </div>
-
-          <div style={{ "flex": "1" }}>
-            {this.state.gameMetricsCompPieChartShotsAttempted && this.state.gameMetricsCompPieChartShotsAttempted.data['away'] && (
-
-              <div className="timeseries-chart-container-minor">
-                <div className="chart-title-small" >{"Away Team"}</div>
-                <Pie
-                  data={
-                    this.state.gameMetricsCompPieChartShotsAttempted.data['away']
-                  }
-                  // options={chartOptions.pieChart}
-                  options={{
-                    legend: {
-                      display: true,
-                      position: 'right'
-                    },
-                    plugins: {
-                      labels: [
-                        {
-                          render: 'percentage',
-                          fontSize: 14,
-                          fontColor: '#ffffff'
-                        }
-                      ]
-                    }
-                  }}
-                />
-              </div>
-            )}
-          </div>
-
-        </div> */}
-
-        {/* <div className="horizontal-chart-container" id="Defensive Plays Block">
-
-          <div style={{ "flex": "2" }}>
-
-            {this.state.cumulativeDefensiveStatsBarChartHomeTeam && (
-
-              <div>
-                <div className="chart-title-large" >{"Avg Defensive Plays - "}{"Home Team"}</div>
-                <Bar
-                  data={this.state.cumulativeDefensiveStatsBarChartHomeTeam.data}
-                  options={{
-                    legend: {
-                      display: true
-                    }, plugins: {
-                      labels: false
-                    }, scales: {
-                      xAxes: [
-                        {
-                          stacked: true,
-                          gridLines: {
-                            drawBorder: true
-                          },
-                          ticks: {
-                            fontColor: "#656565",
-                            fontFamily: "Open Sans",
-                            fontSize: 10
-                          }
-                        }
-                      ],
-                      yAxes: [
-                        {
-                          stacked: false,
-                          gridLines: {
-                            display: false
-                          },
-                          ticks: {
-                            fontColor: "#656565",
-                            fontFamily: "Open Sans",
-                            fontSize: 10,
-                            // min: 0,
-                            // max: 1,
-                            // stepSize: 0.2,
-                            // Include a dollar sign in the ticks
-                            // callback: function(value, index, values) {
-                            //   return value * 100 + "%";
-                            // }
-                          }
-                        }
-                      ]
-                    }
-
-                  }}
-                >
-                </Bar>
-
-              </div>
-
-
-
-            )}
-
-
-          </div>
-
-          <div style={{ "flex": "1" }}> </div>
-        </div> */}
-
-
-
-
-
-        {/* <div className="horizontal-chart-container" >
-
-<div style={{ "flex": "2" }}>
-
-  {this.state.cumulativeDefensiveStatsBarChartAwayTeam && (
-
-    <div>
-      <div className="chart-title-large" >{"Avg Defensive Plays - "}{'Away Team'}</div>
-      <Bar
-        data={this.state.cumulativeDefensiveStatsBarChartAwayTeam.data}
-        options={{
-          legend: {
-            display: true
-          }, plugins: {
-            labels: false
-          }, scales: {
-            xAxes: [
-              {
-                stacked: true,
-                gridLines: {
-                  drawBorder: true
-                },
-                ticks: {
-                  fontColor: "#656565",
-                  fontFamily: "Open Sans",
-                  fontSize: 10
-                }
-              }
-            ],
-            yAxes: [
-              {
-                stacked: true,
-                gridLines: {
-                  display: false
-                },
-                ticks: {
-                  fontColor: "#656565",
-                  fontFamily: "Open Sans",
-                  fontSize: 10,
-                  // min: 0,
-                  // max: 1,
-                  // stepSize: 0.2,
-                  // Include a dollar sign in the ticks
-                  // callback: function(value, index, values) {
-                  //   return value * 100 + "%";
-                  // }
-                }
-              }
-            ]
-          }
-
-        }}
-      >
-      </Bar>
-
-    </div>
-
-
-
-  )}
-
-
-</div>
-
-<div style={{ "flex": "1" }}> </div>
-</div> */}
-
+            </div>
 
 
 

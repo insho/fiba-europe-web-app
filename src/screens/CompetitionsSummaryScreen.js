@@ -438,8 +438,8 @@ markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, thi
   render() {
     return (
       <div>
-        <Menu menuVisibility={this.state.visible}/>
-        
+<Menu menuVisibility={this.state.visible}
+      toggleParentMenu={this.toggleMenu.bind(this)}/>        
         
         <div onMouseDown={this.closeMenu}>
 

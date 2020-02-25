@@ -4,11 +4,12 @@
 		, coalesce(schedule_date,'Unknown') as schedule_date
 		,team_name_hometeam
 ,team_name_awayteam
-
-,to_char(field_goal_pct_hometeam*100,'999D99%') || ' / ' || to_char(field_goal_pct_awayteam*100,'999D99%') as field_goal_pct_homeaway
-,to_char(three_point_pct_hometeam*100,'999D99%') || ' / ' || to_char(three_point_pct_awayteam*100,'999D99%') as three_point_pct_homeaway
-,(defensive_rebounds_hometeam+offensive_rebounds_hometeam) || ' / ' || (defensive_rebounds_awayteam+offensive_rebounds_awayteam) as total_rebounds_homeaway
-,assists_hometeam|| ' / ' || assists_awayteam as assists_homeaway
+,(case when final_score_hometeam>= final_score_awayteam then 1 else 0 end) as winner_hometeam
+,final_score_hometeam || ' - ' || final_score_awayteam as final_score_homeaway
+,to_char(field_goal_pct_hometeam*100,'999D99%') || ' - ' || to_char(field_goal_pct_awayteam*100,'999D99%') as field_goal_pct_homeaway
+,to_char(three_point_pct_hometeam*100,'999D99%') || ' - ' || to_char(three_point_pct_awayteam*100,'999D99%') as three_point_pct_homeaway
+,(defensive_rebounds_hometeam+offensive_rebounds_hometeam) || ' - ' || (defensive_rebounds_awayteam+offensive_rebounds_awayteam) as total_rebounds_homeaway
+,assists_hometeam|| ' - ' || assists_awayteam as assists_homeaway
 
  	-- 		,field_goal_pct_hometeam
         --       ,three_point_pct_hometeam              

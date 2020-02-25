@@ -456,24 +456,21 @@ markdownFinalScoreAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, whe
 
     return (
 
-      <div>
-      <Menu menuVisibility={this.state.visible}/>
+      <div >
+      <Menu menuVisibility={this.state.visible}
+      toggleParentMenu={this.toggleMenu.bind(this)}/>
+      
       
       <div onMouseDown={this.closeMenu}>
 
       <Banner bannerTextMajor = {"Comparing Algorithms"} 
       toggleParentMenu={this.toggleMenu.bind(this)}/>
 
-
         <div className="page-body">
 
           <PageHeader header="The Algorithms" subHeader={""}/>
 
-          
- 
           <div className="split-table-container-upper" style={{paddingRight:'4%'}}> 
-
-
         
         {this.state.algCompsLineChartWinnerHometeam && (
           <div>

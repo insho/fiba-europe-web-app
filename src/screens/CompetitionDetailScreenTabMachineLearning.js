@@ -219,7 +219,7 @@ function searchDropdownListArrayforObjectwithValue(dropdownListArray, props, par
 }
 
 
-class CompetitionDetailScreenTabStats extends Component {
+class CompetitionDetailScreenTabMachineLearning extends Component {
 
 // export default class  extends React.Component {
 
@@ -602,6 +602,13 @@ markdown1_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To create the predictive 
 markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms themselves were created using this large pool of matches, for presentation purposes in this app, I have limited the pool to just a few competitions, ones that are well known, representing a variety of age, sex and skill levels. They are listed below:\n\n";
 markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, this \"show dataset\" has a disproportionately large number of female adult matches. This is primarily to do with readily available competition/date metadata for this segment. You can read more about the metadata issue here, in the \"[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)\" portion of my github write-up.\n\n";
 
+selectorChangeEventSelectorOne = (selectedValue) => {
+  this.setState({
+      selectedValueSelectorOne: selectedValue
+    });
+  this.props.setParentSelectorStateSelectorOne(selectedValue)
+}
+
   render() {
     return (
       <div>
@@ -634,319 +641,67 @@ markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, thi
 
  <div style={{paddingTop: '2%'}}/>
 
-{this.props.tableData && (<ReactTable
-  data={this.props.tableData}
-  columns={columns}
-  showPagination={true}
-  defaultPageSize={10}
-  className="-striped -highlight"
-  style={{color: "#656565ff",paddingLeft: "10px", paddingRight: "10px"}}
-  // getTrProps={this.getTrProps}
-
-/>)}
 
 
-<div style={{paddingTop: '2%'}}/>
+<div>
 
+{/* <DropdownSelectorGroup 
 
-<div className="horizontal-chart-container">
-<div style={{ "flex": "2" }}>
-
-
-<div className="vertical-chart-container">
-
-                {this.props.gameMetricsCompBarChartShotsMade && (
-
-                  <div className="timeseries-chart-container-minor">
-                    <div className="chart-title-large" >{"Avg Shots Made"}</div>
-                    <HorizontalBar
-                      data={
-                        this.props.gameMetricsCompBarChartShotsMade.data
-                      }
-                      options={
-                        chartOptions.gameMetricsCompBarChart
-                      }
-                    />
-                  </div>
-                )}
-
-                {this.props.gameMetricsCompBarChartShotPercentages && (
-
-                  <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
-                    <div className="chart-title-large" >{"Avg Shot Percentages"}</div>
-                    <HorizontalBar
-
-                      data={
-                        this.props.gameMetricsCompBarChartShotPercentages
-                          .data
-                      }
-                      options={
-                        chartOptions.gameMetricsCompBarChartPercents
-                      }
-                    />
-                  </div>
-                )}
-
-
-              </div>
-
+dropDownItemsListSelectorOne={this.props.predictorDropdownList} 
+selectedValueSelectorOne = {this.props.selectedPredictor} 
+// setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
+setParentSelectorStateSelectorOne={this.selectorChangeEventSelectorOne}
+selectedSyles = {selectStylesTertiary}
+toggleParentMenu={this.toggleMenu.bind(this)}
+style={{paddingBottom:'2%'}}/>        */}
 </div>
 
 
+{/* <DropdownSelectorGroup 
+dropDownItemsListSelectorOne={this.state.predictorDropdownList} 
+selectedValueSelectorOne = {this.state.selectedPredictor} 
+setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
 
 
-              <div style={{ "flex": "1" }}>
+selectedSyles = {selectStylesTertiary}
+toggleParentMenu={this.toggleMenu.bind(this)}/>    */}
+<div style={{ width: '85vw',paddingTop: '20px', paddingBottom: '5vh'}}>
 
-<div className="vertical-chart-container">
+{this.props.algCompsLineChartWinnerHometeam && (
+          <div style={{paddingBottom:'2%'}}>
+            <div className="chart-title-large" >{"Predicting Winner"}</div>
+            <div className="chart-title-small" >{"Accuracy %"}</div>
+            {/* {this.props.selectedMetric && (<div className="chart-title-small" >{this.props.selectedMetric.label}</div>)} */}
+      
+            {/* <div style={{maxHeight: '45vh', width: '85vw',paddingTop: '20px', paddingBottom: '5vh'}}> */}
 
-  {this.props.gameMetricsCompBarChartAssistsRebounds && (
-
-    <div className="timeseries-chart-container-minor">
-      <div className="chart-title-large" >{"Avg Rebounds, Assists, Steals"}</div>
-      <HorizontalBar
-
-        data={
-          this.props.gameMetricsCompBarChartAssistsRebounds
-            .data
-        }
-        options={
-          chartOptions.gameMetricsCompBarChart
-        }
-      />
-    </div>
-  )}
-
-  {this.props.gameMetricsCompBarChartFouls && (
-
-    <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
-      <div className="chart-title-large" >{this.props.gameMetricsCompBarChartFouls && "Fouls"}</div>
-      <HorizontalBar
-
-        data={
-          this.props.gameMetricsCompBarChartFouls.data
-        }
-        options={
-          chartOptions.gameMetricsCompBarChart
-        }
-      />
-    </div>
-  )}
+            <Line data={this.props.algCompsLineChartWinnerHometeam.data}
+            options={{
+              responsive: true,
+              maintainAspectRatio: true,
+            }}>
+            </Line>
+            {/* </div> */}
+          </div >
+        )}
 
 
-</div>
-
-
-
-</div>
-
-</div>
-
-
-
-
-
-<div className="chart-title-large" >{"Avg Shots Attempted"}</div>
-
-        <div className="horizontal-chart-container" >
-
-          <div style={{ "flex": "1" }}>
-            {this.state.gameMetricsCompPieChartShotsAttempted && this.state.gameMetricsCompPieChartShotsAttempted.data['home'] && (
-
-              <div className="timeseries-chart-container-minor">
-                <div className="chart-title-small" >{"Home Team"}</div>
-                <Pie
-                  data={
-                    this.state.gameMetricsCompPieChartShotsAttempted.data['home']
-                  }
-                  // options={chartOptions.pieChart}
-                  options={{
-                    legend: {
-                      display: true,
-                      position: 'right'
-                    },
-                    plugins: {
-                      labels: [
-                        {
-                          render: 'percentage',
-                          fontSize: 14,
-                          fontColor: '#ffffff'
-                        }
-                      ]
-                    }
-                  }}
-
-
-                />
-              </div>
-            )}
+{this.props.algCompsLineChartFinalScoreHometeam && (
+          <div>
+            <div className="chart-title-large" >{"Predicting Final Score Home Team"}</div>
+            <div className="chart-title-small" >{"R2 %"}</div>
+            
+            {/* <div className="chart-title-small" >{"Adult Male Matches"}</div> */}
+            {/* {this.props.selectedMetric && (<div className="chart-title-small" >{this.props.selectedMetric.label}</div>)} */}
+      
+            <Line data={this.props.algCompsLineChartFinalScoreHometeam.data} >
+            </Line>
+            {/* </div> */}
           </div>
-
-          <div style={{ "flex": "1" }}>
-            {this.state.gameMetricsCompPieChartShotsAttempted && this.state.gameMetricsCompPieChartShotsAttempted.data['away'] && (
-
-              <div className="timeseries-chart-container-minor">
-                <div className="chart-title-small" >{"Away Team"}</div>
-                <Pie
-                  data={
-                    this.state.gameMetricsCompPieChartShotsAttempted.data['away']
-                  }
-                  // options={chartOptions.pieChart}
-                  options={{
-                    legend: {
-                      display: true,
-                      position: 'right'
-                    },
-                    plugins: {
-                      labels: [
-                        {
-                          render: 'percentage',
-                          fontSize: 14,
-                          fontColor: '#ffffff'
-                        }
-                      ]
-                    }
-                  }}
-                />
-              </div>
-            )}
-          </div>
-
-        </div>
-
-        <div className="horizontal-chart-container" id="Defensive Plays Block">
-
-          <div style={{ "flex": "2" }}>
-
-            {this.state.cumulativeDefensiveStatsBarChartHomeTeam && (
-
-              <div>
-                <div className="chart-title-large" >{"Avg Defensive Plays - "}{"Home Team"}</div>
-                <Bar
-                  data={this.state.cumulativeDefensiveStatsBarChartHomeTeam.data}
-                  options={{
-                    legend: {
-                      display: true
-                    }, plugins: {
-                      labels: false
-                    }, scales: {
-                      xAxes: [
-                        {
-                          stacked: true,
-                          gridLines: {
-                            drawBorder: true
-                          },
-                          ticks: {
-                            fontColor: "#656565",
-                            fontFamily: "Open Sans",
-                            fontSize: 10
-                          }
-                        }
-                      ],
-                      yAxes: [
-                        {
-                          stacked: false,
-                          gridLines: {
-                            display: false
-                          },
-                          ticks: {
-                            fontColor: "#656565",
-                            fontFamily: "Open Sans",
-                            fontSize: 10,
-                            // min: 0,
-                            // max: 1,
-                            // stepSize: 0.2,
-                            // Include a dollar sign in the ticks
-                            // callback: function(value, index, values) {
-                            //   return value * 100 + "%";
-                            // }
-                          }
-                        }
-                      ]
-                    }
-
-                  }}
-                >
-                </Bar>
-
-              </div>
-
-
-
-            )}
-
-
-          </div>
-
-          <div style={{ "flex": "1" }}> </div>
-        </div>
-
-
-
-
-
-        <div className="horizontal-chart-container" >
-
-<div style={{ "flex": "2" }}>
-
-  {this.state.cumulativeDefensiveStatsBarChartAwayTeam && (
-
-    <div>
-      <div className="chart-title-large" >{"Avg Defensive Plays - "}{'Away Team'}</div>
-      <Bar
-        data={this.state.cumulativeDefensiveStatsBarChartAwayTeam.data}
-        options={{
-          legend: {
-            display: true
-          }, plugins: {
-            labels: false
-          }, scales: {
-            xAxes: [
-              {
-                stacked: true,
-                gridLines: {
-                  drawBorder: true
-                },
-                ticks: {
-                  fontColor: "#656565",
-                  fontFamily: "Open Sans",
-                  fontSize: 10
-                }
-              }
-            ],
-            yAxes: [
-              {
-                stacked: true,
-                gridLines: {
-                  display: false
-                },
-                ticks: {
-                  fontColor: "#656565",
-                  fontFamily: "Open Sans",
-                  fontSize: 10,
-                  // min: 0,
-                  // max: 1,
-                  // stepSize: 0.2,
-                  // Include a dollar sign in the ticks
-                  // callback: function(value, index, values) {
-                  //   return value * 100 + "%";
-                  // }
-                }
-              }
-            ]
-          }
-
-        }}
-      >
-      </Bar>
-
-    </div>
-
-
-
-  )}
-
+        )}
 
 </div>
+
 
 <div style={{ "flex": "1" }}> </div>
 </div>
@@ -957,12 +712,6 @@ markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, thi
 
 
 
-            <div > 
-
-
-
-            </div>
-
 
 
 
@@ -971,9 +720,7 @@ markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, thi
 
            
 
-        </div>
-      // </div>
     );
   }
 }
-export default CompetitionDetailScreenTabStats; 
+export default CompetitionDetailScreenTabMachineLearning; 

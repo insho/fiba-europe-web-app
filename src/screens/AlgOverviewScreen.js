@@ -421,7 +421,9 @@ markdownTuning2Code = "```python \
     return (
 
       <div>
-      <Menu menuVisibility={this.state.visible}/>
+      <Menu menuVisibility={this.state.visible}
+      toggleParentMenu={this.toggleMenu.bind(this)}/>
+      
       
       <div onMouseDown={this.closeMenu}>
 

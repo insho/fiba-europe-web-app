@@ -7,8 +7,8 @@
     width: 100%;
      */
     /* margin-bottom: 20px; */
-    width: 70px;
-    height: 70px;
+    width: 75px;
+    height: 75%;
     border-radius: 90%;
     
     border: 1px transparent;
@@ -18,7 +18,7 @@
   }
    
   #roundButton:hover {
-    background-color: rgba(136, 211, 255, 0.01);
+    background-color: rgba(136, 211, 255, 0.322);
     cursor: pointer;
     border-color: #003557;
     transform: scale(1.05, 1.05);

@@ -52,8 +52,8 @@ SELECT home_away
 ,percent_rank() over (order by (case when field_goals_attempted > 0 then (field_goals_made/cast(field_goals_attempted as float)) else 0 end) asc) as field_goal_pct_rank
 FROM 
 (
-SELECT home_away
-      ,(case when home_away = 'home' then team_name_hometeam else team_name_awayteam end) as team_name
+SELECT (case when team_name_hometeam = team then 'home' else 'away' end) as home_away
+      ,(case when team_name_hometeam = team then team_name_hometeam else team_name_awayteam end) as team_name
       ,player
 
 ,sum(coalesce(total_points_scored,0)) as total_points_scored

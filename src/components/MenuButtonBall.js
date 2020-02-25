@@ -8,8 +8,8 @@ class MenuButton extends Component {
     return (
     
                 <button id="roundButton"  onMouseDown={this.props.handleMouseDown} style={{
-                height: '75%',
-                width: '80',
+                height: '70px',
+                width: '70px',
                 backgroundImage: `url(${logo})`,
                 backgroundSize: '100%',
                 backgroundPosition: 'center center',

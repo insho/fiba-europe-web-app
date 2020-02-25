@@ -3,6 +3,12 @@ body {
   padding-left: 0px;
 } 
 
+.page-body {
+  padding-left: 10px;
+}
+
+
+
 .App {
   top: 0px;
   left: 0;
