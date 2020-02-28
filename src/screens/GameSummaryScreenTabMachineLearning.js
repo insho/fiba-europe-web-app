@@ -11,7 +11,8 @@ import ReactTable from 'react-table';
 import { ChartModule } from 'chartjs-plugin-labels';
 // import { ChartModule } from 'angular2-chartjs';
 import ChartBlock from "../components/ChartBlock.js";
-
+import Select from 'react-select';
+  
 import {
   assembleChartDataCollectionSimple
   , assembleChartDataCollectionStacked
@@ -91,19 +92,52 @@ class GameSummaryScreenTabMachineLearning extends Component {
     });
   }
 
+
+  selectorChangeEventSelectorOne = (selectedValue) => {
+  this.setState({
+      selectedValueSelectorOne: selectedValue
+    });
+  this.props.setParentSelectorStateSelectorOne(selectedValue)
+}
+
+
   render() {
 
     return (
 
       <div >
         <div style={{ "paddingTop": "20px" }}>
-          {this.state.cumulativePredictionsFinaleScoreHometeamLineChart && (
+
+        <div className="banner-dropdown-container" id="banner-dropdown-container--left">
+                      
+                      <div className="dropdown-selector-container" >
+    
+                          {this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags && (
+    
+                                      <Select className="drop-down-select"
+                                          value={this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags}
+                                          closeMenuOnSelect={false}
+                                          onChange={this.handleChangeSelectorTagSelected}
+                                          isMulti
+                                          options={this.props.finalScoreMatchAlgCompsPredictorTagDropdownOptions}  
+                                          // styles={selectStylesSecondary} 
+                                          // components={makeAnimated()}
+                                          // styles={colourStyles}
+                                          ></Select>
+                          )}
+    
+                        </div>
+            </div>
+
+
+
+          {this.props.cumulativePredictionsFinaleScoreHometeamLineChart && (
             <div>
               <div className="chart-title-large" >{"Home Team Final Score Predictons"}</div>
 
 
               <Line
-                data={this.state.cumulativePredictionsFinaleScoreHometeamLineChart.data}
+                data={this.props.cumulativePredictionsFinaleScoreHometeamLineChart.data}
               // options={chartOptions.brandDetailsSalesReturnRateLineChart}
               >
               </Line>
@@ -200,43 +234,48 @@ class GameSummaryScreenTabMachineLearning extends Component {
     }}
   />
 
-  {this.state.cumulativeAOVImpact && (
+  
+EXTRA SHIT HERE BELOW:
 
-    <ChartBlock
-      chartData={this.state.cumulativeAOVImpact}
-      chartOptions={chartOptions.ImpactLineChart}
-      chartTitle={"AOV Impact"}
-      chartSubTitle={this.state.cumulativeAOVImpact.segmentTypeSubTitle}
+<div style={{ "paddingTop": "20px" }}>
+          {this.state.cumulativePredictionsFinaleScoreHometeamLineChart && (
+            <div>
+              <div className="chart-title-large" >{this.state.selectedMatch.label}</div>
+            <div className="chart-title-small" >{"Home Team Final Score"}</div>
 
-    />
 
-  )}
+            <div className="banner-dropdown-container" id="banner-dropdown-container--left">
+                      
+                      <div className="dropdown-selector-container" >
+    
+                          {this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags && (
+    
+                                      <Select className="drop-down-select"
+                                          value={this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags}
+                                          closeMenuOnSelect={false}
+                                          onChange={this.handleChangeSelectorTagSelected}
+                                          isMulti
+                                          options={this.state.finalScoreMatchAlgCompsPredictorTagDropdownOptions}  
+                                          // styles={selectStylesSecondary} 
+                                          // components={makeAnimated()}
+                                          // styles={colourStyles}
+                                          ></Select>
+                          )}
+    
+                        </div>
+            </div>
 
-  {this.state.cumulativeAIVImpact && (
+              <Line
+                data={this.state.cumulativePredictionsFinaleScoreHometeamLineChart.data}
+              // options={chartOptions.brandDetailsSalesReturnRateLineChart}
+              >
+              </Line>
+            </div>
+          )}
 
-    <ChartBlock
-      chartData={this.state.cumulativeAIVImpact}
-      chartOptions={chartOptions.ImpactLineChart}
-      chartTitle={"AIV Impact"}
-      chartSubTitle={this.state.cumulativeAIVImpact.segmentTypeSubTitle}
 
-    />
-
-  )}
-
-  <div className="chart-divider" />
-
-  {this.state.cumulativeVisitsperUserImpact && (
-
-    <ChartBlock
-      chartData={this.state.cumulativeVisitsperUserImpact}
-      chartOptions={chartOptions.ImpactLineChart}
-      chartTitle={"Visits per User Impact"}
-      chartSubTitle={this.state.cumulativeVisitsperUserImpact.segmentTypeSubTitle}
-
-    />
-
-  )}
+        </div>
+  
 
 
 

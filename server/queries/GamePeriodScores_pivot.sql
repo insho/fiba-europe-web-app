@@ -37,4 +37,3 @@ SELECT  team_name_awayteam as team_name
 FROM scores
 
 ;
-

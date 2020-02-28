@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import $ from "jquery";
 import "../App.css";
 // import "./CompetitionDetailScreen.css";
+
 import DropdownSelectorGroup from "../components/DropdownSelectorGroup.js";
 import { selectStylesSecondary, selectStylesTertiary } from "../options/SelectStyles";
 import ReactMarkdown from 'react-markdown';

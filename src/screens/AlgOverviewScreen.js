@@ -420,15 +420,17 @@ markdownTuning2Code = "```python \
 
     return (
 
-      <div>
+      <div >
       <Menu menuVisibility={this.state.visible}
       toggleParentMenu={this.toggleMenu.bind(this)}/>
       
       
-      <div onMouseDown={this.closeMenu}>
+      <div onMouseDown={this.closeMenu } >
 
       <Banner bannerTextMajor = {"Algorithms Overview"}  
-      toggleParentMenu={this.toggleMenu.bind(this)}/>
+      toggleParentMenu={this.toggleMenu.bind(this)}
+      // style={{width:'100vw',height: '100vh', alignSelf: 'stretch', backGroundColor: 'yellow'}}
+      />
 
 
         <div className="page-body">

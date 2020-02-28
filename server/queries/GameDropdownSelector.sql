@@ -14,3 +14,5 @@
         WHERE metadata_competition_name = '{{selectedCompetition}}'
         ) as s1
         order by schedule_date
+
+        

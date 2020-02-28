@@ -91,9 +91,9 @@ class GameSummaryScreen extends Component {
       case "two":
 
 
-        if (!this.state.playerSummaryBoxScoresTableData) {
+        if (!this.state.cumulativePredictionsFinaleScoreHometeamLineChart) {
 
-          this.fillPlayerSummaryCharts();
+          this.fillGameMachineLearningCharts();
         }
         break;
     }
@@ -155,22 +155,231 @@ class GameSummaryScreen extends Component {
         {value: "Division C Men", label: "Division C Men"}
       ],
       selectedCompetition: {value: "EuroCup Women", label: "EuroCup Women"},
-      selectedMatch:  {value: "107421", label: "2007-02-08 Cavigal Nice Basket vs Basket Landes"}
+      selectedMatch:  {value: "104721", label: "2007-02-08 Cavigal Nice Basket vs Basket Landes"},
+
+      matchDropdownList: [{value: "104721" , label: "2007-02-08 Cavigal Nice Basket vs Basket Landes"},
+      {value: "110811" , label: "2008-12-03 TTT Riga vs VBW CEKK Ceglèd"},
+      {value: "108292" , label: "2010-07-14 Elfic Fribourg vs Cavigal Nice Basket"},
+      {value: "103202" , label: "2010-11-17 Nantes Reze vs Basketball Nymburk"},
+      {value: "101423" , label: "2010-12-01 Eisvögel USC vs Carolo Basket"},
+      {value: "10068"  , label: "2011-11-02 Dexia Namur vs Optimum Ted Ankara"},
+      {value: "10081"  , label: "2011-11-02 Olimpia  vs Dynamo Kursk"},
+      {value: "10066"  , label: "2011-11-02 Lemminkainen vs Hainaut Basket"},
+      {value: "10067"  , label: "2011-11-02 Flying Foxes vs Gran Canaria"},
+      {value: "10069"  , label: "2011-11-02 Lombos vs Botas"},
+      {value: "10065"  , label: "2011-11-02 Lotto Young Cats vs Besiktas JK"},
+      {value: "10084"  , label: "2011-11-03 BBC Sint-Katelijne-Waver vs Arras"},
+      {value: "10076"  , label: "2011-11-03 Maccabi Bnot  vs Kayseri Kaskispor"},
+      {value: "10077"  , label: "2011-11-03 Partizan Galenika vs MBK Ruzomberok"},
+      {value: "10078"  , label: "2011-11-03 Elitzur Ramla vs Spartak Noginsk"},
+      {value: "10396"  , label: "2011-11-03 Dynamo Kursk vs Olimpia "},
+      {value: "10083"  , label: "2011-11-03 AD Vagos vs Nantes Reze"},
+      {value: "10082"  , label: "2011-11-03 Horizont vs WBC Dynamo"},
+      {value: "10080"  , label: "2011-11-03 Sdent Helios vs Basket Landes"},
+      {value: "10079"  , label: "2011-11-03 SISU vs Chevakata"},
+      {value: "10432"  , label: "2011-11-09 Arras vs SISU"},
+      {value: "10428"  , label: "2011-11-09 WBC Dynamo vs Lombos"},
+      {value: "10430"  , label: "2011-11-09 Nantes Reze vs Dexia Namur"},
+      {value: "10431"  , label: "2011-11-09 Hainaut Basket vs Flying Foxes"},
+      {value: "10446"  , label: "2011-11-10 Besiktas JK vs Telge Basket"},
+      {value: "10442"  , label: "2011-11-10 Spartak Noginsk vs USO Mondeville"},
+      {value: "10445"  , label: "2011-11-10 Kayseri Kaskispor vs Olimpia "},
+      {value: "10443"  , label: "2011-11-10 Dynamo - GUVD vs Lotto Young Cats"},
+      {value: "10440"  , label: "2011-11-10 Botas vs Horizont"},
+      {value: "10444"  , label: "2011-11-10 Basket Landes vs Partizan Galenika"},
+      {value: "10448"  , label: "2011-11-10 AD Vagos vs Optimum Ted Ankara"},
+      {value: "10447"  , label: "2011-11-10 Gran Canaria vs Lemminkainen"},
+      {value: "10556"  , label: "2011-11-16 Lotto Young Cats vs Telge Basket"},
+      {value: "10560"  , label: "2011-11-16 Dexia Namur vs AD Vagos"},
+      {value: "10559"  , label: "2011-11-16 Nantes Reze vs Optimum Ted Ankara"},
+      {value: "10558"  , label: "2011-11-16 Dynamo Kursk vs Kayseri Kaskispor"},
+      {value: "10557"  , label: "2011-11-16 WBC Dynamo vs Botas"},
+      {value: "10583"  , label: "2011-11-17 USO Mondeville vs Elitzur Ramla"},
+      {value: "10586"  , label: "2011-11-17 Lombos vs Horizont"},
+      {value: "10582"  , label: "2011-11-17 Basket Landes vs MBK Ruzomberok"},
+      {value: "10581"  , label: "2011-11-17 Partizan Galenika vs Sdent Helios"},
+      {value: "10585"  , label: "2011-11-17 BBC Sint-Katelijne-Waver vs SISU"},
+      {value: "10580"  , label: "2011-11-17 Maccabi Bnot  vs Olimpia "},
+      {value: "10584"  , label: "2011-11-17 Gran Canaria vs Hainaut Basket"},
+      {value: "10579"  , label: "2011-11-17 Lemminkainen vs Flying Foxes"},
+      {value: "10578"  , label: "2011-11-17 Dynamo - GUVD vs Besiktas JK"},
+      {value: "10577"  , label: "2011-11-17 Chevakata vs Arras"},
+      {value: "10587"  , label: "2011-11-19 Horizont vs Lombos"},
+      {value: "10660"  , label: "2011-11-23 Hainaut Basket vs Lemminkainen"},
+      {value: "10661"  , label: "2011-11-23 Nantes Reze vs AD Vagos"},
+      {value: "10658"  , label: "2011-11-23 WBC Dynamo vs Horizont"},
+      {value: "10703"  , label: "2011-11-24 Gran Canaria vs Flying Foxes"},
+      {value: "10696"  , label: "2011-11-24 Chevakata vs SISU"},
+      {value: "10697"  , label: "2011-11-24 Spartak Noginsk vs Elitzur Ramla"},
+      {value: "10699"  , label: "2011-11-24 Botas vs Lombos"},
+      {value: "10700"  , label: "2011-11-24 Dynamo - GUVD vs Telge Basket"},
+      {value: "10701"  , label: "2011-11-24 Basket Landes vs Sdent Helios"},
+      {value: "10702"  , label: "2011-11-24 Kayseri Kaskispor vs Maccabi Bnot "},
+      {value: "10704"  , label: "2011-11-24 Besiktas JK vs Lotto Young Cats"},
+      {value: "10768"  , label: "2011-11-30 Dexia Namur vs Nantes Reze"},
+      {value: "10765"  , label: "2011-11-30 Lotto Young Cats vs Dynamo - GUVD"},
+      {value: "10767"  , label: "2011-11-30 Flying Foxes vs Hainaut Basket"},
+      {value: "10780"  , label: "2011-12-01 Telge Basket vs Besiktas JK"},
+      {value: "10787"  , label: "2011-12-01 Lombos vs WBC Dynamo"},
+      {value: "10782"  , label: "2011-12-01 Maccabi Bnot  vs Dynamo Kursk"},
+      {value: "10783"  , label: "2011-12-01 Sdent Helios vs MBK Ruzomberok"},
+      {value: "10781"  , label: "2011-12-01 Partizan Galenika vs Basket Landes"},
+      {value: "10784"  , label: "2011-12-01 USO Mondeville vs Spartak Noginsk"},
+      {value: "10785"  , label: "2011-12-01 SISU vs Arras"},
+      {value: "10853"  , label: "2011-12-07 Hainaut Basket vs Gran Canaria"},
+      {value: "10852"  , label: "2011-12-07 Telge Basket vs Lotto Young Cats"},
+      {value: "10851"  , label: "2011-12-07 MBK Ruzomberok vs Basket Landes"},
+      {value: "10862"  , label: "2011-12-08 Elitzur Ramla vs USO Mondeville"},
+      {value: "10871"  , label: "2011-12-08 AD Vagos vs Dexia Namur"},
+      {value: "10869"  , label: "2011-12-08 Olimpia  vs Maccabi Bnot "},
+      {value: "10867"  , label: "2011-12-08 Sdent Helios vs Partizan Galenika"},
+      {value: "10866"  , label: "2011-12-08 SISU vs BBC Sint-Katelijne-Waver"},
+      {value: "10865"  , label: "2011-12-08 Botas vs WBC Dynamo"},
+      {value: "10863"  , label: "2011-12-08 Optimum Ted Ankara vs Nantes Reze"},
+      {value: "11162"  , label: "2012-01-11 Lotto Young Cats vs Chevakata"},
+      {value: "11164"  , label: "2012-01-11 Dexia Namur vs Hainaut Basket"},
+      {value: "11163"  , label: "2012-01-11 Basket Landes vs Arras"},
+      {value: "11172"  , label: "2012-01-12 Gran Canaria vs Besiktas JK"},
+      {value: "11170"  , label: "2012-01-12 Horizont vs Dynamo Kursk"},
+      {value: "11171"  , label: "2012-01-12 USO Mondeville vs Botas"},
+      {value: "104833" , label: "2012-10-05 Basketball Nymburk vs Nantes Reze"},
+      {value: "101420" , label: "2013-01-15 Basket 90 Gdynia vs Elfic Fribourg"},
+      {value: "108293" , label: "Unknown Nantes Reze vs Virtus Eirene Ragusa"},
+      {value: "108294" , label: "Unknown Basket Landes vs Reyer Venezia"},
+      {value: "108296" , label: "Unknown Carolo Basket vs Lulea BBK"},
+      {value: "108297" , label: "Unknown Namur vs Basketball Nymburk"},
+      {value: "108298" , label: "Unknown Castors Braine vs Spar Citylift Girona"},
+      {value: "108299" , label: "Unknown Sparta&k M.R. Vidnoje vs VBW CEKK Ceglèd"},
+      {value: "108300" , label: "Unknown Olympiacos vs Aluinvent Miskolc"},
+      {value: "108301" , label: "Unknown Good Angels Kosice vs Yakin Dogu Universitesi"},
+      {value: "108304" , label: "Unknown TSV 1880 vs Umea Udominate"},
+      {value: "108305" , label: "Unknown Hoptrans-Sirenos vs Maccabi Bnot"},
+      {value: "109473" , label: "Unknown PEAC Pécs vs Galatasaray"},
+      {value: "109474" , label: "Unknown TSV 1880 vs Spar Citylift Girona"},
+      {value: "109475" , label: "Unknown Basketball Nymburk vs Virtus Eirene Ragusa"},
+      {value: "109476" , label: "Unknown Reyer Venezia vs Maccabi Bnot"},
+      {value: "109534" , label: "Unknown Good Angels Kosice vs Carolo Basket"},
+      {value: "109535" , label: "Unknown VBW CEKK Ceglèd vs TTT Riga"},
+      {value: "109536" , label: "Unknown Cavigal Nice Basket vs Bellona AGÜ"},
+      {value: "109537" , label: "Unknown Rutronik Stars Keltern vs Yakin Dogu Universitesi"},
+      {value: "110736" , label: "Unknown Bellona AGÜ vs Cavigal Nice Basket"},
+      {value: "110737" , label: "Unknown Spar Citylift Girona vs TSV 1880"},
+      {value: "110738" , label: "Unknown Carolo Basket vs Good Angels Kosice"},
+      {value: "110740" , label: "Unknown Virtus Eirene Ragusa vs Basketball Nymburk"},
+      {value: "110810" , label: "Unknown Maccabi Bnot vs Reyer Venezia"},
+      {value: "104831" , label: "Unknown Yakin Dogu Universitesi vs Olympiacos"},
+      {value: "101418" , label: "Unknown PEAC Pécs vs Pieštanské Cajky"},
+      {value: "101419" , label: "Unknown Samsun Canik vs Chevakata"},
+      {value: "101421" , label: "Unknown Yakin Dogu Universitesi vs Istanbul Universitesi "},
+      {value: "101422" , label: "Unknown VBW CEKK Ceglèd vs Enisey "},
+      {value: "101424" , label: "Unknown Rutronik Stars Keltern vs KP Brno"},
+      {value: "101425" , label: "Unknown Amsterdam Angels vs Nantes Reze"},
+      {value: "101426" , label: "Unknown Pieštanské Cajky vs PEAC Pécs"},
+      {value: "101427" , label: "Unknown KP Brno vs Rutronik Stars Keltern"},
+      {value: "101428" , label: "Unknown Elfic Fribourg vs Basket 90 Gdynia"},
+      {value: "101429" , label: "Unknown Carolo Basket vs Eisvögel USC"},
+      {value: "101430" , label: "Unknown Nantes Reze vs Amsterdam Angels"},
+      {value: "101431" , label: "Unknown Chevakata vs Samsun Canik"},
+      {value: "101432" , label: "Unknown Enisey  vs VBW CEKK Ceglèd"},
+      {value: "101433" , label: "Unknown Istanbul Universitesi  vs Yakin Dogu Universitesi"},
+      {value: "101434" , label: "Unknown Sparta&k M.R. Vidnoje vs Maccabi Bnot"},
+      {value: "101435" , label: "Unknown Bellona AGÜ vs Pinkk Pécsi 424"},
+      {value: "101436" , label: "Unknown Good Angels Kosice vs Aluinvent Miskolc"},
+      {value: "101437" , label: "Unknown TSV 1880 vs Lulea BBK"},
+      {value: "101438" , label: "Unknown Galatasaray vs TTT Riga"},
+      {value: "101439" , label: "Unknown Basket Landes vs Cavigal Nice Basket"},
+      {value: "101440" , label: "Unknown Namur vs Virtus Eirene Ragusa"},
+      {value: "101441" , label: "Unknown Castors Braine vs União Sportiva"},
+      {value: "102201" , label: "Unknown Pinkk Pécsi 424 vs MBA Moscow"},
+      {value: "102202" , label: "Unknown Umea Udominate vs TSV 1880"},
+      {value: "102203" , label: "Unknown Reyer Venezia vs Basket Landes"},
+      {value: "102317" , label: "Unknown Aluinvent Miskolc vs Olympiacos"},
+      {value: "102318" , label: "Unknown Basketball Nymburk vs Namur"},
+      {value: "102319" , label: "Unknown Maccabi Bnot vs Hoptrans-Sirenos"},
+      {value: "102320" , label: "Unknown TTT Riga vs Dynamo Novosibirsk"},
+      {value: "102321" , label: "Unknown Spar Citylift Girona vs Castors Braine"},
+      {value: "102816" , label: "Unknown Olympiacos vs Good Angels Kosice"},
+      {value: "102817" , label: "Unknown Dynamo Novosibirsk vs Galatasaray"},
+      {value: "102818" , label: "Unknown Cavigal Nice Basket vs Reyer Venezia"},
+      {value: "102819" , label: "Unknown Virtus Eirene Ragusa vs Basketball Nymburk"},
+      {value: "102820" , label: "Unknown União Sportiva vs Spar Citylift Girona"},
+      {value: "102894" , label: "Unknown MBA Moscow vs Bellona AGÜ"},
+      {value: "102895" , label: "Unknown Lulea BBK vs Umea Udominate"},
+      {value: "102896" , label: "Unknown Hoptrans-Sirenos vs Sparta&k M.R. Vidnoje"},
+      {value: "102991" , label: "Unknown MBA Moscow vs PEAC Pécs"},
+      {value: "102992" , label: "Unknown PEAC Pécs vs Bellona AGÜ"},
+      {value: "102993" , label: "Unknown Cavigal Nice Basket vs Elfic Fribourg"},
+      {value: "102994" , label: "Unknown União Sportiva vs Rutronik Stars Keltern"},
+      {value: "102995" , label: "Unknown Lulea BBK vs Carolo Basket"},
+      {value: "102996" , label: "Unknown Virtus Eirene Ragusa vs Nantes Reze"},
+      {value: "102997" , label: "Unknown Pinkk Pécsi 424 vs PEAC Pécs"},
+      {value: "103095" , label: "Unknown Dynamo Novosibirsk vs Samsun Canik"},
+      {value: "103096" , label: "Unknown Olympiacos vs Yakin Dogu Universitesi"},
+      {value: "103097" , label: "Unknown Hoptrans-Sirenos vs VBW CEKK Ceglèd"},
+      {value: "103098" , label: "Unknown Aluinvent Miskolc vs Yakin Dogu Universitesi"},
+      {value: "103099" , label: "Unknown Maccabi Bnot vs VBW CEKK Ceglèd"},
+      {value: "103100" , label: "Unknown TTT Riga vs Samsun Canik"},
+      {value: "103200" , label: "Unknown Rutronik Stars Keltern vs Spar Citylift Girona"},
+      {value: "103201" , label: "Unknown Elfic Fribourg vs Reyer Venezia"},
+      {value: "103203" , label: "Unknown Carolo Basket vs Umea Udominate"},
+      {value: "103204" , label: "Unknown Yakin Dogu Universitesi vs Good Angels Kosice"},
+      {value: "103205" , label: "Unknown Elfic Fribourg vs Basket Landes"},
+      {value: "103206" , label: "Unknown Nantes Reze vs Namur"},
+      {value: "103207" , label: "Unknown Carolo Basket vs TSV 1880"},
+      {value: "103257" , label: "Unknown VBW CEKK Ceglèd vs Sparta&k M.R. Vidnoje"},
+      {value: "103372" , label: "Unknown Samsun Canik vs Galatasaray"},
+      {value: "103434" , label: "Unknown Castors Braine vs Rutronik Stars Keltern"},
+      {value: "104718" , label: "Unknown Aluinvent Miskolc vs Good Angels Kosice"},
+      {value: "104719" , label: "Unknown PEAC Pécs vs MBA Moscow"},
+      {value: "104720" , label: "Unknown Pinkk Pécsi 424 vs Bellona AGÜ"},
+      {value: "104722" , label: "Unknown União Sportiva vs Castors Braine"},
+      {value: "104723" , label: "Unknown Reyer Venezia vs Elfic Fribourg"},
+      {value: "104830" , label: "Unknown Samsun Canik vs Dynamo Novosibirsk"},
+      {value: "104832" , label: "Unknown VBW CEKK Ceglèd vs Hoptrans-Sirenos"},
+      {value: "104834" , label: "Unknown Maccabi Bnot vs Sparta&k M.R. Vidnoje"},
+      {value: "104835" , label: "Unknown Umea Udominate vs Carolo Basket"},
+      {value: "104836" , label: "Unknown Lulea BBK vs TSV 1880"},
+      {value: "104837" , label: "Unknown TTT Riga vs Galatasaray"},
+      {value: "104838" , label: "Unknown Spar Citylift Girona vs Rutronik Stars Keltern"},
+      {value: "104839" , label: "Unknown Virtus Eirene Ragusa vs Namur"},
+      {value: "106161" , label: "Unknown Rutronik Stars Keltern vs Castors Braine"},
+      {value: "106162" , label: "Unknown Galatasaray vs Dynamo Novosibirsk"},
+      {value: "106163" , label: "Unknown Basket Landes vs Elfic Fribourg"},
+      {value: "106164" , label: "Unknown Spar Citylift Girona vs União Sportiva"},
+      {value: "106166" , label: "Unknown Reyer Venezia vs Cavigal Nice Basket"},
+      {value: "106250" , label: "Unknown Samsun Canik vs TTT Riga"},
+      {value: "106251" , label: "Unknown Yakin Dogu Universitesi vs Aluinvent Miskolc"},
+      {value: "106252" , label: "Unknown Sparta&k M.R. Vidnoje vs Hoptrans-Sirenos"},
+      {value: "106254" , label: "Unknown VBW CEKK Ceglèd vs Maccabi Bnot"},
+      {value: "106255" , label: "Unknown Basketball Nymburk vs Virtus Eirene Ragusa"},
+      {value: "106256" , label: "Unknown Umea Udominate vs Lulea BBK"},
+      {value: "108290" , label: "Unknown Bellona AGÜ vs PEAC Pécs"}],
+
+      finalScoreMatchAlgCompsPredictorTagDropdownOptions: [
+        { value: "somepredictorsA", label: "Alg A (some)" , sort: 1},
+        { value: "severalpredictorsA", label: "Alg B (several)" , sort: 2},
+        { value: "manypredictorsA", label: "Alg C (many)" , sort: 3}
+      ],
+      finalScoreMatchAlgCompsPredictorTagSelectedTags: [
+        { value: "somepredictorsA", label: "Alg A (some)" , sort: 1}    ]
+      
     
       
     })
 
-    if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
-      && this.state.selectedCompetition )) {
-        this.changeMatch();
-        // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
-    }
+    // if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
+    //   && this.state.selectedCompetition )) {
+    //     this.changeMatch();
+    //     // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
+    // }
 
     const metadataPromise = this.METADATASMARTMAKING();
 
     metadataPromise.then(() => {
+      // // console.log("Filling game summary charts")
+      // console.log(this.state.selectedMatch.value)
       this.fillGameSummaryCharts();
-    });
+    })
 
   }
 
@@ -180,7 +389,7 @@ class GameSummaryScreen extends Component {
 
     return $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameMetadata',
-      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || '3781'
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || '104721'
     }), data => {
 
       if (data.length > 0) {
@@ -214,9 +423,11 @@ class GameSummaryScreen extends Component {
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GamePeriodScores_pivot',
-      matchId: (this.state.selectedMatch && this.state.selectedMatch.value)
+      matchId: this.state.selectedMatch.value
       // dateRange:this.state.selectedDateRange.value
     }), data => {
+      console.log(this.state.selectedMatch.value)
+      console.log("DATA LENGTH " + data.length)
 
       if (data.length >= 1) {
         this.setState({
@@ -294,7 +505,7 @@ class GameSummaryScreen extends Component {
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameMetricsInstanceCounts',
-      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || "107421"
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || "104721"
       // dateRange:this.state.selectedDateRange.value
     }), data => {
 
@@ -314,7 +525,7 @@ class GameSummaryScreen extends Component {
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameMetricsComp',
-      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || "107421"
+      matchId: (this.state.selectedMatch && this.state.selectedMatch.value) || "104721"
     }), data => {
 
       /* Shots Made */
@@ -440,6 +651,30 @@ class GameSummaryScreen extends Component {
   }
 
 
+  fillGameMachineLearningCharts = () => {
+
+    const tagsString = this.state.finalScoreMatchAlgCompsPredictorTagSelectedTags.map(item => item.value).join(',,');
+    
+    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+      queryName: 'GameCumulativePredictionComps',
+      matchId: this.state.selectedMatch.value,
+      tagsString: tagsString
+      // dateRange:this.state.selectedDateRange.value
+    }), data => {
+      // console.log("IN updatePredictionChart for " + this.state.selectedCompetition.value)
+      // console.log(data)
+      this.setState({
+        cumulativePredictionsFinaleScoreHometeamLineChart: {
+          // data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction'], { labels: ["current score", "final score (actual)", "final score (prediction)"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"] })
+                      data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
+
+        }
+
+      })
+
+    });
+
+  }
 
 
   componentDidUpdate() {
@@ -449,24 +684,13 @@ class GameSummaryScreen extends Component {
       2. There is no prior selected brand 
       If so, set a previously selected brand and update all charts
       */
-    if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
-      && this.state.selectedCompetition )) {
-        this.changeMatch();
-        // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
-    }
+    // if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
+    //   && this.state.selectedCompetition )) {
+    //     this.changeMatch();
+    //     // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
+    // }
 
-    /* Product Domain dropdown list is depedent on the brandId. So once brandId dropddown is selected for the first time, then fill product domain dropdown */
-    if (this.state.selectedBrand && (this.state.timeSeriesProductDomainDropdownList === undefined)) {
-      this.updateTimeseriesBrands();
-    }
-
-    //If its the first time loading product domains, run the time series charts
-    if (this.state.selectedTimeSeriesProductDomains && (this.state.previouslySelectedProductDomains === null)) {
-      this.setState({ previouslySelectedProductDomains: this.state.selectedTimeSeriesProductDomains })
-      this.handleDropdownSelectorChangeProductDomains(this.state.selectedTimeSeriesProductDomains)
-    }
-
-    // this.fillGameSummaryCharts();
+ 
   }
 
   updateTimeseriesBrands = () => {
@@ -529,10 +753,14 @@ class GameSummaryScreen extends Component {
       queryName: 'GameDropdownSelector',
       selectedCompetition: this.state.selectedCompetition.value
     }), data => {
+      if(data.length>0) {
 
-      this.setState({
-        matchDropdownList: data
-      });
+        this.setState({
+          matchDropdownList: data,
+          selectedMatch: data[0]
+        });
+  
+      }
   
   
     });
@@ -540,121 +768,18 @@ class GameSummaryScreen extends Component {
 
   fillAllCharts = () => {
 
-    if (this.state.selectedBrand !== undefined && this.state.selectedDateRange !== undefined
-      && (this.state.selectedBrand !== this.state.previouslySelectedBrand ||
-        this.state.selectedDateRange !== this.state.previouslySelectedDateRange
-      )
 
-    ) {
-      // console.log("filling all charts")
+    const fillChartsPromise = this.fillGameSummaryCharts();
 
-      //Query Data for Brand Consistency Data - Main (overall consistency charts)
+    fillChartsPromise.then(() => {
+      this.fillGameMachineLearningCharts();
+    })
 
-
-
-      /*
-         $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-          queryName: 'BrandSalesDataSalesXProductDomain',
-          brandId: this.state.selectedBrand.value,
-          dateRange:this.state.selectedDateRange.value
-        }), data => {
-
-              const colorsCollection = data.map(item => getColorsForProductDomain(item['product_domain']).backgroundColor);
-            
-                this.setState({
-                 pieChartSalesXProductDomain: {      
-                    data: assembleChartDataCollectionSimple(data,'product_domain','ordered_items',{label: "Sales x Product Category",backgroundColor:colorsCollection})
-                  //  ,chartOptions: chartOptions.brandDetailsPieChartSales
-                    }
-                 }
-                );
-
-                this.setState({
-                    barChartSalesXProductDomain: {
-                       data: assembleChartDataCollectionSimple(data,'product_domain','ordered_items',{label: "Purchased Items x Product Category",backgroundColor:"#64b5f6"})
-                      // ,chartOptions: chartOptions.brandDetailsBarChartSales
-                       }
-                    }
-                   );
-
-
-                   this.setState({
-                    barChartReturnRateXProductDomain: {
-                       data: assembleChartDataCollectionSimple(data,'product_domain','sixty_day_return_rate',{label: "60 Day Return Rate",backgroundColor:"#64b5f6"})
-                      // ,chartOptions: chartOptions.brandDetailsBarChartReturns
-                       }
-                    }
-                   );                       
-             });
-             */
-
-      //  this.fillTimeSeriesCharts();
-    }
+    
   }
 
 
-  fillTimeSeriesCharts = () => {
-    // console.log("selected brand: " + JSON.stringify(this.state.selectedBrand));
-    // console.log("selected selectedDateRange: " + JSON.stringify(this.state.selectedDateRange));
-
-    if (this.state.selectedBrand !== undefined
-      // && this.state.selectedDateRange !== undefined 
-      && this.state.selectedTimeSeriesDateFrequency !== undefined
-      && this.state.selectedTimeSeriesProductDomains !== undefined
-    ) {
-
-      //Query Data for Brand Consistency Data - Main (overall consistency charts)
-      // console.log("this prod domain: " + JSON.stringify(this.state.selectedTimeSeriesProductDomains))
-      // var domainsString;
-
-      const domainsString = this.state.selectedTimeSeriesProductDomains.map(item => item.value).join(',,');
-      // console.log("domainstring: " + JSON.stringify(domainsString))
-
-
-
-      $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: 'BrandSalesDataSalesXReturnsXProductDomainTimeSeries',
-        brandId: this.state.selectedBrand.value,
-        dateFrequency: this.state.selectedTimeSeriesDateFrequency.value,
-        productDomainIDs: domainsString
-      }), data => {
-
-        // const colorsCollection = [...new Set(data.map(item => getColorsForProductDomain(item['product_domain']).backgroundColor))]
-        // console.log("setting state timeseries")  
-        //   this.setState({
-        //    timeSeriesSales: {
-        //       data: assembleChartDataCollectionStacked(data,'date_text_format','ordered_items','product_domain',{ backgroundColor: colorsCollection})
-        //     //  ,chartOptions: chartOptions.timeSeriesStackedBar
-        //       }
-        //  });     
-      });
-
-
-      $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-        queryName: 'BrandSalesDataSalesXReturnsTimeSeries',
-        brandId: this.state.selectedBrand.value,
-        dateFrequency: this.state.selectedTimeSeriesDateFrequency.value,
-        productDomainIDs: domainsString
-      }), data => {
-
-
-        var datatransform = assembleChartDataCollectionSimple(data, 'date_text_format', 'returned_items_sixty_day', { backgroundColor: '#ffffff' });
-        datatransform.datasets[0].borderWidth = 1
-        datatransform.datasets[0].borderColor = 'rgb(0,0,0)'
-
-        this.setState({
-          timeSeriesReturns: {
-            data: datatransform
-            // ,chartOptions: chartOptions.brandDetailsSalesReturnRateLineChart
-          }
-        });
-
-
-      });
-
-
-    }
-  }
+  
 
 
 
@@ -670,6 +795,18 @@ class GameSummaryScreen extends Component {
     }
   }
 
+
+
+  handleChangeSelectorTagSelected = (selectedTags) => {
+    selectedTags = selectedTags.sort((a, b) => (a.sort > b.sort) ? 1 : -1)
+
+    // console.log(this.state.gameSummaryTabPlayerSummaryselectedTags)
+
+    // if(this.state.gameSummaryTabPlayerSummarySelectedPeriods === undefined || (this.state.gameSummaryTabPlayerSummarySelectedPeriods!== selectedPeriods)) {
+
+    Promise.resolve(this.setState({ finalScoreMatchAlgCompsPredictorTagSelectedTags: selectedTags })).then(() => { this.updatePredictionChart() });
+    // }
+  }
 
 
 
@@ -701,6 +838,7 @@ class GameSummaryScreen extends Component {
               finalScoreAwayTeam={this.state.finalScoreAwayTeam}
               matchLocation={this.state.matchLocation}
               matchScheduleDateText={this.state.matchScheduleDateText}
+              showMatchInfo={true}
             />
 
             <hr
@@ -751,7 +889,11 @@ class GameSummaryScreen extends Component {
                     <GameSummaryScreenTabMachineLearning
                     // matchId={this.state.selectedMatch.value}
                     selectedTabId={this.state.selectedTabId}
+                    cumulativePredictionsFinaleScoreHometeamLineChart={this.state.cumulativePredictionsFinaleScoreHometeamLineChart}
+                    finalScoreMatchAlgCompsPredictorTagSelectedTags={this.state.finalScoreMatchAlgCompsPredictorTagSelectedTags}
+                    setParentSelectorStateSelectorOne ={this.handleChangeSelectorTagSelected.bind(this)}
                     />
+
 
 
                   </TabPanel>

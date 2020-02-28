@@ -19,7 +19,7 @@ export default class App extends Component {
 
   <Router>
 
-        <div >
+        <div  >
         <Route path="/welcome" component={ WelcomeScreen }/>
         <Route path="/competitions-summary" component={ CompetitionsSummaryScreen }/>
         <Route path="/competition-detail" component={ CompetitionDetailScreen }/>

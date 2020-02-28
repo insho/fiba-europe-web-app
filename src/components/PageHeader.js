@@ -6,17 +6,25 @@ class PageHeader extends Component {
     
       render() {
         return (
-
-          <div style={{ "width": "100%", "display": "flex", "flex-direction": "row" }}>
+        <div>
             <div>
               <div className="page-header">{this.props.header}</div>
               <div className="page-sub-header">{this.props.header2}</div>
+              {/* <div className="page-sub-header-grey" style={{ "padding-top": "10px" }}>{this.props.matchLocation}</div>
+              <div className="page-sub-header-grey">{this.props.matchScheduleDateText}</div> */}
+            </div>
+
+          <div style={{ "width": "100%", "display": "flex", "flex-direction": "row" }}>
+            
+            <div>
+              {/* <div className="page-header">{this.props.header}</div>
+              <div className="page-sub-header">{this.props.header2}</div> */}
               <div className="page-sub-header-grey" style={{ "padding-top": "10px" }}>{this.props.matchLocation}</div>
               <div className="page-sub-header-grey">{this.props.matchScheduleDateText}</div>
             </div>
 
             {this.props.showMatchInfo  && (
-            <div style={{ "paddingTop": "2px", "display": "flex", "align": "center", "flex-direction": "row", "flex": "3", "flex-wrap": "wrap", "justify-content": "center", "width": "80%", "align": "right", "padding-right":"0px" }}>
+            <div style={{ "paddingLeft":"5%","paddingRight":"5%","paddingTop": "2px", "display": "flex", "align": "center", "flex-direction": "row", "flex": "3", "flex-wrap": "wrap", "justify-content": "center", "width": "80%", "align": "right", "padding-right":"0px" }}>
 
               <div style={{ "paddingTop": "2px", "display": "flex", "flex-direction": "column", "justify-content": "center", "flex": "2", "flex-wrap": "wrap" }}>
                 <div className="page-score">{this.props.subHeaderHomeTeam}</div>
@@ -43,7 +51,7 @@ class PageHeader extends Component {
           </div>
 
 
-
+          </div>
 );
   }
 }
