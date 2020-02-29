@@ -17,6 +17,16 @@ SELECT match.*
 ,final_score_hometeam_lower_many
 ,final_score_hometeam_prediction_many
 ,final_score_hometeam_upper_many
+
+
+,winner_hometeam
+,coalesce(winner_hometeam_prediction_some,(case when final_score_hometeam_prediction_some>=final_score_awayteam then 1 else -1 end)) as winner_hometeam_prediction_some
+,coalesce(winner_hometeam_prediction_several,(case when final_score_hometeam_prediction_several>=final_score_awayteam then 1 else -1 end)) as winner_hometeam_prediction_several
+,coalesce(winner_hometeam_prediction_many,(case when final_score_hometeam_prediction_many>=final_score_awayteam then 1 else -1 end)) as winner_hometeam_prediction_many
+
+-- ,winner_hometeam_prediction_several
+-- ,winner_hometeam_prediction_many
+
 FROM 
 (
 
@@ -38,6 +48,8 @@ FROM (
             ,current_score_awayteam
             , current_score_hometeam + current_score_awayteam as combined_score
             ,final_score_hometeam
+            ,final_score_awayteam
+            ,(case when final_score_hometeam>=final_score_awayteam then 1 else -1 end) as winner_hometeam
 
               , row_number()
                 over (partition by period, minutes_remaining_in_period order by row_number desc) as last_event_in_minute_rank
@@ -78,6 +90,14 @@ SELECT  match_id
         ,min(case when predictor_tag = 'manypredictorsA' and metric_tag = 'final_score_hometeam' then lower else null end) as final_score_hometeam_lower_many
         ,min(case when predictor_tag = 'manypredictorsA' and  metric_tag = 'final_score_hometeam' then prediction else null end) as final_score_hometeam_prediction_many
         ,min(case when predictor_tag = 'manypredictorsA' and  metric_tag = 'final_score_hometeam' then upper else null end) as final_score_hometeam_upper_many
+
+
+        ,min(case when predictor_tag = 'somepredictorsA' and  metric_tag = 'winner_hometeam' then (case when prediction>=.5 then 1 else -1 end) else null end) as winner_hometeam_prediction_some
+        ,min(case when predictor_tag = 'severalpredictorsA' and  metric_tag = 'winner_hometeam' then (case when prediction>=.5 then 1 else -1 end) else null end) as winner_hometeam_prediction_several
+        ,min(case when predictor_tag = 'manypredictorsA' and  metric_tag = 'winner_hometeam' then (case when prediction>=.5 then 1 else -1 end) else null end) as winner_hometeam_prediction_many
+
+
+
 
         -- ,row_number() OVER (partition by match_id,period,minute order by 1) as safe_rank
 

@@ -117,6 +117,51 @@
 
 
 
+/**
+ * Creates a single chart data object from the results of a sql query. 
+ * @param {Object} data - collected data object from sql query
+ * @param {String} labelColumn - name of column which will be the labels of each chart
+ * @param {Array} rowColumns  - name of columns which will be the values of each chart
+ * @param {Array} chartTypes  - array of chart types to be used in mixed chart (i.e. [bar, line, line] etc)
+ * @param {Object} otherOptions  - json object containing other parameters with which we can override the default values in the dataset (colors, bordeWidth, etc)
+   */
+  export const assembleChartDataCollectionSimpleMultipleMixedType = (data,labelColumn,rowColumns,chartTypes, otherOptions= {}) =>{
+    const labels = data.map(item => item[labelColumn]);
+
+    var datasets = []
+    for (var i in rowColumns) {
+
+      
+      /* Note:  This map being declared a constant before the push 
+      appears to be necessary to avoid the data getting all fucked up. 
+      It enforces sequentiality I guess, or something */
+      const datamap = data.map(item => item[rowColumns[i]])
+
+      datasets.push({
+        label: otherOptions.labels[i] || "",
+        backgroundColor: otherOptions.backgroundColors[i] || "#8c8a8a",
+        borderColor: otherOptions.borderColors[i] || "rgba(80,80,80,.8)",
+        borderWidth: otherOptions.borderWidth || 1.5, 
+        fill: otherOptions.fill || false,
+        hoverBackgroundColor: otherOptions.hoverBackgroundColor || "rgba(255,99,132,0.4)",
+        hoverBorderColor: otherOptions.hoverBorderColor ||  "rgba(255,99,132,.8)",
+        hoverBorderWidth: otherOptions.hoverBorderWidth || 1,
+        pointBorderWidth: otherOptions.pointBorderWidth || 1,
+        pointRadius: otherOptions.pointRadius || 1.5,
+        pointStyle: otherOptions.pointStyle || 'square',
+        type: chartTypes[i] || 'line',
+        // pointBorderColor: otherOptions.pointBorderColor || "rgba(255,99,132,.8)",
+        data: datamap
+      })
+
+  };
+
+    return {
+      labels,
+      datasets
+    };
+  }
+
   /**
    * Creates a chart data object for a stacked chart
    * This means there is a single set of labels (our axis values) and array of datasets, each of which contain values for every one of the labels.  

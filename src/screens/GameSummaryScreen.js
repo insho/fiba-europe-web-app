@@ -28,6 +28,7 @@ import {
   , assembleChartDataCollectionGrouped
   , assemblePivotedPieChart
   , assemblePivotedPieChartCollection
+  ,assembleChartDataCollectionSimpleMultipleMixedType
 } from "../options/ChartAssembly";
 
 
@@ -662,17 +663,45 @@ class GameSummaryScreen extends Component {
       // dateRange:this.state.selectedDateRange.value
     }), data => {
       // console.log("IN updatePredictionChart for " + this.state.selectedCompetition.value)
-      // console.log(data)
+      console.log(data)
       this.setState({
         cumulativePredictionsFinaleScoreHometeamLineChart: {
-          // data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction'], { labels: ["current score", "final score (actual)", "final score (prediction)"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"] })
                       data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
-
         }
+//         ,
+//         cumulativePredictionsWinnerHometeamLineChart: {
+//           data: assembleChartDataCollectionSimpleMultipleMixedType(data, 'minute', ['winner_hometeam', 'winner_hometeam_prediction_some','winner_hometeam_prediction_several','winner_hometeam_prediction_many'],['line','bar','bar','bar'], { labels: ["winner (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#656565", "#a60000","#e6a312","#d44fe8"] })
+// }
+
+
 
       })
 
     });
+
+    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+      queryName: 'GameCumulativePredictionCompsWinPct',
+      matchId: this.state.selectedMatch.value,
+      tagsString: tagsString
+      // dateRange:this.state.selectedDateRange.value
+    }), data => {
+      // console.log("IN updatePredictionChart for " + this.state.selectedCompetition.value)
+      console.log(data)
+      this.setState({
+        // cumulativePredictionsFinaleScoreHometeamLineChart: {
+        //               data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
+        // },
+        cumulativePredictionsWinnerHometeamLineChart: {
+          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['final_winner_hometeam', 'win_pct_somepredictors','win_pct_severalpredictors','win_pct_manypredictors'], { labels: ["winner (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#656565", "#a60000","#e6a312","#d44fe8"] })
+}
+
+
+
+      })
+
+    });
+
+    
 
   }
 
@@ -804,7 +833,7 @@ class GameSummaryScreen extends Component {
 
     // if(this.state.gameSummaryTabPlayerSummarySelectedPeriods === undefined || (this.state.gameSummaryTabPlayerSummarySelectedPeriods!== selectedPeriods)) {
 
-    Promise.resolve(this.setState({ finalScoreMatchAlgCompsPredictorTagSelectedTags: selectedTags })).then(() => { this.updatePredictionChart() });
+    Promise.resolve(this.setState({ finalScoreMatchAlgCompsPredictorTagSelectedTags: selectedTags })).then(() => { this.fillGameMachineLearningCharts() });
     // }
   }
 
@@ -890,7 +919,9 @@ class GameSummaryScreen extends Component {
                     // matchId={this.state.selectedMatch.value}
                     selectedTabId={this.state.selectedTabId}
                     cumulativePredictionsFinaleScoreHometeamLineChart={this.state.cumulativePredictionsFinaleScoreHometeamLineChart}
+                    cumulativePredictionsWinnerHometeamLineChart={this.state.cumulativePredictionsWinnerHometeamLineChart}
                     finalScoreMatchAlgCompsPredictorTagSelectedTags={this.state.finalScoreMatchAlgCompsPredictorTagSelectedTags}
+                    finalScoreMatchAlgCompsPredictorTagDropdownOptions={this.state.finalScoreMatchAlgCompsPredictorTagDropdownOptions}
                     setParentSelectorStateSelectorOne ={this.handleChangeSelectorTagSelected.bind(this)}
                     />
 

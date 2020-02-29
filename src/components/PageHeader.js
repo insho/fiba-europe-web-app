@@ -7,18 +7,18 @@ class PageHeader extends Component {
       render() {
         return (
         <div>
-            <div>
+            {/* <div>
               <div className="page-header">{this.props.header}</div>
               <div className="page-sub-header">{this.props.header2}</div>
-              {/* <div className="page-sub-header-grey" style={{ "padding-top": "10px" }}>{this.props.matchLocation}</div>
-              <div className="page-sub-header-grey">{this.props.matchScheduleDateText}</div> */}
-            </div>
+              <div className="page-sub-header-grey" style={{ "padding-top": "10px" }}>{this.props.matchLocation}</div>
+              <div className="page-sub-header-grey">{this.props.matchScheduleDateText}</div>
+            </div> */}
 
           <div style={{ "width": "100%", "display": "flex", "flex-direction": "row" }}>
             
             <div>
-              {/* <div className="page-header">{this.props.header}</div>
-              <div className="page-sub-header">{this.props.header2}</div> */}
+              <div className="page-header">{this.props.header}</div>
+              <div className="page-sub-header">{this.props.header2}</div>
               <div className="page-sub-header-grey" style={{ "padding-top": "10px" }}>{this.props.matchLocation}</div>
               <div className="page-sub-header-grey">{this.props.matchScheduleDateText}</div>
             </div>
@@ -32,7 +32,7 @@ class PageHeader extends Component {
                 <div className="page-score">{this.props.finalScoreHomeTeam}</div>
               </div>
 
-              <div style={{ "paddingTop": "2px", "display": "flex", "flex-direction": "column", "justify-content": "center", "flex": "2" }}>
+              <div style={{ "paddingTop": "2px", "display": "flex", "flex-direction": "column", "justify-content": "center", "flex": "1" }}>
                 <div className="page-score" style={{ "paddingLeft": "8px", "paddingRight": "8px", "font-size": "20px", "align": "bottom" }}>{" vs "}</div>
                 <div className="page-homeaway" style={{ "paddingLeft": "8px", "paddingRight": "8px", "font-size": "20px", "align": "bottom" }}>{" "}</div>
                 <div className="page-score" style={{ "paddingLeft": "8px", "paddingRight": "8px", "font-size": "20px", "align": "bottom" }}>{" - "}</div>
