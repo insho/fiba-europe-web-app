@@ -431,14 +431,43 @@ getTrProps = (state, rowInfo, instance) => {
 
 markdown1_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To create the predictive algorithms I used around 40,000 matches, belonging to about 5,000 \"competitions\". A competition, in this context, could mean anything from immediately recognizable leagues like \"Euroleague Men\'s Final\" to lower-level B and C league matches from Georgia (match and league names denoted in Georgian script)\n\n";
 markdown2_intro = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the algorithms themselves were created using this large pool of matches, for presentation purposes in this app, I have limited the pool to just a few competitions, ones that are well known, representing a variety of age, sex and skill levels. They are listed below:\n\n";
-
-
 markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, this \"show dataset\" has a disproportionately large number of female adult matches. This is primarily to do with readily available competition/date metadata for this segment. You can read more about the metadata issue here, in the \"[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)\" portion of my github write-up.\n\n";
 
+
+
+
+componentWillMount() {
+  window.addEventListener('resize',this.handleWindowSizeChange);
+}
+
+componentWillUnmount() {
+  window.removeEventListener('resize',this.handleWindowSizeChange);
+}
+
+
+handleWindowSizeChange = () => {
+  this.setState({width: window.innerWidth, height: window.innerHeight})
+}
+
+
+
   render() {
+
+
+    const isMobile = (window.innerWidth< window.innerHeight);
+
+    var flyOutWidth = '25vw'
+    if(isMobile) {
+      flyOutWidth = '100vw'
+    }
+
+
     return (
+
+
       <div>
       <Menu menuVisibility={this.state.visible}
+      flyOutWidth = {flyOutWidth}
       toggleParentMenu={this.toggleMenu.bind(this)}/>        
         
         <div onMouseDown={this.closeMenu}>

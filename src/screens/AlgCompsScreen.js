@@ -452,12 +452,37 @@ markdownFinalScoreAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, whe
 // 4. **[Creating, Testing and Comparing Machine Learning Algorithms](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part4_making_algs.ipynb)**\n\n\n";
 
 
+
+  componentWillMount() {
+    window.addEventListener('resize',this.handleWindowSizeChange);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize',this.handleWindowSizeChange);
+  }
+  
+  
+  handleWindowSizeChange = () => {
+    this.setState({width: window.innerWidth, height: window.innerHeight})
+  }
+
+
+
   render() {
+
+        const isMobile = (window.innerWidth< window.innerHeight);
+
+    var flyOutWidth = '25vw'
+    if(isMobile) {
+      flyOutWidth = '100vw'
+    }
+
 
     return (
 
       <div >
       <Menu menuVisibility={this.state.visible}
+      flyOutWidth = {flyOutWidth}
       toggleParentMenu={this.toggleMenu.bind(this)}/>
       
       
@@ -579,7 +604,7 @@ toggleParentMenu={this.toggleMenu.bind(this)}/> */}
       </div>
 
 <DropdownSelectorGroup 
-
+style = {{"minWidth":"35vw"}}
 dropDownItemsListSelectorOne={this.state.competitionDropdownList} 
 selectedValueSelectorOne = {this.state.selectedCompetition} 
 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeCompetition.bind(this)}        
@@ -595,7 +620,7 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 
 <DropdownSelectorGroup 
-
+style = {{"width":"35vw"}}
 dropDownItemsListSelectorOne={this.state.matchDropdownList} 
 selectedValueSelectorOne = {this.state.selectedMatch} 
 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeMatch.bind(this)}        
@@ -613,9 +638,8 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 <div style={{ "paddingTop": "20px" }}>
           {this.state.cumulativePredictionsFinaleScoreHometeamLineChart && (
             <div>
-              <div className="chart-title-large" >{this.state.selectedMatch.label}</div>
+            <div className="chart-title-large" >{this.state.selectedMatch.label}</div>
             <div className="chart-title-small" >{"Home Team Final Score"}</div>
-
 
             <div className="banner-dropdown-container" id="banner-dropdown-container--left">
                       
@@ -624,6 +648,7 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
                           {this.state.finalScoreMatchAlgCompsPredictorTagSelectedTags && (
     
                                       <Select className="drop-down-select"
+                                      
                                           value={this.state.finalScoreMatchAlgCompsPredictorTagSelectedTags}
                                           closeMenuOnSelect={false}
                                           onChange={this.handleChangeSelectorTagSelected}
@@ -648,19 +673,7 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 
         </div>
-        {/* <div className="chart-divider" />
-  {this.state.cumulativePredictionsFinaleScoreHometeamLineChart && (
-
-    <ChartBlock
-      chartData={this.state.cumulativePredictionsFinaleScoreHometeamLineChart}
-      chartOptions={chartOptions.ImpactLineChart}
-      chartTitle={"Home Team Final Score Predictons"}
-      chartSubTitle={""}
-    />
-
-
-  )} */}
-
+        
 
 
 

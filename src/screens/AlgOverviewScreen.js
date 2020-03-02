@@ -416,12 +416,35 @@ markdownTuning2Code = "```python \
 // 4. **[Creating, Testing and Comparing Machine Learning Algorithms](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part4_making_algs.ipynb)**\n\n\n";
 
 
+
+componentWillMount() {
+  window.addEventListener('resize',this.handleWindowSizeChange);
+}
+
+componentWillUnmount() {
+  window.removeEventListener('resize',this.handleWindowSizeChange);
+}
+
+
+handleWindowSizeChange = () => {
+  this.setState({width: window.innerWidth, height: window.innerHeight})
+}
+
+
   render() {
+
+    const isMobile = (window.innerWidth< window.innerHeight);
+
+    var flyOutWidth = '25vw'
+    if(isMobile) {
+      flyOutWidth = '100vw'
+    }
 
     return (
 
       <div >
       <Menu menuVisibility={this.state.visible}
+      flyOutWidth = {flyOutWidth}
       toggleParentMenu={this.toggleMenu.bind(this)}/>
       
       
@@ -565,13 +588,13 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 
 {this.state.algCompsWinnerFeatureImporancesSomePredictors && (
-<div className="feature-importance-chart-container" style={{maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
+<div  style={{maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
    
 
 {/* <div className="chart-title-large" >{this.props.chartTitle}</div> */}
 
 
-<div className="chart-title-large" >{"Algorithm A"}</div>
+<div className="chart-title-large" style={{"paddingBottom":"10px"}} >{"Algorithm A"}</div>
 
 {/* <ReactMarkdown source={this.markdownFeatureImportance}/> */}
 
@@ -599,9 +622,9 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 <div>
 {this.state.algCompsWinnerFeatureImporancesSeveralPredictors 
   &&   (
-<div className="feature-importance-chart-container" style={{width: '70vw',paddingTop: '5vh'}}>
+<div  style={{width: '70vw',paddingTop: '5vh'}}>
   {/* <div className="chart-title-large" >{this.props.chartTitle}</div> */}
-  <div className="chart-title-large" >{"Algorithm B"}</div>
+  <div className="chart-title-large" style={{"paddingBottom":"10px"}} >{"Algorithm B"}</div>
   <Bar 
     data={this.state.algCompsWinnerFeatureImporancesSeveralPredictors.data}
     options={chartOptions.featureImportances}
@@ -618,9 +641,9 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
           
 
 {this.state.algCompsWinnerFeatureImporancesManyPredictors && (
-<div className="feature-importance-chart-container" style={{width: '70vw',paddingTop: '5vh'}}>
+<div  style={{width: '70vw',paddingTop: '5vh'}}>
 {/* <div className="chart-title-large" >{this.props.chartTitle}</div> */}
-<div className="chart-title-large" >{"Algorithm C"}</div>
+<div className="chart-title-large" style={{"paddingBottom":"10px"}} >{"Algorithm C"}</div>
 <Bar
 data={this.state.algCompsWinnerFeatureImporancesManyPredictors.data}
 options={chartOptions.featureImportances}

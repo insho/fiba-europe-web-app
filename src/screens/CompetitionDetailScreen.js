@@ -266,7 +266,7 @@ export default class CompetitionDetailScreen extends React.Component {
 
     });
      
-console.log("ID " + this.props.match.params.competitionGroupId)
+// console.log("ID " + this.props.match.params.competitionGroupId)
 this.handleCompetitionPassedbyURL(this.props.match.params.competitionGroupId)
 
   }
@@ -624,10 +624,34 @@ handleTabChange = (selectedTabId) => {
 
 
 
+componentWillMount() {
+  window.addEventListener('resize',this.handleWindowSizeChange);
+}
+
+componentWillUnmount() {
+  window.removeEventListener('resize',this.handleWindowSizeChange);
+}
+
+
+handleWindowSizeChange = () => {
+  this.setState({width: window.innerWidth, height: window.innerHeight})
+}
+
+
+
   render() {
+
+    const isMobile = (window.innerWidth< window.innerHeight);
+
+    var flyOutWidth = '25vw'
+    if(isMobile) {
+      flyOutWidth = '100vw'
+    }
+
     return (
       <div>
         <Menu menuVisibility={this.state.visible}
+        flyOutWidth = {flyOutWidth}
       toggleParentMenu={this.toggleMenu.bind(this)}/>
       
         

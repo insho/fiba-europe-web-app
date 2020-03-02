@@ -102,12 +102,23 @@ class GameSummaryScreen extends Component {
   }
 
 
+  
+
+
   componentWillMount() {
-
-
-
-
+    window.addEventListener('resize',this.handleWindowSizeChange);
   }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize',this.handleWindowSizeChange);
+  }
+  
+  
+  handleWindowSizeChange = () => {
+    this.setState({width: window.innerWidth, height: window.innerHeight})
+  }
+
+
 
   fillPlayerSummaryCharts = () => {
     const periodsString = this.state.gameSummaryTabPlayerSummarySelectedPeriods.map(item => item.value).join(',,');
@@ -368,12 +379,6 @@ class GameSummaryScreen extends Component {
       
     })
 
-    // if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
-    //   && this.state.selectedCompetition )) {
-    //     this.changeMatch();
-    //     // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
-    // }
-
     const metadataPromise = this.METADATASMARTMAKING();
 
     metadataPromise.then(() => {
@@ -425,10 +430,9 @@ class GameSummaryScreen extends Component {
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GamePeriodScores_pivot',
       matchId: this.state.selectedMatch.value
-      // dateRange:this.state.selectedDateRange.value
     }), data => {
-      console.log(this.state.selectedMatch.value)
-      console.log("DATA LENGTH " + data.length)
+      // console.log(this.state.selectedMatch.value)
+      // console.log("DATA LENGTH " + data.length)
 
       if (data.length >= 1) {
         this.setState({
@@ -436,42 +440,7 @@ class GameSummaryScreen extends Component {
 
         });
       }
-      /*
-        // const colorsCollection = data.map(item => getColorsForProductDomain(item['product_domain']).backgroundColor);
-        
-          // const period_labels = [...new Set(data.map(item => item['period']))]
-          const score_hometeam = [...new Set(data.map(item => item['score_hometeam']))]
-          // const score_awayteam = [...new Set(data.map(item => item['score_awayteam']))]
 
-          // const scores = [...new Set(data.map(item => [item['score_hometeam'],item['score_awayteam']] ))]
-
-          var datasets = [];
-          data.forEach((item) => {
-            datasets.push({label:item['period'],data:[item['score_hometeam'],item['score_awayteam']],backgroundColor:defaultColors.periodColor[item['period']].backgroundColor})
-          });
-          // console.log(score_hometeam)
-
-            this.setState({
-             quarterScoresBarChart: {    
-               
-              data : { 
-                datasets:datasets,
-                labels:[this.state.teamNameHomeTeam,this.state.teamNameAwayTeam]
-              }
-              ,options : {
-                scales: {
-                     xAxes: [{
-                         stacked: true
-                     }],
-                     yAxes: [{
-                         stacked: true
-                     }]
-                 }
-             }               
-                }
-             }
-            );
-                */
     });
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
@@ -606,48 +575,11 @@ class GameSummaryScreen extends Component {
           data: assembleChartDataCollectionGrouped(data, foulsGroupLabels, foulsGroupColumns, 'team', segmentColors)
         },
         gameMetricsCompPieChartShotsAttempted: {
-
           data: assemblePivotedPieChartCollection(data, shotsAttemptedGroupLabels, shotsAttemptedGroupColumns, 'team', teamPieChartColors)
-          // data: assemblePivotedPieChartCollection(data,shotsmadeGroupLabels,shotsmadeGroupColumns,'team',['#57A0E0',"#50CEF4","#A1E6F4"])
         }
       })
 
     });
-
-    /*
-                 $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-                  queryName: 'GamePeriodScores',
-                  matchId: '10002'
-                }), data => {
-            
-                        // const colours = [...new Set(data.map(item => item['current_lead_hometeam'] >= 0 ?  '#64b5f6' : '#ae4126'))]
-                        const colours = data.map((item) => item['current_lead_hometeam'] < 0 ? '#ae4126' : '#64b5f6');
-                        console.log(colours)
-            
-                         this.setState({
-                          cumulativeScoresLineChart: {
-                             data: assembleChartDataCollectionSimpleMultiple(data,'minute',['current_score_hometeam','current_score_awayteam'],{labels: [this.state.teamNameHomeTeam,this.state.teamNameAwayTeam],backgroundColors:["#64b5f6","#ae4126"],borderColors:["#64b5f6","#ae4126"]})
-                             },
-                             
-                          })
-            
-            
-            
-                          this.setState({cumulativeLeadLineChart: {
-                            data: assembleChartDataCollectionSimple(data,'minute','current_lead_hometeam',{label: "Hometeam Lead +/-",backgroundColor:colours,borderColor:colours,fill:false})
-                            // data: assembleChartDataCollectionSimpleMultiple(data,'minute',['current_lead_hometeam_pos','current_lead_hometeam_neg'],{labels: [this.state.teamNameHomeTeam,this.state.teamNameAwayTeam],backgroundColors:["#64b5f6","#ae4126"],borderColors:["#64b5f6","#ae4126"],fill:[true,true]})
-                           }})
-            
-                           
-                          
-            
-                        // );
-                            
-                     });
-                     */
-
-
-
 
   }
 
@@ -660,20 +592,11 @@ class GameSummaryScreen extends Component {
       queryName: 'GameCumulativePredictionComps',
       matchId: this.state.selectedMatch.value,
       tagsString: tagsString
-      // dateRange:this.state.selectedDateRange.value
     }), data => {
-      // console.log("IN updatePredictionChart for " + this.state.selectedCompetition.value)
-      console.log(data)
       this.setState({
         cumulativePredictionsFinaleScoreHometeamLineChart: {
                       data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
         }
-//         ,
-//         cumulativePredictionsWinnerHometeamLineChart: {
-//           data: assembleChartDataCollectionSimpleMultipleMixedType(data, 'minute', ['winner_hometeam', 'winner_hometeam_prediction_some','winner_hometeam_prediction_several','winner_hometeam_prediction_many'],['line','bar','bar','bar'], { labels: ["winner (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#656565", "#a60000","#e6a312","#d44fe8"] })
-// }
-
-
 
       })
 
@@ -683,14 +606,8 @@ class GameSummaryScreen extends Component {
       queryName: 'GameCumulativePredictionCompsWinPct',
       matchId: this.state.selectedMatch.value,
       tagsString: tagsString
-      // dateRange:this.state.selectedDateRange.value
     }), data => {
-      // console.log("IN updatePredictionChart for " + this.state.selectedCompetition.value)
-      console.log(data)
       this.setState({
-        // cumulativePredictionsFinaleScoreHometeamLineChart: {
-        //               data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
-        // },
         cumulativePredictionsWinnerHometeamLineChart: {
           data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['final_winner_hometeam', 'win_pct_somepredictors','win_pct_severalpredictors','win_pct_manypredictors'], { labels: ["winner (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#656565", "#a60000","#e6a312","#d44fe8"] })
 }
@@ -707,32 +624,9 @@ class GameSummaryScreen extends Component {
 
 
   componentDidUpdate() {
-    /* On first page load, after default brand has been automatically selected from brand list in componentDidMount,
-      we want to then load corresponding charts for that brand. Here we check if
-      1. There is a currently selected brand
-      2. There is no prior selected brand 
-      If so, set a previously selected brand and update all charts
-      */
-    // if (this.state.selectedMatch && (this.state.previouslySelectedMatch === undefined
-    //   && this.state.selectedCompetition )) {
-    //     this.changeMatch();
-    //     // Promise.resolve(this.setState({ previouslySelectedMatch: this.state.selectedBrand, previouslyselectedDateRange: this.state.selectedDateRange })).then(() => { this.fillAllCharts(); }).then(() => { this.fillTimeSeriesCharts(); });
-    // }
 
- 
   }
 
-  updateTimeseriesBrands = () => {
-
-    //   $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
-    //     queryName: 'BrandSalesSelectorTimeSeriesGetProductDomains',
-    //     brandId:  this.state.selectedBrand.value
-    //     }), data => {    
-    //     // add colors to the result set, one for each product domain
-    //     data.map(item => item.color = getColorsForProductDomain(item.label).backgroundColor)    
-    //   this.setState({timeSeriesProductDomainDropdownList: data, selectedTimeSeriesProductDomains: data});                
-    // }); 
-  }
 
 
   handleDropdownSelectorChangeGameSummaryTabPlayerSummarySelector = (selectedPeriods) => {
@@ -867,10 +761,19 @@ class GameSummaryScreen extends Component {
 
 
   render() {
+
+    const isMobile = (window.innerWidth< window.innerHeight);
+
+    var flyOutWidth = '25vw'
+    if(isMobile) {
+      flyOutWidth = '100vw'
+    }
+
     return (
 
       <div>
        <Menu menuVisibility={this.state.visible}
+       flyOutWidth = {flyOutWidth}
       toggleParentMenu={this.toggleMenu.bind(this)}/>
         <div onMouseDown={this.closeMfenu}>
 
@@ -895,6 +798,7 @@ class GameSummaryScreen extends Component {
               matchLocation={this.state.matchLocation}
               matchScheduleDateText={this.state.matchScheduleDateText}
               showMatchInfo={true}
+              isMobile={isMobile}
             />
 
             <hr
