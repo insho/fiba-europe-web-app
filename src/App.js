@@ -29,7 +29,7 @@ export default class App extends Component {
         
         
         
-          {/* <Route path="/brandconsistency/:brandId?" component={ BrandConsistencyScreen } /> */}
+          <Route path="/competition-detail-id/:competitionGroupId?" component={ CompetitionDetailScreen } />
           
         </div>
         

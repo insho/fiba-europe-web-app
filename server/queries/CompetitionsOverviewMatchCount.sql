@@ -40,6 +40,7 @@ group by 1,2,3,4
 -- SELECT competition_group as competition 
 SELECT *
 	,row_number() OVER (order by age,sex,competition) as row_rank
+	,lower(replace(competition,' ','_')) as competition_group_id
 FROM
 (
 	SELECT metadata_competition_name as competition

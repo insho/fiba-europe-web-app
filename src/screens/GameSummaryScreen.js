@@ -745,40 +745,66 @@ class GameSummaryScreen extends Component {
   }
 
 
-  handleDropdownSelectorChangeBrand = (selectedBrand) => {
-    if (this.state.previouslySelectedBrand === undefined || (this.state.selectedBrand !== selectedBrand)) {
-      Promise.resolve(this.setState({ previouslySelectedBrand: this.state.selectedBrand, selectedBrand })).then(() => { this.updateTimeseriesBrands() }).then(() => { this.fillAllCharts() }).then(() => { this.fillTimeSeriesCharts(); });;
-    }
-  }
+  // handleDropdownSelectorChangeBrand = (selectedBrand) => {
+  //   if (this.state.previouslySelectedBrand === undefined || (this.state.selectedBrand !== selectedBrand)) {
+  //     Promise.resolve(this.setState({ previouslySelectedBrand: this.state.selectedBrand, selectedBrand })).then(() => { this.updateTimeseriesBrands() }).then(() => { this.fillAllCharts() }).then(() => { this.fillTimeSeriesCharts(); });;
+  //   }
+  // }
 
-  handleDropdownSelectorChangeDateRange = (selectedDateRange) => {
-    Promise.resolve(this.setState({ previouslyselectedDateRange: this.state.selectedDateRange, selectedDateRange })).then(() => { this.fillAllCharts() }).then(() => { this.fillTimeSeriesCharts(); });;
-  }
+  // handleDropdownSelectorChangeDateRange = (selectedDateRange) => {
+  //   Promise.resolve(this.setState({ previouslyselectedDateRange: this.state.selectedDateRange, selectedDateRange })).then(() => { this.fillAllCharts() }).then(() => { this.fillTimeSeriesCharts(); });;
+  // }
 
-  handleDropdownSelectorChangeDateFrequency = (selectedTimeSeriesDateFrequency) => {
-    Promise.resolve(this.setState({ selectedTimeSeriesDateFrequency })).then(() => { this.fillTimeSeriesCharts() });
-  }
+  // handleDropdownSelectorChangeDateFrequency = (selectedTimeSeriesDateFrequency) => {
+  //   Promise.resolve(this.setState({ selectedTimeSeriesDateFrequency })).then(() => { this.fillTimeSeriesCharts() });
+  // }
 
-  handleDropdownSelectorChangeProductDomains = (selectedTimeSeriesProductDomains) => {
-    Promise.resolve(this.setState({ selectedTimeSeriesProductDomains })).then(() => { this.fillTimeSeriesCharts() });
-  }
+  // handleDropdownSelectorChangeProductDomains = (selectedTimeSeriesProductDomains) => {
+  //   Promise.resolve(this.setState({ selectedTimeSeriesProductDomains })).then(() => { this.fillTimeSeriesCharts() });
+  // }
+
+
 
   handleDropdownSelectorChangeCompetition = (selectedCompetition) => {
     if(this.state.previouslySelectedCompetition === undefined || (this.state.selectedCompetition!== selectedCompetition)) {
-      Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.changeMatch(); }).then(() => {this.fillAllCharts();});
+
+      // this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})
+
+      Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {
+      // console.log("competition changed to " + selectedCompetition.value)
+        const changeMatchPromise = this.changeMatch();
+      // console.log("Changing match")
+
+      changeMatchPromise.then(() => {
+        //  console.log("filling metadata")
+        // console.log(this.state.selectedMatch.value)
+        const metadataPromise = this.METADATASMARTMAKING();
+
+        metadataPromise.then(() => {
+          // console.log("Filling game summary charts")
+          // console.log(this.state.selectedMatch.value)
+          this.fillAllCharts();
+        })
+
+      })
+    })
+      // Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.changeMatch(); }).then(()=> {this.METADATASMARTMAKING()}).then(() => {this.fillAllCharts(); });
     }
   }
 
+  
+
   handleDropdownSelectorChangeMatch = (selectedMatch) => {
     if(this.state.previouslySelectedMatch === undefined || (this.state.selectedMatch!== selectedMatch)) {
-      Promise.resolve(this.setState({previouslySelectedMatch:this.state.selectedMatch,selectedMatch})).then(() => {this.fillAllCharts(); });
+      
+      Promise.resolve(this.setState({previouslySelectedMatch:this.state.selectedMatch,selectedMatch})).then(()=> {this.METADATASMARTMAKING()}).then(() => {this.fillAllCharts(); });
     }
   }
 
 
   changeMatch = () => {
 
-    $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
+    return $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameDropdownSelector',
       selectedCompetition: this.state.selectedCompetition.value
     }), data => {
@@ -797,12 +823,13 @@ class GameSummaryScreen extends Component {
 
   fillAllCharts = () => {
 
+    this.fillGameSummaryCharts();
+    this.fillGameMachineLearningCharts();
+    // const fillChartsPromise = this.fillGameSummaryCharts();
 
-    const fillChartsPromise = this.fillGameSummaryCharts();
-
-    fillChartsPromise.then(() => {
-      this.fillGameMachineLearningCharts();
-    })
+    // fillChartsPromise.then(() => {
+    //   this.fillGameMachineLearningCharts();
+    // })
 
     
   }
@@ -877,6 +904,8 @@ class GameSummaryScreen extends Component {
                 height: .8
               }}
             />
+
+
             <TabProvider defaultTab="one" onChange={(tabId) => {this.handleTabChange(tabId) }}>
               <section className="my-tabs">
                 <TabList className="my-tablist">

@@ -1,7 +1,5 @@
-
-
-
-         SELECT period
+ SELECT 'period '  || period as "period" 
+        -- SELECT period as column_that_shall_not_be_named
                 -- ,minutes_remaining_in_period
                 -- ,row_number() OVER (order by period asc,minutes_remaining_in_period desc) as minute
               ,count( shot_blocked_hometeam) as shot_blocked_hometeam
@@ -18,5 +16,4 @@
          FROM fiba_europe_games_master
          where match_id = '{{matchId}}'
          group by 1
-
          order by 1 asc

@@ -77,7 +77,7 @@ const columns = [{
 }, {
   Header: 'Competition',
   accessor: 'competition',
-  Cell: ({row}) =><a href={'competition-detail/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition} </a>,
+  Cell: ({row}) =><a href={'competition-detail-id/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition} </a>,
   width: 300
 }, {
   Header: 'First Match',
@@ -438,7 +438,7 @@ markdown3_mfdisparity = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can see, thi
   render() {
     return (
       <div>
-<Menu menuVisibility={this.state.visible}
+      <Menu menuVisibility={this.state.visible}
       toggleParentMenu={this.toggleMenu.bind(this)}/>        
         
         <div onMouseDown={this.closeMenu}>

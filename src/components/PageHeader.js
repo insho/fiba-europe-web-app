@@ -24,10 +24,10 @@ class PageHeader extends Component {
             </div>
 
             {this.props.showMatchInfo  && (
-            <div style={{ "paddingLeft":"5%","paddingRight":"5%","paddingTop": "2px", "display": "flex", "align": "center", "flex-direction": "row", "flex": "3", "flex-wrap": "wrap", "justify-content": "center", "width": "80%", "align": "right", "padding-right":"0px" }}>
+            <div style={{ "paddingLeft":"30px","paddingRight":"5%","paddingTop": "2px", "display": "flex", "flex-direction": "row", "flex": "5", "flex-wrap": "wrap", "justify-content": "center", "width": "80%", "align": "right", "padding-right":"0px" }}>
 
               <div style={{ "paddingTop": "2px", "display": "flex", "flex-direction": "column", "justify-content": "center", "flex": "2", "flex-wrap": "wrap" }}>
-                <div className="page-score">{this.props.subHeaderHomeTeam}</div>
+                <div className="page-score" style={{ "justifyContent": "center", "align" : "center"}}>{this.props.subHeaderHomeTeam}</div>
                 <div className="page-homeaway" style={{"align-self": "center", "font-size": "12px","color":"#64b5f6","font-weight":"bold"}} >{"(home)"}</div>
                 <div className="page-score">{this.props.finalScoreHomeTeam}</div>
               </div>

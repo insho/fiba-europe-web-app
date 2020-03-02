@@ -108,12 +108,11 @@ class GameSummaryScreenTabSummary extends Component {
         </div>
 
 
-        <div style={{ "paddingTop": "20px" }}>
+        <div style={{ "paddingTop": "40px" , "paddingBottom": "20px"}}>
 
 
-          <div className="horizontal-chart-container">
 
-            <div className="timeseries-chart-container-major" style={{ "flex": "2" }}>
+            <div className="timeseries-chart-container-major" style={{  "paddingLeft":"2%","paddingRight":"2%", "paddingBottom": "20px"}}>
 
               {this.props.cumulativeScoresLineChart && (
                 <div >
@@ -128,9 +127,12 @@ class GameSummaryScreenTabSummary extends Component {
                 </div>
               )}
             </div>
-            <div style={{ "flex": "1" }}>
 
-              <div className="vertical-chart-container">
+            <div className="horizontal-chart-container" style={{"maxHeight":"200px",  "paddingLeft":"2%","paddingRight":"2%"}}>
+
+            {/* <div style={{ "flex": "1" }}> */}
+
+              {/* <div className="vertical-chart-container"> */}
 
                 {this.props.gameMetricsCompBarChartShotsMade && (
 
@@ -165,9 +167,9 @@ class GameSummaryScreenTabSummary extends Component {
                 )}
 
 
-              </div>
+              {/* </div> */}
 
-            </div>
+            {/* </div> */}
 
           </div>
         </div>
@@ -177,16 +179,15 @@ class GameSummaryScreenTabSummary extends Component {
 
 
 
-        <div style={{ "paddingTop": "20px" }}>
+        <div style={{ "paddingTop": "20px","paddingBottom": "20px" }}>
           {/* <div className="chart-title-large" >{this.state.cumulativeLeadLineChart && "Cumulative Scores"}</div> */}
 
-          <div className="horizontal-chart-container">
 
-            <div className="timeseries-chart-container-major" style={{ "flex": "2" }}>
+            <div className="timeseries-chart-container-major" style={{ "paddingLeft":"2%","paddingRight":"2%", "paddingBottom": "20px", "paddingTop": "20px" }}>
 
               {this.props.cumulativeLeadLineChart && (
 
-                <div>
+                <div >
                   <div className="chart-title-large" >{"Hometeam Lead +/-"}</div>
                   <Bar
                     data={this.props.cumulativeLeadLineChart.data}
@@ -209,7 +210,8 @@ class GameSummaryScreenTabSummary extends Component {
             </div>
             <div style={{ "flex": "1" }}>
 
-              <div className="vertical-chart-container">
+            <div className="horizontal-chart-container" style={{"maxHeight":"200px",  "paddingLeft":"2%","paddingRight":"2%", "paddingBottom":"40px"}}>
+              {/* <div className="vertical-chart-container"> */}
 
                 {this.props.gameMetricsCompBarChartAssistsRebounds && (
 
@@ -251,63 +253,13 @@ class GameSummaryScreenTabSummary extends Component {
 
             </div>
 
-          </div>
+          {/* </div> */}
         </div>
-
-
-
-{/* 
-        <div className="horizontal-chart-container">
-          <div className="small-chart-flex">
-            {this.props.gameMetricsCompBarChartAssistsRebounds && (
-
-              <div className="timeseries-chart-container-minor">
-                <div className="chart-title-large" >{"Rebounds, Assists, Steals"}</div>
-                <HorizontalBar
-
-                  data={
-                    this.props.gameMetricsCompBarChartAssistsRebounds
-                      .data
-                  }
-                  options={
-                    chartOptions.gameMetricsCompBarChart
-                  }
-                />
-              </div>
-            )}
-          </div>
-          <div className="small-chart-flex">
-            {this.props.gameMetricsCompBarChartFouls && (
-
-              <div className="timeseries-chart-container-minor" style={{ "padding-top": "8px" }}>
-                <div className="chart-title-large" >{this.props.gameMetricsCompBarChartFouls && "Fouls"}</div>
-                <HorizontalBar
-
-                  data={
-                    this.props.gameMetricsCompBarChartFouls.data
-                  }
-                  options={
-                    chartOptions.gameMetricsCompBarChart
-                  }
-                />
-              </div>
-            )}
-          </div>
-
-          <div style={{ "flex": 1 }}></div>
-
-        </div> */}
-
-
-
-
-
-
 
 
         <div className="chart-title-large" >{"Shots Attempted"}</div>
 
-        <div className="horizontal-chart-container" >
+        <div className="horizontal-chart-container" style={{"paddingTop":"20px", "paddingLeft":"2%","paddingRight":"2%"}}>
 
           <div style={{ "flex": "1" }}>
             {this.props.gameMetricsCompPieChartShotsAttempted && this.props.gameMetricsCompPieChartShotsAttempted.data[this.props.teamNameHomeTeam] && (
@@ -344,7 +296,7 @@ class GameSummaryScreenTabSummary extends Component {
           <div style={{ "flex": "1" }}>
             {this.props.gameMetricsCompPieChartShotsAttempted && this.props.gameMetricsCompPieChartShotsAttempted.data[this.props.teamNameAwayTeam] && (
 
-              <div className="timeseries-chart-container-minor">
+              <div className="timeseries-chart-container-minor" style={{"paddingTop":"20px", "paddingLeft":"2%","paddingRight":"2%"}}>
                 <div className="chart-title-small" >{this.props.teamNameAwayTeam}</div>
                 <Pie
                   data={
@@ -373,9 +325,9 @@ class GameSummaryScreenTabSummary extends Component {
 
         </div>
 
-        <div className="horizontal-chart-container" id="Defensive Plays Block">
+        <div className="horizontal-chart-container" id="Defensive Plays Block" style={{"paddingTop": "30px",  "paddingLeft":"2%","paddingRight":"2%"}}>
 
-          <div style={{ "flex": "2" }}>
+          <div style={{ "flex": "5" }}>
 
             {this.props.cumulativeDefensiveStatsBarChartHomeTeam && (
 
@@ -446,9 +398,9 @@ class GameSummaryScreenTabSummary extends Component {
 
 
 
-        <div className="horizontal-chart-container" >
+        <div className="horizontal-chart-container" style={{ "paddingTop":"20px","paddingLeft":"2%","paddingRight":"2%"}}>
 
-          <div style={{ "flex": "2" }}>
+          <div style={{ "flex": "5" }}>
 
             {this.props.cumulativeDefensiveStatsBarChartAwayTeam && (
 

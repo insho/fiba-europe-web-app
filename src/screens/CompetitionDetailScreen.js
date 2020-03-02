@@ -258,17 +258,63 @@ export default class CompetitionDetailScreen extends React.Component {
     {value: "U16 Women - DIVISION B", label: "U16 Women - DIVISION B"},
     {value: "Division C Men", label: "Division C Men"}
   ],
-  selectedCompetition: {value: "EuroCup Women", label: "EuroCup Women"}
+  selectedCompetition: {value: "EuroCup Women", label: "EuroCup Women"},
+  competitionGroupId: "eurocup_women"
 
   
   
 
     });
      
-
+console.log("ID " + this.props.match.params.competitionGroupId)
+this.handleCompetitionPassedbyURL(this.props.match.params.competitionGroupId)
 
   }
 
+
+  handleCompetitionPassedbyURL = (competitionGroupId) => {
+    if (this.state.competitionGroupId == null || this.state.competitionGroupId != competitionGroupId ) {
+      
+      const competitionDropdownDict= {
+        "eurobasket_-_division_a": {value: "EuroBasket - DIVISION A", label: "EuroBasket - DIVISION A"},
+        "eurobasket_women_-_division_b": {value: "EuroBasket Women - DIVISION B", label: "EuroBasket Women - DIVISION B"},
+        "u16_men_-_division_b": {value: "U16 Men - DIVISION B", label: "U16 Men - DIVISION B"},
+        "eurochallenge": {value: "EuroChallenge", label: "EuroChallenge"},
+        "u20_women_-_division_b": {value: "U20 Women - DIVISION B", label: "U20 Women - DIVISION B"},
+        "euroleague_women": {value: "EuroLeague Women", label: "EuroLeague Women"},
+        "eurocup_women": {value: "EuroCup Women", label: "EuroCup Women"},
+        "u18 men_-_division_a": {value: "U18 Men - DIVISION A", label: "U18 Men - DIVISION A"},
+        "u18 women_-_division_b": {value: "U18 Women - DIVISION B", label: "U18 Women - DIVISION B"},
+        "eurobasket_women_-_division_a": {value: "EuroBasket Women - DIVISION A", label: "EuroBasket Women - DIVISION A"},
+        "south_american_league": {value: "South American League", label: "South American League"},
+        "u16_men_div._c": {value: "U16 Men Div. C", label: "U16 Men Div. C"},
+        "u18_men_-_division_b": {value: "U18 Men - DIVISION B", label: "U18 Men - DIVISION B"},
+        "u16_women_-_division_b": {value: "U16 Women - DIVISION B", label: "U16 Women - DIVISION B"},
+        "division_c_men": {value: "Division C Men", label: "Division C Men"}
+      }
+
+      if (competitionGroupId in competitionDropdownDict) {
+        this.setState({
+          competitionGroupId: competitionGroupId
+          // selectedCompetition: competitionDropdownDict[competitionGroupId]
+        });
+
+        this.handleDropdownSelectorChangeCompetition(competitionDropdownDict[competitionGroupId])
+      }
+
+
+  }
+}
+
+  // handleCompetitionPassedbyURL = (competitionGroupId) => {
+
+    
+  //   if(this.state.previouslySelectedCompetition === undefined || (this.state.selectedCompetition!== selectedCompetition)) {
+  //     // Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.fillCharts()});
+  //     Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.fillTable(); }).then(() => {this.fillCharts(); }).then(() => {this.fillMachineLearningcharts(); });
+
+  //   }
+  // }
 
   componentDidUpdate() {
     /* On first page load, after default brand has been selected from brand list in componentDidMount,

@@ -148,7 +148,7 @@ handleChangeSelectorTagSelected = (selectedValue) => {
 
 {this.props.cumulativePredictionsWinnerHometeamLineChart && (
             <div>
-              <div className="chart-title-large" >{"Winner Score Predictions"}</div>
+              <div className="chart-title-large" >{"Predicted Win Likelihood (Home Team)"}</div>
 
 
               <Line
