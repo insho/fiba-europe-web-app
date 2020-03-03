@@ -1,59 +1,38 @@
 import React, { Component } from "react";
-// import $ from "jquery";
 import "../App.css";
 import "./GameSummaryScreen.css";
-
 import { chartOptions } from "../options/ChartOptions.js";
 import { Pie, Bar, Line, HorizontalBar } from "react-chartjs-2";
 import 'react-web-tabs/dist/react-web-tabs.css';
-// import ReactTable from 'react-table';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-import { ChartModule } from 'chartjs-plugin-labels';
-// import { ChartModule } from 'angular2-chartjs';
-
-
-
-
 
 class GameSummaryScreenTabSummary extends Component {
   constructor(props, context) {
     super(props, context);
-    // this.handleMouseDown = this.handleMouseDown.bind(this);
     this.state = {
-      // matchId: this.props.matchId,
-      // tableData: null,
-      // cumulativeLeadLineChart: null,
-      // gameMetricsCompBarChartShotPercentages: null,
-      // gameMetricsCompBarChartShotsMade: null,
-      // cumulativeScoresLineChart: null,
+
       tableColumns: [{
         Header: 'Team',
         accessor: 'team_name', // String-based value accessors!
-        // Cell: ({row}) =><a href={'teams/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
         width: 200
-        // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
       }, {
         Header: 'P1',
         accessor: 'period1',
-        // Cell: ({row}) =><a href={'teams/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
         width: 100
       }, {
         Header: 'P2',
         accessor: 'period2',
-        // Cell: ({row}) =><a href={'teams/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
         width: 100
       },
       {
         Header: 'P3',
         accessor: 'period3',
-        // Cell: ({row}) =><a href={'teams/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
         width: 100
       },
       {
         Header: 'P4',
         accessor: 'period4',
-        // Cell: ({row}) =><a href={'teams/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
         width: 100
       },
       {
@@ -66,7 +45,6 @@ class GameSummaryScreenTabSummary extends Component {
             },
           };
         },
-        // Cell: ({row}) =><a href={'teams/' + row.competition_group_id} style={{color: "#656565ff"}}> {row.competition_group} </a>,
         width: 100
       }
       ]
@@ -77,16 +55,11 @@ class GameSummaryScreenTabSummary extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    // console.log("________")
-    // console.log(this.props.gameMetricsCompBarChartFouls.data)
   }
 
   componentDidUpdate() { }
 
   componentWillReceiveProps() {
-    // console.log("________")
-    // console.log(this.props.gameMetricsCompBarChartFouls)
-    // console.log(this.props.gameMetricsCompPieChartShotsAttempted)
   }
 
   render() {
@@ -101,7 +74,6 @@ class GameSummaryScreenTabSummary extends Component {
             columns={this.state.tableColumns}
             showPagination={false}
             pageSize={2}
-            // defaultPageSize={1}
             className="-striped -highlight"
             style={{ color: "#656565ff" }}
           />)}
@@ -120,8 +92,6 @@ class GameSummaryScreenTabSummary extends Component {
 
                   <Line id="timeseries-cumulative-scores"
                     data={this.props.cumulativeScoresLineChart.data}
-                  // options={{}}
-                  // options={chartOptions.brandDetailsSalesReturnRateLineChart}
                   >
                   </Line>
                 </div>
@@ -129,11 +99,6 @@ class GameSummaryScreenTabSummary extends Component {
             </div>
 
             <div className="horizontal-chart-container" style={{"maxHeight":"200px",  "paddingLeft":"2%","paddingRight":"2%"}}>
-
-            {/* <div style={{ "flex": "1" }}> */}
-
-              {/* <div className="vertical-chart-container"> */}
-
                 {this.props.gameMetricsCompBarChartShotsMade && (
 
                   <div className="timeseries-chart-container-minor">
@@ -166,22 +131,11 @@ class GameSummaryScreenTabSummary extends Component {
                   </div>
                 )}
 
-
-              {/* </div> */}
-
-            {/* </div> */}
-
           </div>
         </div>
 
 
-        {/* </div> */}
-
-
-
         <div style={{ "paddingTop": "20px","paddingBottom": "20px" }}>
-          {/* <div className="chart-title-large" >{this.state.cumulativeLeadLineChart && "Cumulative Scores"}</div> */}
-
 
             <div className="timeseries-chart-container-major" style={{ "paddingLeft":"2%","paddingRight":"2%", "paddingBottom": "20px", "paddingTop": "20px" }}>
 
@@ -211,7 +165,6 @@ class GameSummaryScreenTabSummary extends Component {
             <div style={{ "flex": "1" }}>
 
             <div className="horizontal-chart-container" style={{"maxHeight":"200px",  "paddingLeft":"2%","paddingRight":"2%", "paddingBottom":"40px"}}>
-              {/* <div className="vertical-chart-container"> */}
 
                 {this.props.gameMetricsCompBarChartAssistsRebounds && (
 
@@ -253,7 +206,6 @@ class GameSummaryScreenTabSummary extends Component {
 
             </div>
 
-          {/* </div> */}
         </div>
 
 
@@ -270,7 +222,6 @@ class GameSummaryScreenTabSummary extends Component {
                   data={
                     this.props.gameMetricsCompPieChartShotsAttempted.data[this.props.teamNameHomeTeam]
                   }
-                  // options={chartOptions.pieChart}
                   options={{
                     legend: {
                       display: true,
@@ -364,13 +315,6 @@ class GameSummaryScreenTabSummary extends Component {
                             fontColor: "#656565",
                             fontFamily: "Open Sans",
                             fontSize: 10,
-                            // min: 0,
-                            // max: 1,
-                            // stepSize: 0.2,
-                            // Include a dollar sign in the ticks
-                            // callback: function(value, index, values) {
-                            //   return value * 100 + "%";
-                            // }
                           }
                         }
                       ]
@@ -437,13 +381,6 @@ class GameSummaryScreenTabSummary extends Component {
                             fontColor: "#656565",
                             fontFamily: "Open Sans",
                             fontSize: 10,
-                            // min: 0,
-                            // max: 1,
-                            // stepSize: 0.2,
-                            // Include a dollar sign in the ticks
-                            // callback: function(value, index, values) {
-                            //   return value * 100 + "%";
-                            // }
                           }
                         }
                       ]

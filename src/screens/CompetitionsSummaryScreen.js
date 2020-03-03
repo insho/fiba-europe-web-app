@@ -471,19 +471,9 @@ handleWindowSizeChange = () => {
       toggleParentMenu={this.toggleMenu.bind(this)}/>        
         
         <div onMouseDown={this.closeMenu}>
-
-        <Banner bannerTextMajor = {"Competitions"} 
-        // dropDownItemsListSelectorOne={this.state.sexDropdownList} 
-        // selectedValueSelectorOne = {this.state.selectedSex} 
-        // setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeSex.bind(this)}
-        // dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
-        // selectedValueSelectorTwo = {this.state.selectedAge} 
-        // setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)}        
+        <Banner bannerTextMajor = {"Competitions"}         
         toggleParentMenu={this.toggleMenu.bind(this)}/>
-
-
 <PageHeader header="Competitions" subHeader={(this.state.sexDropdownList && this.state.ageDropdownList) && this.state.selectedSex.label + " - " + this.state.selectedAge.label}/>
-
 
 <div style={{paddingLeft: '2%', overflowX: false, overflowY: false, width: '80%'}}>
 
@@ -513,8 +503,6 @@ handleWindowSizeChange = () => {
 
 <Bar
   data={this.state.competitionMatchCountBarChart.data}
-  // options={chartOptions.featureImportances}
-  // options={this.state.competitionMatchCountBarChart.chartOptions}
   options={{
     legend: {
       display: false
@@ -544,13 +532,6 @@ handleWindowSizeChange = () => {
             fontColor: "#656565",
             fontFamily: "Open Sans",
             fontSize: 10,
-            // min: 0,
-            // max: 1,
-            // stepSize: 0.2,
-            // Include a dollar sign in the ticks
-            // callback: function(value, index, values) {
-            //   return value * 100 + "%";
-            // }
           }
         }
       ]
@@ -578,8 +559,6 @@ handleWindowSizeChange = () => {
 
 <Bar
   data={this.state.competitionFinalScoreBarChart.data}
-  // options={chartOptions.featureImportances}
-  // options={this.state.competitionFinalScoreBarChart.chartOptions}
   options={{
     legend: {
       display: false
@@ -609,13 +588,6 @@ handleWindowSizeChange = () => {
             fontColor: "#656565",
             fontFamily: "Open Sans",
             fontSize: 10,
-            // min: 0,
-            // max: 1,
-            // stepSize: 0.2,
-            // Include a dollar sign in the ticks
-            // callback: function(value, index, values) {
-            //   return value * 100 + "%";
-            // }
           }
         }
       ]
@@ -642,8 +614,6 @@ handleWindowSizeChange = () => {
 
 <Bar
   data={this.state.competitionWinPctBarChart.data}
-  // options={chartOptions.featureImportances}
-  // options={this.state.competitionFinalScoreBarChart.chartOptions}
   options={{
     legend: {
       display: false
@@ -673,10 +643,6 @@ handleWindowSizeChange = () => {
             fontColor: "#656565",
             fontFamily: "Open Sans",
             fontSize: 10,
-            // min: 0,
-            // max: 1,
-            // stepSize: 0.2,
-            // Include a dollar sign in the ticks
             callback: function(value, index, values) {
               return value * 100 + "%";
             }
@@ -706,31 +672,14 @@ handleWindowSizeChange = () => {
       paddingLeft: '2%',
       paddingRight: '2%',
       paddingRight: '5%'
-      // paddingTop: "5%",
-      //       paddingBottom: "5%"
 
     }}
   />
 
-{/* <div> */}
-            {/* <div className="chart-title-large" >{"Algorithm Accuracy"}</div> */}
             <PageHeader header="Algorithm Accuracy" />
-
-      {/* </div> */}
 
 <div>
   <DropdownSelectorGroup 
-// dropDownItemsListSelectorOne={this.state.periodDropdownList} 
-// selectedValueSelectorOne = {this.state.selectedPeriod} 
-// setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePeriod.bind(this)}
-
-// dropDownItemsListSelectorTwo={this.state.minuteDropdownList} 
-// selectedValueSelectorTwo = {this.state.selectedMinute} 
-// setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeMinute.bind(this)}
-// dropDownItemsListSelectorThree={this.state.ageDropdownList} 
-// selectedValueSelectorThree = {this.state.selectedAge} 
-// setParentSelectorStateSelectorThree={this.handleDropdownSelectorChangeAge.bind(this)}        
-
 dropDownItemsListSelectorOne={this.state.predictorDropdownList} 
 selectedValueSelectorOne = {this.state.selectedPredictor} 
 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
@@ -740,32 +689,18 @@ toggleParentMenu={this.toggleMenu.bind(this)}
 style={{paddingBottom:'2%'}}/>       
 </div>
 
-
-{/* <DropdownSelectorGroup 
-dropDownItemsListSelectorOne={this.state.predictorDropdownList} 
-selectedValueSelectorOne = {this.state.selectedPredictor} 
-setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
-
-
-selectedSyles = {selectStylesTertiary}
-toggleParentMenu={this.toggleMenu.bind(this)}/>    */}
 <div style={{ width: '85vw',paddingTop: '20px', paddingBottom: '5vh'}}>
 
 {this.state.algCompsLineChartWinnerHometeam && (
           <div style={{paddingBottom:'2%'}}>
             <div className="chart-title-large" >{"Predicting Winner"}</div>
             <div className="chart-title-small" >{"Accuracy %"}</div>
-            {/* {this.state.selectedMetric && (<div className="chart-title-small" >{this.state.selectedMetric.label}</div>)} */}
-      
-            {/* <div style={{maxHeight: '45vh', width: '85vw',paddingTop: '20px', paddingBottom: '5vh'}}> */}
-
             <Line data={this.state.algCompsLineChartWinnerHometeam.data}
             options={{
               responsive: true,
               maintainAspectRatio: true,
             }}>
             </Line>
-            {/* </div> */}
           </div >
         )}
 
@@ -775,12 +710,8 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>    */}
             <div className="chart-title-large" >{"Predicting Final Score Home Team"}</div>
             <div className="chart-title-small" >{"R2 %"}</div>
             
-            {/* <div className="chart-title-small" >{"Adult Male Matches"}</div> */}
-            {/* {this.state.selectedMetric && (<div className="chart-title-small" >{this.state.selectedMetric.label}</div>)} */}
-      
             <Line data={this.state.algCompsLineChartFinalScoreHometeam.data} >
             </Line>
-            {/* </div> */}
           </div>
         )}
 

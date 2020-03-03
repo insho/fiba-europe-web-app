@@ -4,26 +4,15 @@ import Banner from "../components/Banner.js";
 import DropdownSelectorGroup from "../components/DropdownSelectorGroup.js";
 import Menu from "./Menu";
 import PageHeader from "../components/PageHeader"
-import HorizontalTextwithBoldedSection from "../components/HorizontalTextwithBoldedSection"
 import ReactMarkdown from 'react-markdown';
 import "../App.css";
 import "./GameSummaryScreen.css";
-import { selectStylesSecondary, selectStylesTertiary } from "../options/SelectStyles";
+import { selectStylesTertiary } from "../options/SelectStyles";
 import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
-import chroma from 'chroma-js';
-
-import { HashLoader } from 'react-spinners';
-// import ScrollView from 'react-native';
-// import ScrollText from 'react-scroll-text';
-// import  ScrollArea from 'react-scrollbar'; 
+// import { HashLoader } from 'react-spinners';
 import { chartOptions } from "../options/ChartOptions.js";
 import { Pie, Bar, Line, HorizontalBar } from "react-chartjs-2";
- 
-// import 'react-web-tabs/dist/react-web-tabs.css';
-// import ReactTable from 'react-table';
 import { ChartModule } from 'chartjs-plugin-labels';
-// import { ChartModule } from 'angular2-chartjs';
 import ChartBlock from "../components/ChartBlock.js";
 
 import {
@@ -50,9 +39,6 @@ class AlgCompsScreen extends Component {
    
     this.state = {
       loadingFeatureImportancesSeveralPredictors: true,
-      // selectedMetric: 'accuracy',
-      // selectedAge: 'adult',
-      // selectedSex: 'male',
       compTarget: 'winner_hometeam',
       ageDropdownList: [{ value: "adult", label: "Adult" },
       { value: "U20", label: "U20" },
@@ -115,26 +101,6 @@ class AlgCompsScreen extends Component {
     ],
     finalScoreMatchAlgCompsPredictorTagSelectedTags: [
       { value: "somepredictorsA", label: "Alg A (some)" , sort: 1}    ]
-
-  //   featureImportancePeriodDropdownList: [{value: "1", label: "Period 1"},
-  //     {value: "2", label: "Period 2"},
-  //     {value: "3", label: "Period 3"},
-  //     {value: "4", label: "Period 4"}
-  //   ],
-  //   selectedFeatureImportancePeriod: { value: "1", label: "Period 1" },
-
-  //   featureImportanceMinuteDropdownList: [{value: "1", label: "Minute 1"},
-  //   {value: "2", label: "Minute 2"},
-  //   {value: "3", label: "Minute 3"},
-  //   {value: "4", label: "Minute 4"},
-  //   {value: "5", label: "Minute 5"},
-  //   {value: "6", label: "Minute 6"},
-  //   {value: "7", label: "Minute 7"},
-  //   {value: "8", label: "Minute 8"},
-  //   {value: "9", label: "Minute 9"},
-  //   {value: "10", label: "Minute 10"}],
-  // selectedFeatureImportanceMinute: { value: "3", label: "Minute 3" }
-
     }
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
@@ -152,13 +118,6 @@ class AlgCompsScreen extends Component {
     e.stopPropagation();
   }
 
-  // state = {
-  //   brandDropdownList: null,
-  //   data: null,
-  //   selectedBrand: null,
-  //   previouslySelectedBrand: null
-  // };
-
   toggleMenu = this.toggleMenu.bind(this);
   handleMouseDown = this.handleMouseDown.bind(this);
 
@@ -174,33 +133,23 @@ class AlgCompsScreen extends Component {
    }
 
   componentDidMount() {
-    // this.setState({loading: false});
     Promise.resolve(this.updateAccuracyCharts()).then(() => {this.updatePredictionChart()});
 
   }
 
-  componentDidUpdate() {
-    // this.updateAccuracyCharts();
-   }
+  componentDidUpdate() {   }
 
 
   componentWillReceiveProps(nextProps) {
-    // if(this.state.selectedTabId != "three" && nextProps.selectedTabId == "three") {
-    //   console.log("SETTING STATE")
-    //   this.setState({selectedTabId: nextProps.selectedTabId});
-      // this.updateAccuracyCharts();
-    // }
-
   }
 
   updateMatchDropdown = () => {
-    // console.log("updating match dropdown : " + this.state.selectedCompetition.value)  
     
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'MatchDropdownSelector',
       selectedCompetition: this.state.selectedCompetition.value
     }), data => {
-      console.log("heres selected match : " + data[0].value)  
+      // console.log("heres selected match : " + data[0].value)  
     
       this.setState({
         matchDropdownList: data,
@@ -230,13 +179,9 @@ $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
 
 });
 
-
-
-
     if (this.state.selectedMetric !== undefined 
       && this.state.selectedMetric !== this.state.previouslySelectedMetric )
-    {
-  
+    {  
 
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'AlgCompsWinnerAccuracyLine',
@@ -260,16 +205,10 @@ $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameCumulativePredictionComps',
       matchId: this.state.selectedMatch.value,
       tagsString: tagsString
-      // dateRange:this.state.selectedDateRange.value
     }), data => {
-      // console.log(this.state.selectedMatch.value)
       this.setState({
         cumulativePredictionsFinaleScoreHometeamLineChart: {
-          // data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction'], { labels: ["current score", "final score (actual)", "final score (prediction)"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"] })
-
-            // data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_lower_some','final_score_hometeam_upper_some'], { labels: ["current score", "final score (actual)", "final score (prediction)","LOWER","UPPER"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
             data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
-
         }
 
       })
@@ -280,8 +219,6 @@ $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
 
 
   updatePredictionChart = () => {
-  
-
     
         const tagsString = this.state.finalScoreMatchAlgCompsPredictorTagSelectedTags.map(item => item.value).join(',,');
     
@@ -289,15 +226,10 @@ $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
           queryName: 'GameCumulativePredictionComps',
           matchId: this.state.selectedMatch.value,
           tagsString: tagsString
-          // dateRange:this.state.selectedDateRange.value
         }), data => {
-          // console.log("IN updatePredictionChart for " + this.state.selectedCompetition.value)
-          // console.log(data)
           this.setState({
             cumulativePredictionsFinaleScoreHometeamLineChart: {
-              // data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction'], { labels: ["current score", "final score (actual)", "final score (prediction)"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"] })
-                          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
-
+              data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction_some','final_score_hometeam_prediction_several','final_score_hometeam_prediction_many'], { labels: ["current score", "final score (actual)", "Alg A (some)","Alg B (several)","Alg C (many)"], backgroundColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"], borderColors: ["#64b5f6","#656565", "#a60000","#e6a312","#d44fe8"] })
             }
     
           })
@@ -322,29 +254,11 @@ $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       Promise.resolve(this.setState({previouslySelectedMetric:this.state.selectedMetric,selectedMetric})).then(() => {this.updateAccuracyCharts()});
     }
   }
-
-  //   handleDropdownSelectorChangeFeatureImportancePeriod = (selectedFeatureImportancePeriod) => {
-  //   if(this.state.previouslySelectedFeatureImportancePeriod === undefined || (this.state.selectedFeatureImportancePeriod!== selectedFeatureImportancePeriod)) {
-  //     Promise.resolve(this.setState({previouslySelectedFeatureImportancePeriod:this.state.selectedFeatureImportancePeriod,selectedFeatureImportancePeriod})).then(() => {this.updateAccuracyCharts()});
-  //   }
-  // }
-
-  // handleDropdownSelectorChangeFeatureImportanceMinute = (selectedFeatureImportanceMinute) => {
-  //   if(this.state.previouslySelectedFeatureImportanceMinute === undefined || (this.state.selectedFeatureImportanceMinute!== selectedFeatureImportanceMinute)) {
-  //     Promise.resolve(this.setState({previouslySelectedFeatureImportanceMinute:this.state.selectedFeatureImportanceMinute,selectedFeatureImportanceMinute})).then(() => {this.updateAccuracyCharts()});
-  //   }
-  // }
-
   
   handleDropdownSelectorChangeCompetition = (selectedCompetition) => {
     if(this.state.previouslySelectedCompetition === undefined || (this.state.selectedCompetition!== selectedCompetition)) {
-      // (Promise.resolve(this.setState({previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => {this.updateMatchDropdown()})).then(()=> {this.updatePredictionChart()});
-
-      // Promise.resolve(this.setState({ previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition})).then(() => { this.updateMatchDropdown()  }).then(() => { this.updatePredictionChart(); });
-
       this.setState({ previouslySelectedCompetition:this.state.selectedCompetition,selectedCompetition});
 
-      // console.log("SETTING SELECTED COMPETITION: " + selectedCompetition.value)
       const updateMatchDropdownPromise = this.updateMatchDropdownConst(selectedCompetition.value);
 
       updateMatchDropdownPromise.then(() => {
@@ -360,8 +274,6 @@ $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
     queryName: 'MatchDropdownSelector',
     selectedCompetition: selectedCompetition
   }), data => {
-    // console.log("GETTING MATCHES FOR COMPETITION : " + this.state.selectedCompetition.value)  
-  
     this.setState({
       matchDropdownList: data,
       selectedMatch: data[0]
@@ -378,21 +290,13 @@ $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
   
   handleChangeSelectorTagSelected = (selectedTags) => {
     selectedTags = selectedTags.sort((a, b) => (a.sort > b.sort) ? 1 : -1)
-
-    // console.log(this.state.gameSummaryTabPlayerSummaryselectedTags)
-
-    // if(this.state.gameSummaryTabPlayerSummarySelectedPeriods === undefined || (this.state.gameSummaryTabPlayerSummarySelectedPeriods!== selectedPeriods)) {
-
     Promise.resolve(this.setState({ finalScoreMatchAlgCompsPredictorTagSelectedTags: selectedTags })).then(() => { this.updatePredictionChart() });
-    // }
   }
   
 
 markdownWinnerAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As expected, the simplest algorithm (Alg A, with the current score of the home and away teams as its only inputs) performs the worst out of the three. The algorithm with the most inputs (Alg C) performs the best, particularly toward the end of the match. However, Alg B, which has as its inputs the current score broken down by shot type (inputs like 'free throws made by home team' and 'two point shots made by home team'), but is lacking various ancillary inputs not related to the score, is almost neck and neck with Alg C for the majority of the points in time during the match. In fact, Alg B performs at an equivalent rate of overall accuracy, or even better, at a few choice points early in the matches. \n\n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perhaps the takeaway here is that, in the early stages of a match, metrics that are not directly related to score, like 'starting five in play home team' only server to muddle things, or lead to over-fitting of the alg on the training set. \n\n\n\n"
-
 markdownWinnerAlg2 = "### False Negatives & False Positives\n\n\
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If we switch the metric selector drop-down from ‘Overall Accuracy’ to ‘False Positives’, it is apparent that much of the difference between Alg A and Algs B and C comes from an improvement in the rate of False Negatives (a false negative in this case being the erroneous conclusion that the home team lost a match which it actually ended up winning). Alg A has a false negative rate that is almost 10 percentage points higher than B and C at several points in the match. On the other hand, the rate of false positives (the erroneous conclusion that the home team won a match it actually lost), is essentially the same for all three algs. Interesting! \n\n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; One common reason for an excess of false negatives in a classification model has to do with class imbalance (i.e. having significantly more matches in the training set which the home team won instead of lost. Perhaps there is some truth to this, given that 'home team advantage' is a known phenomenon. The analytics website 538 states that the home team wins NBA games 59.9% of the time. We can investigate this rate on the Fiba data set using the following query:"
-
 markdownWinnerAlg3 = "```sql\n\
 WITH hometeam_win_loss as (\n\
   SELECT\n\
@@ -441,16 +345,6 @@ markdownFinalScoreAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, whe
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However, as the games progress to the 2nd half, Alg A does just as well as Alg B at predicting the final score, while Alg C, with all its various inputs, performs markedly worse than the other two. On reflection, this is an understandable outcome. The inputs for algs A and B are solely related to scoring. It follows that these algs would perform particularly well as the game progresses, when the current score becomes increasingly, disproportionately important in predicting the final score of the game.\n\n\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The variety of inputs in Alg C help to predict outcomes early in the game, but these fields seem to do more to muddle the predictive ability of the alg in the later stages of the game.\n\n\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alg B appears to be a solid middle ground, equally successful in the first and second halves. Of course, to truly maximize the predictive power here we would need to both experiment more with the input fields, as well as tweak the alg hyper-parameters."
-
-
-
-// The code for this app [is here](https://github.com/insho/fiba-europe-web-app)\n\n\n\
-// The machine learning project itself can be [found here](https://github.com/insho/fiba-europe-basketball-project). It involved four main parts:\n\n\
-// 1. **[Acquiring the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part1_acquiring_data.ipynb)**\n\
-// 2. **[Processing the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part2_process_data.ipynb)**\n\
-// 3. **[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)**\n\
-// 4. **[Creating, Testing and Comparing Machine Learning Algorithms](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part4_making_algs.ipynb)**\n\n\n";
-
 
 
   componentWillMount() {
@@ -509,10 +403,7 @@ markdownFinalScoreAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, whe
       dropDownItemsListSelectorOne={this.state.metricDropdownList} 
       selectedValueSelectorOne = {this.state.selectedMetric} 
       setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeMetric.bind(this)}
-    
-      // dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
-      // selectedValueSelectorTwo = {this.state.selectedAge} 
-      // setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)}        
+  
       toggleParentMenu={this.toggleMenu.bind(this)}/>
 
             <Line data={this.state.algCompsLineChartWinnerHometeam.data}>
@@ -541,8 +432,6 @@ markdownFinalScoreAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, whe
       paddingLeft: '2%',
       paddingRight: '2%',
       paddingRight: '5%'
-      // paddingTop: "5%",
-      //       paddingBottom: "5%"
 
     }}
   />
@@ -569,19 +458,6 @@ markdownFinalScoreAlg1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, whe
 
           <div className="split-table-container-lower" style={{paddingRight:'4%'}}> 
 
-          {/* <DropdownSelectorGroup 
-
-dropDownItemsListSelectorOne={this.state.sexDropdownList} 
-selectedValueSelectorOne = {this.state.selectedSex} 
-setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeSex.bind(this)}        
-
-dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
-selectedValueSelectorTwo = {this.state.selectedAge} 
-setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)} 
-
-selectedSyles = {selectStylesTertiary}
-toggleParentMenu={this.toggleMenu.bind(this)}/> */}
-
 
 <div className="chart-divider" />
   <hr
@@ -592,8 +468,6 @@ toggleParentMenu={this.toggleMenu.bind(this)}/> */}
       paddingLeft: '2%',
       paddingRight: '2%',
       paddingRight: '5%'
-      // paddingTop: "5%",
-      //       paddingBottom: "5%"
 
     }}
   />
@@ -608,11 +482,6 @@ style = {{"minWidth":"35vw"}}
 dropDownItemsListSelectorOne={this.state.competitionDropdownList} 
 selectedValueSelectorOne = {this.state.selectedCompetition} 
 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeCompetition.bind(this)}        
-
-// dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
-// selectedValueSelectorTwo = {this.state.selectedAge} 
-// setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)} 
-
 selectedSyles = {selectStylesTertiary}
 toggleParentMenu={this.toggleMenu.bind(this)}/>
 
@@ -624,11 +493,6 @@ style = {{"width":"35vw"}}
 dropDownItemsListSelectorOne={this.state.matchDropdownList} 
 selectedValueSelectorOne = {this.state.selectedMatch} 
 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeMatch.bind(this)}        
-
-// dropDownItemsListSelectorTwo={this.state.ageDropdownList} 
-// selectedValueSelectorTwo = {this.state.selectedAge} 
-// setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeAge.bind(this)} 
-
 selectedSyles = {selectStylesTertiary}
 toggleParentMenu={this.toggleMenu.bind(this)}/>
 
@@ -654,9 +518,6 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
                                           onChange={this.handleChangeSelectorTagSelected}
                                           isMulti
                                           options={this.state.finalScoreMatchAlgCompsPredictorTagDropdownOptions}  
-                                          // styles={selectStylesSecondary} 
-                                          // components={makeAnimated()}
-                                          // styles={colourStyles}
                                           ></Select>
                           )}
     
@@ -665,7 +526,6 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 
               <Line
                 data={this.state.cumulativePredictionsFinaleScoreHometeamLineChart.data}
-              // options={chartOptions.brandDetailsSalesReturnRateLineChart}
               >
               </Line>
             </div>

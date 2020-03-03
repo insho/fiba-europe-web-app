@@ -10,31 +10,22 @@ import "../App.css";
 import "./GameSummaryScreen.css";
 import { selectStylesTertiary } from "../options/SelectStyles";
 import { NavLink } from "react-router-dom";
-
 import { HashLoader } from 'react-spinners';
-// import ScrollView from 'react-native';
-// import ScrollText from 'react-scroll-text';
-// import  ScrollArea from 'react-scrollbar'; 
 import { chartOptions } from "../options/ChartOptions.js";
-import { Pie, Bar, Line, HorizontalBar } from "react-chartjs-2";
- 
-// import 'react-web-tabs/dist/react-web-tabs.css';
-// import ReactTable from 'react-table';
-import { ChartModule } from 'chartjs-plugin-labels';
+import { Bar } from "react-chartjs-2";
+// import { ChartModule } from 'chartjs-plugin-labels';
 // import { ChartModule } from 'angular2-chartjs';
-import ChartBlock from "../components/ChartBlock.js";
+// import ChartBlock from "../components/ChartBlock.js";
 
 import {
-  assembleChartDataCollectionSimple
-  , assembleChartDataCollectionStacked
-  , assembleChartDataCollectionSimpleMultiple
-  , assembleChartDataCollectionGrouped
-  , assemblePivotedPieChart
-  , assemblePivotedPieChartCollection
+  // assembleChartDataCollectionSimple
+  // , assembleChartDataCollectionStacked
+  assembleChartDataCollectionSimpleMultiple
+  // , assembleChartDataCollectionGrouped
+  // , assemblePivotedPieChart
+  // , assemblePivotedPieChartCollection
   ,assembleChartDataCollectionSingleRowMultipleColumns
 } from "../options/ChartAssembly";
-
-
 
 const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
 
@@ -48,9 +39,6 @@ class AlgOverviewScreen extends Component {
    
     this.state = {
       loadingFeatureImportancesSeveralPredictors: true,
-      // selectedMetric: 'accuracy',
-      // selectedAge: 'adult',
-      // selectedSex: 'male',
       compTarget: 'winner_hometeam',
       ageDropdownList: [{ value: "adult", label: "Adult" },
       { value: "U20", label: "U20" },
@@ -111,13 +99,6 @@ class AlgOverviewScreen extends Component {
     e.stopPropagation();
   }
 
-  // state = {
-  //   brandDropdownList: null,
-  //   data: null,
-  //   selectedBrand: null,
-  //   previouslySelectedBrand: null
-  // };
-
   toggleMenu = this.toggleMenu.bind(this);
   handleMouseDown = this.handleMouseDown.bind(this);
 
@@ -133,22 +114,14 @@ class AlgOverviewScreen extends Component {
    }
 
   componentDidMount() {
-    // this.setState({loading: false});
     this.updateCharts();
   }
 
   componentDidUpdate() {
-    // this.updateCharts();
    }
 
 
   componentWillReceiveProps(nextProps) {
-    // if(this.state.selectedTabId != "three" && nextProps.selectedTabId == "three") {
-    //   console.log("SETTING STATE")
-    //   this.setState({selectedTabId: nextProps.selectedTabId});
-      // this.updateCharts();
-    // }
-
   }
 
   updateCharts = () => {
@@ -408,15 +381,6 @@ markdownTuning2Code = "```python \
  markdownConclusion1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As one would expect, the most important feature in predicting whether the home team won a match is the home team's current score. The second most important is the away team's current score. This is true for all three algorithms.\n\n\ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We can see that, particularly early in the match, there is a virtual tie between home team and away team current score for Alg A and B. Alg C, on the other hand, clearly favors the home team's current score far more than any other factor, almost twice as much (!) as the away team's final score. I am a bit wary of this result. My first thought is that something eronious is occurring, as the addition of several other less important inputs (like 'players with two fouls for the home team' for example) would cause 'current score home team' to suddenly be so disproportionaly imporant. Alg B certainly does not exhibit this kind of difference. "
 
 
- // The code for this app [is here](https://github.com/insho/fiba-europe-web-app)\n\n\n\
-// The machine learning project itself can be [found here](https://github.com/insho/fiba-europe-basketball-project). It involved four main parts:\n\n\
-// 1. **[Acquiring the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part1_acquiring_data.ipynb)**\n\
-// 2. **[Processing the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part2_process_data.ipynb)**\n\
-// 3. **[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)**\n\
-// 4. **[Creating, Testing and Comparing Machine Learning Algorithms](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part4_making_algs.ipynb)**\n\n\n";
-
-
-
 componentWillMount() {
   window.addEventListener('resize',this.handleWindowSizeChange);
 }
@@ -452,7 +416,6 @@ handleWindowSizeChange = () => {
 
       <Banner bannerTextMajor = {"Algorithms Overview"}  
       toggleParentMenu={this.toggleMenu.bind(this)}
-      // style={{width:'100vw',height: '100vh', alignSelf: 'stretch', backGroundColor: 'yellow'}}
       />
 
 
@@ -474,35 +437,13 @@ handleWindowSizeChange = () => {
 
               <ReactMarkdown source={this.markdown1}/> 
               </div>
-        {/* <ReactMarkdown source={this.markdown1} style={{paddingLeft: '10%', width: '60%', backgroundColor: "#656565ff"}}/> */}
-
-        {/* <div className="horizontal-chart-container" style={{width: '70vw',paddingTop: '20px'}}> */}
-
-    
-        
-        
-        {/* <ReactMarkdown source={this.markdown1b}/>  */}
-        {/* <div style={{paddingLeft: '10%', width: '60%'}}> */}
               <ReactMarkdown source={this.markdown1b}  style={{paddingTop: '2%'}}/> 
-           {/* </div> */}
-
             <div style={{paddingLeft: '10%', overflowX: false, overflowY: 'scroll', maxHeight: '200px', display: 'block', width: '60%'}}>
               <ReactMarkdown source={this.markdown2}/> 
            </div>
 
-
-           
-
-        
-
-
-
-
            <br></br>
            <ReactMarkdown source={this.markdown3} style={{paddingTop: '20px'}}/>
-                     
-
-
 
            <div style={{paddingLeft: '10%', overflowX: false, overflowY: 'scroll', maxHeight: '200px', display: 'block', width: '60%'}}>
            <ReactMarkdown source={this.markdown4}/> 
@@ -518,16 +459,11 @@ handleWindowSizeChange = () => {
       backgroundColor: "#e7e7e7",
       height: '.1',
       paddingLeft: '2%',
-            paddingRight: '2%'
-      // paddingTop: "5%",
-      //       paddingBottom: "5%"
-
+      paddingRight: '2%'
     }}
   />
 
-
 <div style={{ width: '60%', paddingLeft: '2%'}}>
-
 
 <PageHeader header="Alg Tuning & Hyper Parameters" subHeader={""}/>
 
@@ -549,23 +485,11 @@ handleWindowSizeChange = () => {
       backgroundColor: "#e7e7e7",
       height: '.1',
       paddingLeft: '2%',
-            paddingRight: '2%'
-      // paddingTop: "5%",
-      //       paddingBottom: "5%"
-
+      paddingRight: '2%'
     }}
   />
 
 <PageHeader header="Feature Importances" subHeader={""}/>
-
-{/* <div className="chart-title-large" >{"Feature Importances"}</div> */}
-{/* <div className="chart-title-small">{"Feature Importances indicate the importance/relevance of the input features to the target (output) feature for which the model predicts"}</div>
-<div className="chart-title-small">{"The feature importances plotted below are for algs predicting the winner of the match, at the period and minute specified below:"}</div> */}
-
-
-
-
-
 <div >
            <ReactMarkdown source={this.markdownFeatureImportance}/> 
            </div>
@@ -580,9 +504,6 @@ setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeFeatureImpor
 dropDownItemsListSelectorTwo={this.state.featureImportanceMinuteDropdownList} 
 selectedValueSelectorTwo = {this.state.selectedFeatureImportanceMinute} 
 setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeFeatureImportanceMinute.bind(this)}
-// dropDownItemsListSelectorThree={this.state.ageDropdownList} 
-// selectedValueSelectorThree = {this.state.selectedAge} 
-// setParentSelectorStateSelectorThree={this.handleDropdownSelectorChangeAge.bind(this)}        
 selectedSyles = {selectStylesTertiary}
 toggleParentMenu={this.toggleMenu.bind(this)}/>
 
@@ -590,16 +511,7 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 {this.state.algCompsWinnerFeatureImporancesSomePredictors && (
 <div  style={{maxHeight: '35vh', width: '70vw',paddingTop: '20px', paddingBottom: '5vh'}}>
    
-
-{/* <div className="chart-title-large" >{this.props.chartTitle}</div> */}
-
-
 <div className="chart-title-large" style={{"paddingBottom":"10px"}} >{"Algorithm A"}</div>
-
-{/* <ReactMarkdown source={this.markdownFeatureImportance}/> */}
-
-{/* <div className="chart-title-small" style={{fontSize: '14px'}}>{"Predicting the winner of the match"}</div> */}
-
 
 <Bar
   data={this.state.algCompsWinnerFeatureImporancesSomePredictors.data}
@@ -612,7 +524,6 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 
 {this.state.loading ? <div className='loading-spinner' style={{paddingTop: '5vh'}}>
 <HashLoader
-  // css={override}
   sizeUnit={"px"}
   size={100}
   color={'#d14972'}
@@ -623,7 +534,6 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
 {this.state.algCompsWinnerFeatureImporancesSeveralPredictors 
   &&   (
 <div  style={{width: '70vw',paddingTop: '5vh'}}>
-  {/* <div className="chart-title-large" >{this.props.chartTitle}</div> */}
   <div className="chart-title-large" style={{"paddingBottom":"10px"}} >{"Algorithm B"}</div>
   <Bar 
     data={this.state.algCompsWinnerFeatureImporancesSeveralPredictors.data}
@@ -637,12 +547,8 @@ toggleParentMenu={this.toggleMenu.bind(this)}/>
   }
 
 
-
-          
-
 {this.state.algCompsWinnerFeatureImporancesManyPredictors && (
 <div  style={{width: '70vw',paddingTop: '5vh'}}>
-{/* <div className="chart-title-large" >{this.props.chartTitle}</div> */}
 <div className="chart-title-large" style={{"paddingBottom":"10px"}} >{"Algorithm C"}</div>
 <Bar
 data={this.state.algCompsWinnerFeatureImporancesManyPredictors.data}
@@ -658,10 +564,7 @@ options={chartOptions.featureImportances}
            <ReactMarkdown source={this.markdownConclusion1}/> 
            </div>
 
-{/* <div className="horizontal-chart-container" style={{paddingTop: "10px"}}> */}
-{/* <ReactMarkdown source={"We can see how the algorithms fared against a test data set here, on the 'Alg Comparisons' page"}/> */}
 <NavLink  exact to="/machine-learning-alg-comps">We can see how the algorithms fared against a test data set here, on the 'Alg Comparisons' page</NavLink>
-{/* </div> */}
 
           </div>
           

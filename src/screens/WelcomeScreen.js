@@ -7,32 +7,60 @@ export default class WelcomeScreen extends React.Component {
 
 state = {visible: true};
 
-markdown = "This is a companion piece to my [Fiba Basketball Machine Learning Project](https://github.com/insho/fiba-europe-basketball-project). It Wvisualize and better explain my Fiba basketball machine learning project. I built it as a way to visualize and better explain aspects of the machine learning project, as well as to gain experience experience building and deploying a react web app for the first time.\n\n\n\
-The code for this app [is here](https://github.com/insho/fiba-europe-web-app)\n\n\n\
-The machine learning project itself can be [found here](https://github.com/insho/fiba-europe-basketball-project). It involved four main parts:\n\n\
-1. **[Acquiring the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part1_acquiring_data.ipynb)**\n\
-2. **[Processing the Data](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part2_process_data.ipynb)**\n\
-3. **[Finding Additional Metadata](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part3_finding_additional_metadata.ipynb)**\n\
-4. **[Creating, Testing and Comparing Machine Learning Algorithms](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part4_making_algs.ipynb)**\n\n\n";
+markdown = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is a companion piece to my [Fiba Basketball Machine Learning Project](https://github.com/insho/fiba-europe-basketball-project). I built it as a way to visualize and better explain aspects of the project, as well as to gain experience experience building and deploying a react web app for the first time.\n\n\n\
+* The code for this app can be [found here on github](https://github.com/insho/fiba-europe-web-app)\n\
+* The machine learning project itself can be [found here](https://github.com/insho/fiba-europe-basketball-project).\n\n\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This React web app showcases some findings from the project, regarding feature inputs, accuracy for different algorithm variations, etc. \
+It also includes stats and charts for a set of about 500 competitions and matches (a small subset of the roughly 40,000 matches\
+   which were used to train and test the algorithms). I've limited the competition and match detail pages to this subset to keep the size of the database nicely \
+   compact and manageable, and because these matches were representative of various types of matches (age, sex), and they had, for the most part, proper metadata associated wtih them (match date, location, etc).\n\n\n\n" 
 
-markdown2 = "**Extra SQL DEMO:** \n\n\
+
+
+
+markdown2 = "## Process Overview\n\n\
+The project involved four main parts:\n\n\
+1. **[Acquiring the Data](fiba_part1_acquiring_data.ipynb)**\n\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fiba basketball matches could, until late 2019, be found in two places:\n\
+* http://www.fibalivestats.com - fiba basketball matches from around the world, available in json format\n\
+* http://live.fibaeurope.com - fiba basketball matches from european leagues, available in xml format\n\n\
+This project focuses on the latter \"live.fibaeurope.com\" data. The notebook has functions for downloading and storing these files.\n\n\
+Unfortunately, as of late 2019, the site no longer seems to be up, and I am not sure how one can find the xml files. I have included a few in the repo for example purposes.\n\n\
+2. **[Processing the Data](fiba_part2_process_data.ipynb)**\n\n\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The raw xml files are \"processed\" into a format conducive to data analysis and machine learning. The result is a single dataframe with a columns for each action/event of interest. A few examples:\n\
+* team_fouls_committed_awayteam\n\
+* avg_time_between_scoring_events_overall_hometeam\n\
+* current_lead_hometeam\n\
+* cumulative_lead_changes_game\n\
+* cumulative_possessions_overall_hometeam\n\
+* starting_five_in_play_hometeam\n\
+* top_five_scorers_in_play_hometeam\n\
+* points_scored_by_players_in_play_awayteam\n\
+* percent_of_total_points_scored_by_players_in_play_awayteam\n\
+* points_scored_period1_combined\n\
+* current_score_combined\n\
+* cumulative_possessions_overall_combined\n\
+* starting_five_in_play_combined\n\
+* top_five_scorers_in_play_combined\n\
+* percent_of_total_stat_count_by_players_in_play_combined\n\
+* cumulative_player_personal_fouls_hometeam\n\
+* players_with_one_foul_hometeam\n\n\
+3. **[Finding Additional Metadata](fiba_part3_finding_additional_metadata.ipynb)**\n\n\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While the raw match files contain some metadata, like competition name, location of the match, team names, etc, there are **NO DATES** associated with these matches.\n\
+So, when did the matches occur, and in what sequence? This is not strictly necessary to create algorithms that rely on in-game information to predict outcomes, but I found it an annoyance.\n\
+Of more immediate importance, there is also **no clean metadata regarding the age group and sex of the players**. Matches include all age groups, from U14 to professional, for both male and female athletes.\n\
+To remedy this I scrape a site with archival fiba tournament schedule and boxscore information, and pair that metadata with my fiba matches (based on team names, final scores, and some other logic and ranking). This last bit is done in sql.\n\n\
+4. **[Creating, Testing and Comparing Machine Learning Algorithms](fiba_part4_making_algs.ipynb)**\n\n\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I use sklearn GradientBoostingRegressor and GradientBoostingClassifier to build some predictive algorithms based on the compiled and processed play-by-play match files.\n\
+As an example, I walkthrough the process of predicting the winner (hometeam or awayteam) based on play-by-play information available in the 1st period with 3 minutes of play remaining. I make three algs, with varying sets of input features. The algs are tested on a test dataset, and the results recorded and compared. The best-performing of these (which also happens to have the most inputs), correctly predicts the winner roughly 67% of the time.\n\
+Example training and test sets are included in the repo.\n\
+"
+
+markdown3 = "**Extra SQL DEMO:** \n\n\
 I've also included a 'sql demo' notebook showcasing some sql-based analysis and (somewhat) complicated querying of the fiba europe files.\n\n\
 It's not particularly easy to get sql syntax to render properly in an ipython notebook on github. I've found the best option is to launch the notebook via binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/insho/fiba-europe-basketball-project/master?filepath=fiba_europe_sql_demo.ipynb).\n\n\
-Here's the best way to do it:\n\n\
-* [Launch the notebook in Binder](https://mybinder.org/v2/gh/insho/fiba-europe-basketball-project/master?filepath=fiba_europe_sql_demo.ipynb)\n\n\
-* Click on the cell with the javasript snippet, that looks like so:\n\n\
-    ```javascript\
-    require(['notebook/js/codecell'], function(codecell) {\
-    codecell.CodeCell.options_default.highlight_modes['magic_text/x-mssql'] = {'reg':[/^%%sql/]} ;\
-    Jupyter.notebook.events.one('kernel_ready.Kernel', function(){\
-    Jupyter.notebook.get_cells().map(function(cell){\
-        if (cell.cell_type == 'code'){ cell.auto_highlight(); } }) ;\
-    ```\n\n\
-and press CTR+ENTER (or CMD+ENTER) to run the cell\n\
-* Then, if you click on any of the subsequent cells which contain sql code, the syntax should transform into the proper sql highlighting, etc.\n\n\n\
-Other, Less Fun Options:\n\n\
-* [nbviewer works, but won't highlight syntax](https://nbviewer.jupyter.org/github/insho/fiba-europe-basketball-project/blob/master/fiba_europe_sql_demo.ipynb)\n\n\
-* [Github maaay work, but sometimes fails to load](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_europe_sql_demo.ipynb)"
+"
+
 
   componentDidMount() {
     // If mobile
@@ -130,35 +158,24 @@ componentDidUpdate() {}
             />
 
 
-<Banner bannerTextMajor={"Welcome"} 
-            // dropDownItemsListSelectorOne={this.state.competitionDropdownList}
-            // selectedValueSelectorOne={this.state.selectedCompetition}
-            // setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeCompetition.bind(this)}
-            // dropDownItemsListSelectorTwo={this.state.matchDropdownList}
-            // selectedValueSelectorTwo={this.state.selectedMatch}
-            // setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeMatch.bind(this)}
+        <Banner bannerTextMajor={"Welcome"} 
             toggleParentMenu={this.toggleMenu.bind(this)}
             isWelcomeScreen= {true}
           />
 
 
-        <div className="simple-row-container" style={{paddingLeft: '1%'}}>
+        <div className="simple-row-container" style={{paddingLeft: '3%'}}>
         <div></div>
-        <div id="welcome-screen-text-container">
+        <div id="welcome-screen-text-container" style={{"paddingStart":"20px"}}>
 
             <div className="welcome-screen-text" id="welcome-screen-text-main-title">Fiba Basketball Machine Learning Project</div>
 
             <ReactMarkdown source={this.markdown}/>
           <br></br>
             <ReactMarkdown source={this.markdown2}/>
-            <div className="welcome-screen-text" id="welcome-screen-text-sub-title" style={{paddingTop: "14px"}} >The Idea:</div>
-            <div className="welcome-screen-text" id="welcome-screen-text-sub-title" style={{paddingTop: "12px", paddingBottom: "20px"}}>Process Overview</div>
-            <div className="welcome-screen-paragraph-container-mobile">
-            <div className="welcome-screen-text" id="welcome-screen-text-paragraph" style={{fontSize: "20px", fontWeight:"bold"}}>1. [Acquiring Data](link)</div>
-              <div className="welcome-screen-paragraph-container-mobile">
-                <div className="welcome-screen-text" id="welcome-screen-text-paragraph" style={{paddingTop: "10px"}}>SOME TEXT ABOUT THAT</div>
-              </div>
-            </div>
+            <br></br>
+            <ReactMarkdown source={this.markdown3}/>
+
             </div>
         </div>
         </div>
@@ -179,23 +196,21 @@ componentDidUpdate() {}
             isWelcomeScreen= {true}
             />
 
-        <div className="simple-row-container" style={{paddingLeft: '2%'}}>
+        <div className="simple-row-container" style={{"paddingright": '0px'}}>
         <div></div>
-        <div id="welcome-screen-text-container">
+
+        <div id="welcome-screen-text-container" style={{"paddingStart":"20px"}}>
 
             <div className="welcome-screen-text" id="welcome-screen-text-main-title">Fiba Basketball Machine Learning Project</div>
 
+          <div style={{"paddingLeft":"20px"}}>
             <ReactMarkdown source={this.markdown}/>
           <br></br>
             <ReactMarkdown source={this.markdown2}/>
-            <div className="welcome-screen-text" id="welcome-screen-text-sub-title" style={{paddingTop: "14px"}} >The Idea:</div>
-            <div className="welcome-screen-text" id="welcome-screen-text-sub-title" style={{paddingTop: "12px", paddingBottom: "20px"}}>Process Overview</div>
-            <div className="welcome-screen-paragraph-container">
-            <div className="welcome-screen-text" id="welcome-screen-text-paragraph" style={{fontSize: "20px", fontWeight:"bold"}}>1. [Acquiring Data](link)</div>
-              <div className="welcome-screen-paragraph-container">
-                <div className="welcome-screen-text" id="welcome-screen-text-paragraph" style={{paddingTop: "10px"}}>SOME TEXT ABOUT THAT</div>
-              </div>
-            </div>
+            <br></br>
+            <ReactMarkdown source={this.markdown3}/>
+          </div>
+
             </div>
         </div>
         </div>

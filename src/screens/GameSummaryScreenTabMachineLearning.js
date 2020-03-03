@@ -9,7 +9,6 @@ import { Pie, Bar, Line, HorizontalBar } from "react-chartjs-2";
 import 'react-web-tabs/dist/react-web-tabs.css';
 import ReactTable from 'react-table';
 import { ChartModule } from 'chartjs-plugin-labels';
-// import { ChartModule } from 'angular2-chartjs';
 import ChartBlock from "../components/ChartBlock.js";
 import Select from 'react-select';
   
@@ -43,33 +42,18 @@ class GameSummaryScreenTabMachineLearning extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    // console.log("________")
-    // console.log(this.props.gameMetricsCompBarChartFouls.data)
     this.setState({loading: false});
   }
 
   componentDidUpdate() { 
-
-    // console.log("will receive props: " + this.props.selectedTabId)
-
   }
 
 
   componentWillReceiveProps(nextProps) {
-    // this.setState({ data: nextProps.data });  
-
-    // console.log("state tab id: " + this.state.selectedTabId)
-    // console.log("props tab id: " + nextProps.selectedTabId)
     if(this.state.selectedTabId != "three" && nextProps.selectedTabId == "three") {
-      console.log("SETTING STATE")
       this.setState({selectedTabId: nextProps.selectedTabId});
       this.updateCharts();
     }
-
-
-    // console.log("________")
-    // console.log(this.props.gameMetricsCompBarChartFouls)
-    // console.log(this.props.gameMetricsCompPieChartShotsAttempted)
 
   }
 
@@ -121,9 +105,6 @@ handleChangeSelectorTagSelected = (selectedValue) => {
                                           onChange={this.handleChangeSelectorTagSelected}
                                           isMulti
                                           options={this.props.finalScoreMatchAlgCompsPredictorTagDropdownOptions}  
-                                          // styles={selectStylesSecondary} 
-                                          // components={makeAnimated()}
-                                          // styles={colourStyles}
                                           ></Select>
                           )}
     
@@ -139,7 +120,6 @@ handleChangeSelectorTagSelected = (selectedValue) => {
 
               <Line
                 data={this.props.cumulativePredictionsFinaleScoreHometeamLineChart.data}
-              // options={chartOptions.brandDetailsSalesReturnRateLineChart}
               >
               </Line>
             </div>
@@ -153,7 +133,6 @@ handleChangeSelectorTagSelected = (selectedValue) => {
 
               <Line
                 data={this.props.cumulativePredictionsWinnerHometeamLineChart.data}
-              // options={chartOptions.brandDetailsSalesReturnRateLineChart}
               >
               </Line>
             </div>
