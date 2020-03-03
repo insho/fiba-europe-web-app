@@ -11,7 +11,7 @@ import ReactTable from 'react-table';
 import { ChartModule } from 'chartjs-plugin-labels';
 import ChartBlock from "../components/ChartBlock.js";
 import Select from 'react-select';
-  
+
 import {
   assembleChartDataCollectionSimple
   , assembleChartDataCollectionStacked
@@ -32,7 +32,7 @@ function createAPIEndpointParamString(paramObject) {
 class GameSummaryScreenTabMachineLearning extends Component {
   constructor(props, context) {
     super(props, context);
-   
+
     this.state = {
       loading: true
     }
@@ -42,16 +42,16 @@ class GameSummaryScreenTabMachineLearning extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    this.setState({loading: false});
+    this.setState({ loading: false });
   }
 
-  componentDidUpdate() { 
+  componentDidUpdate() {
   }
 
 
   componentWillReceiveProps(nextProps) {
-    if(this.state.selectedTabId != "three" && nextProps.selectedTabId == "three") {
-      this.setState({selectedTabId: nextProps.selectedTabId});
+    if (this.state.selectedTabId != "three" && nextProps.selectedTabId == "three") {
+      this.setState({ selectedTabId: nextProps.selectedTabId });
       this.updateCharts();
     }
 
@@ -59,7 +59,7 @@ class GameSummaryScreenTabMachineLearning extends Component {
 
   updateCharts = () => {
 
-  
+
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameCumulativePredictionComps',
       matchId: this.props.matchId
@@ -68,7 +68,7 @@ class GameSummaryScreenTabMachineLearning extends Component {
       console.log(data)
       this.setState({
         cumulativePredictionsFinaleScoreHometeamLineChart: {
-          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction'], { labels: ["current score", "final score (actual)", "final score (prediciton)"], backgroundColors: ["#64b5f6","#656565", "#ae4126"], borderColors: ["#64b5f6","#656565", "#ae4126"] })
+          data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction'], { labels: ["current score", "final score (actual)", "final score (prediciton)"], backgroundColors: ["#64b5f6", "#656565", "#ae4126"], borderColors: ["#64b5f6", "#656565", "#ae4126"] })
         }
 
       })
@@ -78,12 +78,12 @@ class GameSummaryScreenTabMachineLearning extends Component {
 
 
 
-handleChangeSelectorTagSelected = (selectedValue) => {
-  this.setState({
+  handleChangeSelectorTagSelected = (selectedValue) => {
+    this.setState({
       selectedValueSelectorOne: selectedValue
     });
-  this.props.setParentSelectorStateSelectorOne(selectedValue)
-}
+    this.props.setParentSelectorStateSelectorOne(selectedValue)
+  }
 
 
   render() {
@@ -93,23 +93,23 @@ handleChangeSelectorTagSelected = (selectedValue) => {
       <div >
         <div style={{ "paddingTop": "20px" }}>
 
-        <div className="banner-dropdown-container" id="banner-dropdown-container--left">
-                      
-                      <div className="dropdown-selector-container" >
-    
-                          {this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags && (
-    
-                                      <Select className="drop-down-select"
-                                          value={this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags}
-                                          closeMenuOnSelect={false}
-                                          onChange={this.handleChangeSelectorTagSelected}
-                                          isMulti
-                                          options={this.props.finalScoreMatchAlgCompsPredictorTagDropdownOptions}  
-                                          ></Select>
-                          )}
-    
-                        </div>
+          <div className="banner-dropdown-container" id="banner-dropdown-container--left">
+
+            <div className="dropdown-selector-container" >
+
+              {this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags && (
+
+                <Select className="drop-down-select"
+                  value={this.props.finalScoreMatchAlgCompsPredictorTagSelectedTags}
+                  closeMenuOnSelect={false}
+                  onChange={this.handleChangeSelectorTagSelected}
+                  isMulti
+                  options={this.props.finalScoreMatchAlgCompsPredictorTagDropdownOptions}
+                ></Select>
+              )}
+
             </div>
+          </div>
 
 
 
@@ -126,7 +126,7 @@ handleChangeSelectorTagSelected = (selectedValue) => {
           )}
 
 
-{this.props.cumulativePredictionsWinnerHometeamLineChart && (
+          {this.props.cumulativePredictionsWinnerHometeamLineChart && (
             <div>
               <div className="chart-title-large" >{"Predicted Win Likelihood (Home Team)"}</div>
 
@@ -137,7 +137,7 @@ handleChangeSelectorTagSelected = (selectedValue) => {
               </Line>
             </div>
           )}
-          
+
 
 
         </div>

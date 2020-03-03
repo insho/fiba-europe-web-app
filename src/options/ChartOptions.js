@@ -47,7 +47,7 @@ export const chartOptions = {
             fontSize: 10,
             beginAtZero: true,
             min: 0
-          
+
           }
         }
       ],
@@ -151,14 +151,14 @@ export const chartOptions = {
         }
       ]
     }
-  }, 
+  },
   featureImportances: {
     maintainAspectRatio: false,
     legend: {
       display: false
     },
     plugins: {
-  labels: false
+      labels: false
     },
     tooltips: {
 

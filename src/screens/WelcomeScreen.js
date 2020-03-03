@@ -5,20 +5,22 @@ import Menu from "./Menu";
 import Banner from "../components/Banner.js";
 export default class WelcomeScreen extends React.Component {
 
-state = {visible: true};
+  state = { visible: true };
 
-markdown = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is a companion piece to my [Fiba Basketball Machine Learning Project](https://github.com/insho/fiba-europe-basketball-project). I built it as a way to visualize and better explain aspects of the project, as well as to gain experience experience building and deploying a react web app for the first time.\n\n\n\
+  markdown = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is a companion piece to my [Fiba Basketball Machine Learning Project](https://github.com/insho/fiba-europe-basketball-project). I built it as a way to visualize and better explain aspects of the project, as well as to gain experience experience building and deploying a react web app for the first time.\n\n\n\
 * The code for this app can be [found here on github](https://github.com/insho/fiba-europe-web-app)\n\
 * The machine learning project itself can be [found here](https://github.com/insho/fiba-europe-basketball-project).\n\n\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This React web app showcases some findings from the project, regarding feature inputs, accuracy for different algorithm variations, etc. \
 It also includes stats and charts for a set of about 500 competitions and matches (a small subset of the roughly 40,000 matches\
    which were used to train and test the algorithms). I've limited the competition and match detail pages to this subset to keep the size of the database nicely \
-   compact and manageable, and because these matches were representative of various types of matches (age, sex), and they had, for the most part, proper metadata associated wtih them (match date, location, etc).\n\n\n\n" 
+   compact and manageable, and because these matches were representative of various types of matches (age, sex), and they had, for the most part, proper metadata associated wtih them (match date, location, etc).\n\n\n\n"
 
 
 
 
-markdown2 = "## Process Overview\n\n\
+
+
+  markdown2 = "## Process Overview\n\n\
 The project involved four main parts:\n\n\
 1. **[Acquiring the Data](fiba_part1_acquiring_data.ipynb)**\n\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fiba basketball matches could, until late 2019, be found in two places:\n\
@@ -56,7 +58,7 @@ As an example, I walkthrough the process of predicting the winner (hometeam or a
 Example training and test sets are included in the repo.\n\
 "
 
-markdown3 = "**Extra SQL DEMO:** \n\n\
+  markdown3 = "**Extra SQL DEMO:** \n\n\
 I've also included a 'sql demo' notebook showcasing some sql-based analysis and (somewhat) complicated querying of the fiba europe files.\n\n\
 It's not particularly easy to get sql syntax to render properly in an ipython notebook on github. I've found the best option is to launch the notebook via binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/insho/fiba-europe-basketball-project/master?filepath=fiba_europe_sql_demo.ipynb).\n\n\
 "
@@ -64,21 +66,21 @@ It's not particularly easy to get sql syntax to render properly in an ipython no
 
   componentDidMount() {
     // If mobile
-    if (window.innerWidth< window.innerHeight)  {
+    if (window.innerWidth < window.innerHeight) {
       this.setState({
         visible: false
-        
-    });
-  } else{
-    this.setState({
-      visible: true
-  });
+
+      });
+    } else {
+      this.setState({
+        visible: true
+      });
+    }
+
+
+
   }
 
-    
-
-  }
-  
 
   constructor(props, context) {
     super(props, context);
@@ -87,18 +89,16 @@ It's not particularly easy to get sql syntax to render properly in an ipython no
       visible: false,
       width: window.innerWidth,
       height: window.innerHeight
-      // matchId: '10002',
-      // selectedTabId: "one"
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
-    
+
   }
 
   toggleMenu() {
-    console.log("TOGGLING MENU")
+    // console.log("TOGGLING MENU")
     this.setState({
       visible: !this.state.visible
     });
@@ -122,101 +122,99 @@ It's not particularly easy to get sql syntax to render properly in an ipython no
   handleMouseDown = this.handleMouseDown.bind(this);
 
 
-componentWillMount() {
-  window.addEventListener('resize',this.handleWindowSizeChange);
-}
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
 
-componentWillUnmount() {
-  window.removeEventListener('resize',this.handleWindowSizeChange);
-}
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
 
 
-handleWindowSizeChange = () => {
-  this.setState({width: window.innerWidth, height: window.innerHeight})
-}
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight })
+  }
 
-componentDidUpdate() {}
+  componentDidUpdate() { }
 
 
 
   render() {
 
-    // const {width, height} = this.state;
-    const isMobile = (window.innerWidth< window.innerHeight);
+    const isMobile = (window.innerWidth < window.innerHeight);
 
     if (isMobile) {
-   
-   
+
+
 
       return (
         <div>
-                  <Menu 
+          <Menu
             menuVisibility={this.state.visible}
-            flyOutWidth ='100vw'
+            flyOutWidth='100vw'
             toggleParentMenu={this.toggleMenu.bind(this)}
             isMobile={isMobile}
-            />
-
-
-        <Banner bannerTextMajor={"Welcome"} 
-            toggleParentMenu={this.toggleMenu.bind(this)}
-            isWelcomeScreen= {true}
           />
 
 
-        <div className="simple-row-container" style={{paddingLeft: '3%'}}>
-        <div></div>
-        <div id="welcome-screen-text-container" style={{"paddingStart":"20px"}}>
+          <Banner bannerTextMajor={"Welcome"}
+            toggleParentMenu={this.toggleMenu.bind(this)}
+            isWelcomeScreen={true}
+          />
 
-            <div className="welcome-screen-text" id="welcome-screen-text-main-title">Fiba Basketball Machine Learning Project</div>
 
-            <ReactMarkdown source={this.markdown}/>
-          <br></br>
-            <ReactMarkdown source={this.markdown2}/>
-            <br></br>
-            <ReactMarkdown source={this.markdown3}/>
+          <div className="simple-row-container" style={{ paddingLeft: '3%' }}>
+            <div></div>
+            <div id="welcome-screen-text-container" style={{ "paddingStart": "20px" }}>
+
+              <div className="welcome-screen-text" id="welcome-screen-text-main-title">Fiba Basketball Machine Learning Project</div>
+
+              <ReactMarkdown source={this.markdown} />
+              <br></br>
+              <ReactMarkdown source={this.markdown2} />
+              <br></br>
+              <ReactMarkdown source={this.markdown3} />
 
             </div>
+          </div>
         </div>
-        </div>
-    );
+      );
 
 
-         
+
 
 
     } else {
-   
+
       return (
         <div>
-                  <Menu 
+          <Menu
             menuVisibility={this.state.visible}
-            // toggleMenu = {this.toggleMenu.bind(this)}
             toggleParentMenu={this.toggleMenu.bind(this)}
-            isWelcomeScreen= {true}
-            />
+            isWelcomeScreen={true}
+          />
 
-        <div className="simple-row-container" style={{"paddingright": '0px'}}>
-        <div></div>
+          <div className="simple-row-container" style={{ "paddingright": '0px' }}>
+            <div></div>
 
-        <div id="welcome-screen-text-container" style={{"paddingStart":"20px"}}>
+            <div id="welcome-screen-text-container" style={{ "paddingStart": "20px" }}>
 
-            <div className="welcome-screen-text" id="welcome-screen-text-main-title">Fiba Basketball Machine Learning Project</div>
+              <div className="welcome-screen-text" id="welcome-screen-text-main-title">Fiba Basketball Machine Learning Project</div>
 
-          <div style={{"paddingLeft":"20px"}}>
-            <ReactMarkdown source={this.markdown}/>
-          <br></br>
-            <ReactMarkdown source={this.markdown2}/>
-            <br></br>
-            <ReactMarkdown source={this.markdown3}/>
-          </div>
+              <div style={{ "paddingLeft": "20px" }}>
+                <ReactMarkdown source={this.markdown} />
+                <br></br>
+                <ReactMarkdown source={this.markdown2} />
+                <br></br>
+                <ReactMarkdown source={this.markdown3} />
+              </div>
 
             </div>
+          </div>
         </div>
-        </div>
-    );
-  }
+      );
     }
+  }
 
-    
+
 }
