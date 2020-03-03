@@ -1,0 +1,30 @@
+
+#roundButton {
+    /* color: #ffffff; */
+    background-color: transparent;
+    /* padding-left: 150px; */
+    /* height: 100%;
+    width: 100%;
+     */
+    /* margin-bottom: 20px; */
+    width: 75px;
+    height: 75%;
+    border-radius: 90%;
+    
+    border: 1px transparent;
+    outline: none;
+    transition: all .1s cubic-bezier(0, 1.26, .8, 1.28);
+  }
+   
+  #roundButton:hover {
+    background-color: rgba(136, 211, 255, 0.322);
+    cursor: pointer;
+    border-color: #003557;
+    transform: scale(1.05, 1.05);
+  }
+   
+  #roundButton:active {
+    border-color: #003557;
+    background-color:'transparent';
+  }
+

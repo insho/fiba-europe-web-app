@@ -1,0 +1,402 @@
+ value  |                           label                           
+--------+-----------------------------------------------------------
+ 104721 | 2007-02-08 Cavigal Nice Basket vs Basket Landes
+ 110811 | 2008-12-03 TTT Riga vs VBW CEKK Ceglèd
+ 108292 | 2010-07-14 Elfic Fribourg vs Cavigal Nice Basket
+ 103202 | 2010-11-17 Nantes Reze vs Basketball Nymburk
+ 101423 | 2010-12-01 Eisvögel USC vs Carolo Basket
+ 10068  | 2011-11-02 Dexia Namur vs Optimum Ted Ankara
+ 10081  | 2011-11-02 Olimpia  vs Dynamo Kursk
+ 10066  | 2011-11-02 Lemminkainen vs Hainaut Basket
+ 10067  | 2011-11-02 Flying Foxes vs Gran Canaria
+ 10069  | 2011-11-02 Lombos vs Botas
+ 10065  | 2011-11-02 Lotto Young Cats vs Besiktas JK
+ 10084  | 2011-11-03 BBC Sint-Katelijne-Waver vs Arras
+ 10076  | 2011-11-03 Maccabi Bnot  vs Kayseri Kaskispor
+ 10077  | 2011-11-03 Partizan Galenika vs MBK Ruzomberok
+ 10078  | 2011-11-03 Elitzur Ramla vs Spartak Noginsk
+ 10396  | 2011-11-03 Dynamo Kursk vs Olimpia 
+ 10083  | 2011-11-03 AD Vagos vs Nantes Reze
+ 10082  | 2011-11-03 Horizont vs WBC Dynamo
+ 10080  | 2011-11-03 Sdent Helios vs Basket Landes
+ 10079  | 2011-11-03 SISU vs Chevakata
+ 10432  | 2011-11-09 Arras vs SISU
+ 10428  | 2011-11-09 WBC Dynamo vs Lombos
+ 10430  | 2011-11-09 Nantes Reze vs Dexia Namur
+ 10431  | 2011-11-09 Hainaut Basket vs Flying Foxes
+ 10446  | 2011-11-10 Besiktas JK vs Telge Basket
+ 10442  | 2011-11-10 Spartak Noginsk vs USO Mondeville
+ 10445  | 2011-11-10 Kayseri Kaskispor vs Olimpia 
+ 10443  | 2011-11-10 Dynamo - GUVD vs Lotto Young Cats
+ 10440  | 2011-11-10 Botas vs Horizont
+ 10444  | 2011-11-10 Basket Landes vs Partizan Galenika
+ 10448  | 2011-11-10 AD Vagos vs Optimum Ted Ankara
+ 10447  | 2011-11-10 Gran Canaria vs Lemminkainen
+ 10556  | 2011-11-16 Lotto Young Cats vs Telge Basket
+ 10560  | 2011-11-16 Dexia Namur vs AD Vagos
+ 10559  | 2011-11-16 Nantes Reze vs Optimum Ted Ankara
+ 10558  | 2011-11-16 Dynamo Kursk vs Kayseri Kaskispor
+ 10557  | 2011-11-16 WBC Dynamo vs Botas
+ 10583  | 2011-11-17 USO Mondeville vs Elitzur Ramla
+ 10586  | 2011-11-17 Lombos vs Horizont
+ 10582  | 2011-11-17 Basket Landes vs MBK Ruzomberok
+ 10581  | 2011-11-17 Partizan Galenika vs Sdent Helios
+ 10585  | 2011-11-17 BBC Sint-Katelijne-Waver vs SISU
+ 10580  | 2011-11-17 Maccabi Bnot  vs Olimpia 
+ 10584  | 2011-11-17 Gran Canaria vs Hainaut Basket
+ 10579  | 2011-11-17 Lemminkainen vs Flying Foxes
+ 10578  | 2011-11-17 Dynamo - GUVD vs Besiktas JK
+ 10577  | 2011-11-17 Chevakata vs Arras
+ 10587  | 2011-11-19 Horizont vs Lombos
+ 10660  | 2011-11-23 Hainaut Basket vs Lemminkainen
+ 10661  | 2011-11-23 Nantes Reze vs AD Vagos
+ 10658  | 2011-11-23 WBC Dynamo vs Horizont
+ 10703  | 2011-11-24 Gran Canaria vs Flying Foxes
+ 10696  | 2011-11-24 Chevakata vs SISU
+ 10697  | 2011-11-24 Spartak Noginsk vs Elitzur Ramla
+ 10699  | 2011-11-24 Botas vs Lombos
+ 10700  | 2011-11-24 Dynamo - GUVD vs Telge Basket
+ 10701  | 2011-11-24 Basket Landes vs Sdent Helios
+ 10702  | 2011-11-24 Kayseri Kaskispor vs Maccabi Bnot 
+ 10704  | 2011-11-24 Besiktas JK vs Lotto Young Cats
+ 10768  | 2011-11-30 Dexia Namur vs Nantes Reze
+ 10765  | 2011-11-30 Lotto Young Cats vs Dynamo - GUVD
+ 10767  | 2011-11-30 Flying Foxes vs Hainaut Basket
+ 10780  | 2011-12-01 Telge Basket vs Besiktas JK
+ 10787  | 2011-12-01 Lombos vs WBC Dynamo
+ 10782  | 2011-12-01 Maccabi Bnot  vs Dynamo Kursk
+ 10783  | 2011-12-01 Sdent Helios vs MBK Ruzomberok
+ 10781  | 2011-12-01 Partizan Galenika vs Basket Landes
+ 10784  | 2011-12-01 USO Mondeville vs Spartak Noginsk
+ 10785  | 2011-12-01 SISU vs Arras
+ 10853  | 2011-12-07 Hainaut Basket vs Gran Canaria
+ 10852  | 2011-12-07 Telge Basket vs Lotto Young Cats
+ 10851  | 2011-12-07 MBK Ruzomberok vs Basket Landes
+ 10862  | 2011-12-08 Elitzur Ramla vs USO Mondeville
+ 10871  | 2011-12-08 AD Vagos vs Dexia Namur
+ 10869  | 2011-12-08 Olimpia  vs Maccabi Bnot 
+ 10867  | 2011-12-08 Sdent Helios vs Partizan Galenika
+ 10866  | 2011-12-08 SISU vs BBC Sint-Katelijne-Waver
+ 10865  | 2011-12-08 Botas vs WBC Dynamo
+ 10863  | 2011-12-08 Optimum Ted Ankara vs Nantes Reze
+ 11162  | 2012-01-11 Lotto Young Cats vs Chevakata
+ 11164  | 2012-01-11 Dexia Namur vs Hainaut Basket
+ 11163  | 2012-01-11 Basket Landes vs Arras
+ 11172  | 2012-01-12 Gran Canaria vs Besiktas JK
+ 11170  | 2012-01-12 Horizont vs Dynamo Kursk
+ 11171  | 2012-01-12 USO Mondeville vs Botas
+ 104833 | 2012-10-05 Basketball Nymburk vs Nantes Reze
+ 101420 | 2013-01-15 Basket 90 Gdynia vs Elfic Fribourg
+ 108293 | Unknown Nantes Reze vs Virtus Eirene Ragusa
+ 108294 | Unknown Basket Landes vs Reyer Venezia
+ 108296 | Unknown Carolo Basket vs Lulea BBK
+ 108297 | Unknown Namur vs Basketball Nymburk
+ 108298 | Unknown Castors Braine vs Spar Citylift Girona
+ 108299 | Unknown Sparta&k M.R. Vidnoje vs VBW CEKK Ceglèd
+ 108300 | Unknown Olympiacos vs Aluinvent Miskolc
+ 108301 | Unknown Good Angels Kosice vs Yakin Dogu Universitesi
+ 108304 | Unknown TSV 1880 vs Umea Udominate
+ 108305 | Unknown Hoptrans-Sirenos vs Maccabi Bnot
+ 109473 | Unknown PEAC Pécs vs Galatasaray
+ 109474 | Unknown TSV 1880 vs Spar Citylift Girona
+ 109475 | Unknown Basketball Nymburk vs Virtus Eirene Ragusa
+ 109476 | Unknown Reyer Venezia vs Maccabi Bnot
+ 109534 | Unknown Good Angels Kosice vs Carolo Basket
+ 109535 | Unknown VBW CEKK Ceglèd vs TTT Riga
+ 109536 | Unknown Cavigal Nice Basket vs Bellona AGÜ
+ 109537 | Unknown Rutronik Stars Keltern vs Yakin Dogu Universitesi
+ 110736 | Unknown Bellona AGÜ vs Cavigal Nice Basket
+ 110737 | Unknown Spar Citylift Girona vs TSV 1880
+ 110738 | Unknown Carolo Basket vs Good Angels Kosice
+ 110740 | Unknown Virtus Eirene Ragusa vs Basketball Nymburk
+ 110810 | Unknown Maccabi Bnot vs Reyer Venezia
+ 104831 | Unknown Yakin Dogu Universitesi vs Olympiacos
+ 101418 | Unknown PEAC Pécs vs Pieštanské Cajky
+ 101419 | Unknown Samsun Canik vs Chevakata
+ 101421 | Unknown Yakin Dogu Universitesi vs Istanbul Universitesi 
+ 101422 | Unknown VBW CEKK Ceglèd vs Enisey 
+ 101424 | Unknown Rutronik Stars Keltern vs KP Brno
+ 101425 | Unknown Amsterdam Angels vs Nantes Reze
+ 101426 | Unknown Pieštanské Cajky vs PEAC Pécs
+ 101427 | Unknown KP Brno vs Rutronik Stars Keltern
+ 101428 | Unknown Elfic Fribourg vs Basket 90 Gdynia
+ 101429 | Unknown Carolo Basket vs Eisvögel USC
+ 101430 | Unknown Nantes Reze vs Amsterdam Angels
+ 101431 | Unknown Chevakata vs Samsun Canik
+ 101432 | Unknown Enisey  vs VBW CEKK Ceglèd
+ 101433 | Unknown Istanbul Universitesi  vs Yakin Dogu Universitesi
+ 101434 | Unknown Sparta&k M.R. Vidnoje vs Maccabi Bnot
+ 101435 | Unknown Bellona AGÜ vs Pinkk Pécsi 424
+ 101436 | Unknown Good Angels Kosice vs Aluinvent Miskolc
+ 101437 | Unknown TSV 1880 vs Lulea BBK
+ 101438 | Unknown Galatasaray vs TTT Riga
+ 101439 | Unknown Basket Landes vs Cavigal Nice Basket
+ 101440 | Unknown Namur vs Virtus Eirene Ragusa
+ 101441 | Unknown Castors Braine vs União Sportiva
+ 102201 | Unknown Pinkk Pécsi 424 vs MBA Moscow
+ 102202 | Unknown Umea Udominate vs TSV 1880
+ 102203 | Unknown Reyer Venezia vs Basket Landes
+ 102317 | Unknown Aluinvent Miskolc vs Olympiacos
+ 102318 | Unknown Basketball Nymburk vs Namur
+ 102319 | Unknown Maccabi Bnot vs Hoptrans-Sirenos
+ 102320 | Unknown TTT Riga vs Dynamo Novosibirsk
+ 102321 | Unknown Spar Citylift Girona vs Castors Braine
+ 102816 | Unknown Olympiacos vs Good Angels Kosice
+ 102817 | Unknown Dynamo Novosibirsk vs Galatasaray
+ 102818 | Unknown Cavigal Nice Basket vs Reyer Venezia
+ 102819 | Unknown Virtus Eirene Ragusa vs Basketball Nymburk
+ 102820 | Unknown União Sportiva vs Spar Citylift Girona
+ 102894 | Unknown MBA Moscow vs Bellona AGÜ
+ 102895 | Unknown Lulea BBK vs Umea Udominate
+ 102896 | Unknown Hoptrans-Sirenos vs Sparta&k M.R. Vidnoje
+ 102991 | Unknown MBA Moscow vs PEAC Pécs
+ 102992 | Unknown PEAC Pécs vs Bellona AGÜ
+ 102993 | Unknown Cavigal Nice Basket vs Elfic Fribourg
+ 102994 | Unknown União Sportiva vs Rutronik Stars Keltern
+ 102995 | Unknown Lulea BBK vs Carolo Basket
+ 102996 | Unknown Virtus Eirene Ragusa vs Nantes Reze
+ 102997 | Unknown Pinkk Pécsi 424 vs PEAC Pécs
+ 103095 | Unknown Dynamo Novosibirsk vs Samsun Canik
+ 103096 | Unknown Olympiacos vs Yakin Dogu Universitesi
+ 103097 | Unknown Hoptrans-Sirenos vs VBW CEKK Ceglèd
+ 103098 | Unknown Aluinvent Miskolc vs Yakin Dogu Universitesi
+ 103099 | Unknown Maccabi Bnot vs VBW CEKK Ceglèd
+ 103100 | Unknown TTT Riga vs Samsun Canik
+ 103200 | Unknown Rutronik Stars Keltern vs Spar Citylift Girona
+ 103201 | Unknown Elfic Fribourg vs Reyer Venezia
+ 103203 | Unknown Carolo Basket vs Umea Udominate
+ 103204 | Unknown Yakin Dogu Universitesi vs Good Angels Kosice
+ 103205 | Unknown Elfic Fribourg vs Basket Landes
+ 103206 | Unknown Nantes Reze vs Namur
+ 103207 | Unknown Carolo Basket vs TSV 1880
+ 103257 | Unknown VBW CEKK Ceglèd vs Sparta&k M.R. Vidnoje
+ 103372 | Unknown Samsun Canik vs Galatasaray
+ 103434 | Unknown Castors Braine vs Rutronik Stars Keltern
+ 104718 | Unknown Aluinvent Miskolc vs Good Angels Kosice
+ 104719 | Unknown PEAC Pécs vs MBA Moscow
+ 104720 | Unknown Pinkk Pécsi 424 vs Bellona AGÜ
+ 104722 | Unknown União Sportiva vs Castors Braine
+ 104723 | Unknown Reyer Venezia vs Elfic Fribourg
+ 104830 | Unknown Samsun Canik vs Dynamo Novosibirsk
+ 104832 | Unknown VBW CEKK Ceglèd vs Hoptrans-Sirenos
+ 104834 | Unknown Maccabi Bnot vs Sparta&k M.R. Vidnoje
+ 104835 | Unknown Umea Udominate vs Carolo Basket
+ 104836 | Unknown Lulea BBK vs TSV 1880
+ 104837 | Unknown TTT Riga vs Galatasaray
+ 104838 | Unknown Spar Citylift Girona vs Rutronik Stars Keltern
+ 104839 | Unknown Virtus Eirene Ragusa vs Namur
+ 106161 | Unknown Rutronik Stars Keltern vs Castors Braine
+ 106162 | Unknown Galatasaray vs Dynamo Novosibirsk
+ 106163 | Unknown Basket Landes vs Elfic Fribourg
+ 106164 | Unknown Spar Citylift Girona vs União Sportiva
+ 106166 | Unknown Reyer Venezia vs Cavigal Nice Basket
+ 106250 | Unknown Samsun Canik vs TTT Riga
+ 106251 | Unknown Yakin Dogu Universitesi vs Aluinvent Miskolc
+ 106252 | Unknown Sparta&k M.R. Vidnoje vs Hoptrans-Sirenos
+ 106254 | Unknown VBW CEKK Ceglèd vs Maccabi Bnot
+ 106255 | Unknown Basketball Nymburk vs Virtus Eirene Ragusa
+ 106256 | Unknown Umea Udominate vs Lulea BBK
+ 108290 | Unknown Bellona AGÜ vs PEAC Pécs
+(197 rows)
+
+ value  |                           label                           
+--------+-----------------------------------------------------------
+ 104721 | 2007-02-08 Cavigal Nice Basket vs Basket Landes
+ 110811 | 2008-12-03 TTT Riga vs VBW CEKK Ceglèd
+ 108292 | 2010-07-14 Elfic Fribourg vs Cavigal Nice Basket
+ 103202 | 2010-11-17 Nantes Reze vs Basketball Nymburk
+ 101423 | 2010-12-01 Eisvögel USC vs Carolo Basket
+ 10068  | 2011-11-02 Dexia Namur vs Optimum Ted Ankara
+ 10081  | 2011-11-02 Olimpia  vs Dynamo Kursk
+ 10066  | 2011-11-02 Lemminkainen vs Hainaut Basket
+ 10067  | 2011-11-02 Flying Foxes vs Gran Canaria
+ 10069  | 2011-11-02 Lombos vs Botas
+ 10065  | 2011-11-02 Lotto Young Cats vs Besiktas JK
+ 10084  | 2011-11-03 BBC Sint-Katelijne-Waver vs Arras
+ 10076  | 2011-11-03 Maccabi Bnot  vs Kayseri Kaskispor
+ 10077  | 2011-11-03 Partizan Galenika vs MBK Ruzomberok
+ 10078  | 2011-11-03 Elitzur Ramla vs Spartak Noginsk
+ 10396  | 2011-11-03 Dynamo Kursk vs Olimpia 
+ 10083  | 2011-11-03 AD Vagos vs Nantes Reze
+ 10082  | 2011-11-03 Horizont vs WBC Dynamo
+ 10080  | 2011-11-03 Sdent Helios vs Basket Landes
+ 10079  | 2011-11-03 SISU vs Chevakata
+ 10432  | 2011-11-09 Arras vs SISU
+ 10428  | 2011-11-09 WBC Dynamo vs Lombos
+ 10430  | 2011-11-09 Nantes Reze vs Dexia Namur
+ 10431  | 2011-11-09 Hainaut Basket vs Flying Foxes
+ 10446  | 2011-11-10 Besiktas JK vs Telge Basket
+ 10442  | 2011-11-10 Spartak Noginsk vs USO Mondeville
+ 10445  | 2011-11-10 Kayseri Kaskispor vs Olimpia 
+ 10443  | 2011-11-10 Dynamo - GUVD vs Lotto Young Cats
+ 10440  | 2011-11-10 Botas vs Horizont
+ 10444  | 2011-11-10 Basket Landes vs Partizan Galenika
+ 10448  | 2011-11-10 AD Vagos vs Optimum Ted Ankara
+ 10447  | 2011-11-10 Gran Canaria vs Lemminkainen
+ 10556  | 2011-11-16 Lotto Young Cats vs Telge Basket
+ 10560  | 2011-11-16 Dexia Namur vs AD Vagos
+ 10559  | 2011-11-16 Nantes Reze vs Optimum Ted Ankara
+ 10558  | 2011-11-16 Dynamo Kursk vs Kayseri Kaskispor
+ 10557  | 2011-11-16 WBC Dynamo vs Botas
+ 10583  | 2011-11-17 USO Mondeville vs Elitzur Ramla
+ 10586  | 2011-11-17 Lombos vs Horizont
+ 10582  | 2011-11-17 Basket Landes vs MBK Ruzomberok
+ 10581  | 2011-11-17 Partizan Galenika vs Sdent Helios
+ 10585  | 2011-11-17 BBC Sint-Katelijne-Waver vs SISU
+ 10580  | 2011-11-17 Maccabi Bnot  vs Olimpia 
+ 10584  | 2011-11-17 Gran Canaria vs Hainaut Basket
+ 10579  | 2011-11-17 Lemminkainen vs Flying Foxes
+ 10578  | 2011-11-17 Dynamo - GUVD vs Besiktas JK
+ 10577  | 2011-11-17 Chevakata vs Arras
+ 10587  | 2011-11-19 Horizont vs Lombos
+ 10660  | 2011-11-23 Hainaut Basket vs Lemminkainen
+ 10661  | 2011-11-23 Nantes Reze vs AD Vagos
+ 10658  | 2011-11-23 WBC Dynamo vs Horizont
+ 10703  | 2011-11-24 Gran Canaria vs Flying Foxes
+ 10696  | 2011-11-24 Chevakata vs SISU
+ 10697  | 2011-11-24 Spartak Noginsk vs Elitzur Ramla
+ 10699  | 2011-11-24 Botas vs Lombos
+ 10700  | 2011-11-24 Dynamo - GUVD vs Telge Basket
+ 10701  | 2011-11-24 Basket Landes vs Sdent Helios
+ 10702  | 2011-11-24 Kayseri Kaskispor vs Maccabi Bnot 
+ 10704  | 2011-11-24 Besiktas JK vs Lotto Young Cats
+ 10768  | 2011-11-30 Dexia Namur vs Nantes Reze
+ 10765  | 2011-11-30 Lotto Young Cats vs Dynamo - GUVD
+ 10767  | 2011-11-30 Flying Foxes vs Hainaut Basket
+ 10780  | 2011-12-01 Telge Basket vs Besiktas JK
+ 10787  | 2011-12-01 Lombos vs WBC Dynamo
+ 10782  | 2011-12-01 Maccabi Bnot  vs Dynamo Kursk
+ 10783  | 2011-12-01 Sdent Helios vs MBK Ruzomberok
+ 10781  | 2011-12-01 Partizan Galenika vs Basket Landes
+ 10784  | 2011-12-01 USO Mondeville vs Spartak Noginsk
+ 10785  | 2011-12-01 SISU vs Arras
+ 10853  | 2011-12-07 Hainaut Basket vs Gran Canaria
+ 10852  | 2011-12-07 Telge Basket vs Lotto Young Cats
+ 10851  | 2011-12-07 MBK Ruzomberok vs Basket Landes
+ 10862  | 2011-12-08 Elitzur Ramla vs USO Mondeville
+ 10871  | 2011-12-08 AD Vagos vs Dexia Namur
+ 10869  | 2011-12-08 Olimpia  vs Maccabi Bnot 
+ 10867  | 2011-12-08 Sdent Helios vs Partizan Galenika
+ 10866  | 2011-12-08 SISU vs BBC Sint-Katelijne-Waver
+ 10865  | 2011-12-08 Botas vs WBC Dynamo
+ 10863  | 2011-12-08 Optimum Ted Ankara vs Nantes Reze
+ 11162  | 2012-01-11 Lotto Young Cats vs Chevakata
+ 11164  | 2012-01-11 Dexia Namur vs Hainaut Basket
+ 11163  | 2012-01-11 Basket Landes vs Arras
+ 11172  | 2012-01-12 Gran Canaria vs Besiktas JK
+ 11170  | 2012-01-12 Horizont vs Dynamo Kursk
+ 11171  | 2012-01-12 USO Mondeville vs Botas
+ 104833 | 2012-10-05 Basketball Nymburk vs Nantes Reze
+ 101420 | 2013-01-15 Basket 90 Gdynia vs Elfic Fribourg
+ 108293 | Unknown Nantes Reze vs Virtus Eirene Ragusa
+ 108294 | Unknown Basket Landes vs Reyer Venezia
+ 108296 | Unknown Carolo Basket vs Lulea BBK
+ 108297 | Unknown Namur vs Basketball Nymburk
+ 108298 | Unknown Castors Braine vs Spar Citylift Girona
+ 108299 | Unknown Sparta&k M.R. Vidnoje vs VBW CEKK Ceglèd
+ 108300 | Unknown Olympiacos vs Aluinvent Miskolc
+ 108301 | Unknown Good Angels Kosice vs Yakin Dogu Universitesi
+ 108304 | Unknown TSV 1880 vs Umea Udominate
+ 108305 | Unknown Hoptrans-Sirenos vs Maccabi Bnot
+ 109473 | Unknown PEAC Pécs vs Galatasaray
+ 109474 | Unknown TSV 1880 vs Spar Citylift Girona
+ 109475 | Unknown Basketball Nymburk vs Virtus Eirene Ragusa
+ 109476 | Unknown Reyer Venezia vs Maccabi Bnot
+ 109534 | Unknown Good Angels Kosice vs Carolo Basket
+ 109535 | Unknown VBW CEKK Ceglèd vs TTT Riga
+ 109536 | Unknown Cavigal Nice Basket vs Bellona AGÜ
+ 109537 | Unknown Rutronik Stars Keltern vs Yakin Dogu Universitesi
+ 110736 | Unknown Bellona AGÜ vs Cavigal Nice Basket
+ 110737 | Unknown Spar Citylift Girona vs TSV 1880
+ 110738 | Unknown Carolo Basket vs Good Angels Kosice
+ 110740 | Unknown Virtus Eirene Ragusa vs Basketball Nymburk
+ 110810 | Unknown Maccabi Bnot vs Reyer Venezia
+ 104831 | Unknown Yakin Dogu Universitesi vs Olympiacos
+ 101418 | Unknown PEAC Pécs vs Pieštanské Cajky
+ 101419 | Unknown Samsun Canik vs Chevakata
+ 101421 | Unknown Yakin Dogu Universitesi vs Istanbul Universitesi 
+ 101422 | Unknown VBW CEKK Ceglèd vs Enisey 
+ 101424 | Unknown Rutronik Stars Keltern vs KP Brno
+ 101425 | Unknown Amsterdam Angels vs Nantes Reze
+ 101426 | Unknown Pieštanské Cajky vs PEAC Pécs
+ 101427 | Unknown KP Brno vs Rutronik Stars Keltern
+ 101428 | Unknown Elfic Fribourg vs Basket 90 Gdynia
+ 101429 | Unknown Carolo Basket vs Eisvögel USC
+ 101430 | Unknown Nantes Reze vs Amsterdam Angels
+ 101431 | Unknown Chevakata vs Samsun Canik
+ 101432 | Unknown Enisey  vs VBW CEKK Ceglèd
+ 101433 | Unknown Istanbul Universitesi  vs Yakin Dogu Universitesi
+ 101434 | Unknown Sparta&k M.R. Vidnoje vs Maccabi Bnot
+ 101435 | Unknown Bellona AGÜ vs Pinkk Pécsi 424
+ 101436 | Unknown Good Angels Kosice vs Aluinvent Miskolc
+ 101437 | Unknown TSV 1880 vs Lulea BBK
+ 101438 | Unknown Galatasaray vs TTT Riga
+ 101439 | Unknown Basket Landes vs Cavigal Nice Basket
+ 101440 | Unknown Namur vs Virtus Eirene Ragusa
+ 101441 | Unknown Castors Braine vs União Sportiva
+ 102201 | Unknown Pinkk Pécsi 424 vs MBA Moscow
+ 102202 | Unknown Umea Udominate vs TSV 1880
+ 102203 | Unknown Reyer Venezia vs Basket Landes
+ 102317 | Unknown Aluinvent Miskolc vs Olympiacos
+ 102318 | Unknown Basketball Nymburk vs Namur
+ 102319 | Unknown Maccabi Bnot vs Hoptrans-Sirenos
+ 102320 | Unknown TTT Riga vs Dynamo Novosibirsk
+ 102321 | Unknown Spar Citylift Girona vs Castors Braine
+ 102816 | Unknown Olympiacos vs Good Angels Kosice
+ 102817 | Unknown Dynamo Novosibirsk vs Galatasaray
+ 102818 | Unknown Cavigal Nice Basket vs Reyer Venezia
+ 102819 | Unknown Virtus Eirene Ragusa vs Basketball Nymburk
+ 102820 | Unknown União Sportiva vs Spar Citylift Girona
+ 102894 | Unknown MBA Moscow vs Bellona AGÜ
+ 102895 | Unknown Lulea BBK vs Umea Udominate
+ 102896 | Unknown Hoptrans-Sirenos vs Sparta&k M.R. Vidnoje
+ 102991 | Unknown MBA Moscow vs PEAC Pécs
+ 102992 | Unknown PEAC Pécs vs Bellona AGÜ
+ 102993 | Unknown Cavigal Nice Basket vs Elfic Fribourg
+ 102994 | Unknown União Sportiva vs Rutronik Stars Keltern
+ 102995 | Unknown Lulea BBK vs Carolo Basket
+ 102996 | Unknown Virtus Eirene Ragusa vs Nantes Reze
+ 102997 | Unknown Pinkk Pécsi 424 vs PEAC Pécs
+ 103095 | Unknown Dynamo Novosibirsk vs Samsun Canik
+ 103096 | Unknown Olympiacos vs Yakin Dogu Universitesi
+ 103097 | Unknown Hoptrans-Sirenos vs VBW CEKK Ceglèd
+ 103098 | Unknown Aluinvent Miskolc vs Yakin Dogu Universitesi
+ 103099 | Unknown Maccabi Bnot vs VBW CEKK Ceglèd
+ 103100 | Unknown TTT Riga vs Samsun Canik
+ 103200 | Unknown Rutronik Stars Keltern vs Spar Citylift Girona
+ 103201 | Unknown Elfic Fribourg vs Reyer Venezia
+ 103203 | Unknown Carolo Basket vs Umea Udominate
+ 103204 | Unknown Yakin Dogu Universitesi vs Good Angels Kosice
+ 103205 | Unknown Elfic Fribourg vs Basket Landes
+ 103206 | Unknown Nantes Reze vs Namur
+ 103207 | Unknown Carolo Basket vs TSV 1880
+ 103257 | Unknown VBW CEKK Ceglèd vs Sparta&k M.R. Vidnoje
+ 103372 | Unknown Samsun Canik vs Galatasaray
+ 103434 | Unknown Castors Braine vs Rutronik Stars Keltern
+ 104718 | Unknown Aluinvent Miskolc vs Good Angels Kosice
+ 104719 | Unknown PEAC Pécs vs MBA Moscow
+ 104720 | Unknown Pinkk Pécsi 424 vs Bellona AGÜ
+ 104722 | Unknown União Sportiva vs Castors Braine
+ 104723 | Unknown Reyer Venezia vs Elfic Fribourg
+ 104830 | Unknown Samsun Canik vs Dynamo Novosibirsk
+ 104832 | Unknown VBW CEKK Ceglèd vs Hoptrans-Sirenos
+ 104834 | Unknown Maccabi Bnot vs Sparta&k M.R. Vidnoje
+ 104835 | Unknown Umea Udominate vs Carolo Basket
+ 104836 | Unknown Lulea BBK vs TSV 1880
+ 104837 | Unknown TTT Riga vs Galatasaray
+ 104838 | Unknown Spar Citylift Girona vs Rutronik Stars Keltern
+ 104839 | Unknown Virtus Eirene Ragusa vs Namur
+ 106161 | Unknown Rutronik Stars Keltern vs Castors Braine
+ 106162 | Unknown Galatasaray vs Dynamo Novosibirsk
+ 106163 | Unknown Basket Landes vs Elfic Fribourg
+ 106164 | Unknown Spar Citylift Girona vs União Sportiva
+ 106166 | Unknown Reyer Venezia vs Cavigal Nice Basket
+ 106250 | Unknown Samsun Canik vs TTT Riga
+ 106251 | Unknown Yakin Dogu Universitesi vs Aluinvent Miskolc
+ 106252 | Unknown Sparta&k M.R. Vidnoje vs Hoptrans-Sirenos
+ 106254 | Unknown VBW CEKK Ceglèd vs Maccabi Bnot
+ 106255 | Unknown Basketball Nymburk vs Virtus Eirene Ragusa
+ 106256 | Unknown Umea Udominate vs Lulea BBK
+ 108290 | Unknown Bellona AGÜ vs PEAC Pécs
+(197 rows)
+

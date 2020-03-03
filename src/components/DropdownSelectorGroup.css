@@ -1,0 +1,103 @@
+
+  
+#dropdownselectorgroup-container {
+    top: 0;
+    left: 0;
+    display: inline-block; 
+    /* right: 0; */
+    width: 70vw;
+    padding-bottom: 70px;
+    /* margin: 3px; */
+    /* border: 1px; */
+    /* border-radius: 99%; */
+    
+    /* border: 2px slategray; */
+    /* border-color: black;
+    border-width: 2px; */
+    /* outline: 1px rgb(15,83,112); */
+
+    /* background: rgb(15,83,112); */
+    position: relative;
+    /* background: linear-gradient(90deg, rgba(15,83,112,1) 0%, rgba(7,42,57,1) 100%); */
+  }
+  
+  #dropdownselectorgroup-container-inner
+  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    /* border: 1px solid grey; */
+    /* border-radius: 3px; */
+  }
+  
+  .dropdownselectorgroup-dropdown-container {
+    width: 100%;
+    height: 100%;
+    text-align: "center";
+    /* height: 50px; */
+    background: rgba(255, 255, 255);  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    /* opacity: .8;  */
+  }
+  
+  #dropdownselectorgroup-dropdown-container--left {
+    /* width: 100%; */
+    /* height: 100%; */
+    /* height: 50px; */
+    background: rgb(255, 255, 255,0.2);  
+    /* opacity: .2;  */
+    
+  }
+  
+  #dropdownselectorgroup-dropdown-container--right {
+    /* width: 100%; */
+    /* height: 100%; */
+    /* height: 50px; */
+    background: rgb(255, 255, 255,0.3);  
+    
+    
+  }
+  
+  .dropdownselectorgroup-dropdown-container > .dropdown-selector-container  {
+    width: 80%;
+  
+    margin: 0 auto;
+    /* color: rgba(255, 0, 255, 1);   */
+    /* color:rgba(255, 255, 255);  */
+    /* box-shadow: #434343; */
+    /* height: 100%; */
+    /* display: ; */
+    /* height: 50px; */
+    /* background-color: rgba(255, 0, 255, 1);   */
+    /* opacity: 1; */
+  
+  }
+  
+  
+  .drop-down-select {
+    font-family: "Open Sans"; 
+    font-size: 12px;
+      /* background-color: rgba(255, 255, 255, 0);   */
+    /* color: #ffffff00 */
+  }
+  
+  
+  #dropdownselectorgroup-container-inner--left
+  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    width: 60%;
+    
+  }
+  

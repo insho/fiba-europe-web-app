@@ -1,0 +1,90 @@
+/**
+ manypredictors       | 0.752475629520728
+ severalpredictors    | 0.749966066824499
+ somepredictors       | 0.726536570155409
+*/
+
+SELECT 'p' || "period" || '-' ||'m' || minute as period_minute,
+  
+max(current_score_hometeam) as current_score_hometeam,
+max(current_score_awayteam) as current_score_awayteam,
+max(team_fouls_committed_hometeam) as team_fouls_committed_hometeam,
+max(team_fouls_committed_awayteam) as team_fouls_committed_awayteam,
+max(avg_time_between_scoring_events_overall_hometeam) as avg_time_between_scoring_events_overall_hometeam,
+max(avg_time_between_scoring_events_overall_awayteam) as avg_time_between_scoring_events_overall_awayteam,
+max(avg_time_between_scoring_events_overall) as avg_time_between_scoring_events_overall,
+max(current_lead_hometeam) as current_lead_hometeam,
+max(cumulative_lead_changes_game) as cumulative_lead_changes_game,
+max(cumulative_avg_abs_size_of_lead_game) as cumulative_avg_abs_size_of_lead_game,
+max(cumulative_max_abs_size_of_lead_game) as cumulative_max_abs_size_of_lead_game,
+max(cumulative_max_size_of_lead_game_hometeam) as cumulative_max_size_of_lead_game_hometeam,
+max(cumulative_max_size_of_lead_game_awayteam) as cumulative_max_size_of_lead_game_awayteam,
+max(avg_abs_size_of_lead_quarter) as avg_abs_size_of_lead_quarter,
+max(cumulative_possessions_overall_hometeam) as cumulative_possessions_overall_hometeam,
+max(cumulative_possessions_overall_awayteam) as cumulative_possessions_overall_awayteam,
+max(starting_five_in_play_hometeam) as starting_five_in_play_hometeam,
+max(starting_five_in_play_awayteam) as starting_five_in_play_awayteam,
+max(top_five_scorers_in_play_hometeam) as top_five_scorers_in_play_hometeam,
+max(top_five_scorers_in_play_awayteam) as top_five_scorers_in_play_awayteam,
+max(percent_of_total_points_scored_by_players_in_play_awayteam) as percent_of_total_points_scored_by_players_in_play_awayteam,
+max(percent_of_total_points_scored_by_players_in_play_hometeam) as percent_of_total_points_scored_by_players_in_play_hometeam,
+max(points_scored_by_players_in_play_hometeam) as points_scored_by_players_in_play_hometeam,
+max(points_scored_by_players_in_play_awayteam) as points_scored_by_players_in_play_awayteam,
+max(top_five_players_in_play_hometeam) as top_five_players_in_play_hometeam,
+max(top_five_players_in_play_awayteam) as top_five_players_in_play_awayteam,
+max(total_stat_count_players_in_play_hometeam) as total_stat_count_players_in_play_hometeam,
+max(total_stat_count_players_in_play_awayteam) as total_stat_count_players_in_play_awayteam,
+max(percent_of_total_stat_count_by_players_in_play_hometeam) as percent_of_total_stat_count_by_players_in_play_hometeam,
+max(percent_of_total_stat_count_by_players_in_play_awayteam) as percent_of_total_stat_count_by_players_in_play_awayteam,
+max(cumulative_player_personal_fouls_hometeam) as cumulative_player_personal_fouls_hometeam,
+max(cumulative_player_personal_fouls_awayteam) as cumulative_player_personal_fouls_awayteam,
+max(players_with_one_foul_hometeam) as players_with_one_foul_hometeam,
+max(players_with_two_fouls_hometeam) as players_with_two_fouls_hometeam,
+max(players_with_three_fouls_hometeam) as players_with_three_fouls_hometeam,
+max(players_with_four_fouls_hometeam) as players_with_four_fouls_hometeam,
+max(players_with_five_fouls_hometeam) as players_with_five_fouls_hometeam,
+max(players_with_one_foul_awayteam) as players_with_one_foul_awayteam,
+max(players_with_two_fouls_awayteam) as players_with_two_fouls_awayteam,
+max(players_with_three_fouls_awayteam) as players_with_three_fouls_awayteam,
+max(players_with_four_fouls_awayteam) as players_with_four_fouls_awayteam,
+max(players_with_five_fouls_awayteam) as players_with_five_fouls_awayteam,
+max(two_point_shots_made_hometeam) as two_point_shots_made_hometeam,
+max(jump_shots_made_hometeam) as jump_shots_made_hometeam,
+max(lay_up_shots_made_hometeam) as lay_up_shots_made_hometeam,
+max(put_backs_shots_made_hometeam) as put_backs_shots_made_hometeam,
+max(dunk_shots_made_hometeam) as dunk_shots_made_hometeam,
+max(two_point_shots_missed_hometeam) as two_point_shots_missed_hometeam,
+max(jump_shots_missed_hometeam) as jump_shots_missed_hometeam,
+max(lay_up_shots_missed_hometeam) as lay_up_shots_missed_hometeam,
+max(put_backs_shots_missed_hometeam) as put_backs_shots_missed_hometeam,
+max(dunk_shots_missed_hometeam) as dunk_shots_missed_hometeam,
+max(three_point_shots_made_hometeam) as three_point_shots_made_hometeam,
+max(three_point_shots_missed_hometeam) as three_point_shots_missed_hometeam,
+max(free_throw_shots_made_hometeam) as free_throw_shots_made_hometeam,
+max(free_throw_shots_missed_hometeam) as free_throw_shots_missed_hometeam,
+max(two_point_shots_made_awayteam) as two_point_shots_made_awayteam,
+max(jump_shots_made_awayteam) as jump_shots_made_awayteam,
+max(lay_up_shots_made_awayteam) as lay_up_shots_made_awayteam,
+max(put_backs_shots_made_awayteam) as put_backs_shots_made_awayteam,
+max(dunk_shots_made_awayteam) as dunk_shots_made_awayteam,
+max(two_point_shots_missed_awayteam) as two_point_shots_missed_awayteam,
+max(jump_shots_missed_awayteam) as jump_shots_missed_awayteam,
+max(lay_up_shots_missed_awayteam) as lay_up_shots_missed_awayteam,
+max(put_backs_shots_missed_awayteam) as put_backs_shots_missed_awayteam,
+max(dunk_shots_missed_awayteam) as dunk_shots_missed_awayteam,
+max(three_point_shots_made_awayteam) as three_point_shots_made_awayteam,
+max(three_point_shots_missed_awayteam) as three_point_shots_missed_awayteam,
+max(free_throw_shots_made_awayteam) as free_throw_shots_made_awayteam,
+max(free_throw_shots_missed_awayteam) as free_throw_shots_missed_awayteam
+
+FROM fiba_europe_alg_feature_importances_manypredictors
+WHERE age = '{{selectedAge}}'
+and sex = '{{selectedSex}}'
+and metric_tag = '{{selectedTarget}}'
+and cast("period" as integer) = cast('{{period}}' as integer)
+and cast(minute as integer) = cast('{{minute}}' as integer)
+Group by 1
+
+
+
+
