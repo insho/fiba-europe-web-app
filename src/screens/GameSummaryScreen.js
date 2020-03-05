@@ -34,7 +34,9 @@ import {
 
 // import { wrap } from "module";
 
-const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+// const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+// const API_ENDPOINT_URL_GENERIC = '//bold-vortex-250420.appspot.com/generic_query';
+const API_ENDPOINT_URL_GENERIC = '//bold-vortex-250420.appspot.com/generic_query'
 
 function createAPIEndpointParamString(paramObject) {
   return `?${Object.keys(paramObject).map(key => `${key}=${paramObject[key]}`).join('&')}`;

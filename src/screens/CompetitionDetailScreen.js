@@ -15,7 +15,8 @@ import {
   assembleChartDataCollectionSimplewithColors,
   assemblePivotedPieChartCollection
 } from "../options/ChartAssembly";
-const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+// const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+const API_ENDPOINT_URL_GENERIC = '//bold-vortex-250420.appspot.com/generic_query';
 
 // TODO - Make Global
 function createAPIEndpointParamString(paramObject) {

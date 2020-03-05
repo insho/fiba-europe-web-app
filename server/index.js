@@ -6,6 +6,10 @@ const Redshift = require("node-redshift");
 // const { Pool, Client } = require('pg')
 // const API_ENDPOINT_URL_GENERIC = "//localhost:3001/generic_query";
 const app = express();
+// const functions = require('firebase-functions');
+
+
+ 
 
 require('dotenv').config();
 
@@ -39,8 +43,15 @@ app.use(function(req, res, next) {
 var user = process.env.SQL_USER;
 var password = process.env.SQL_PASS;
 var database = "postgres";
-var port = 5432; //process.env.SQL_PORT;
+var port = process.env.SQL_PORT;
 var host = process.env.SQL_IP;
+
+// var user = functions.config().fiba.sql_user;
+// var password = functions.config().fiba.sql_pass;
+// var database = "postgres";
+// var port = functions.config().fiba.sql_port;
+// var host = functions.config().fiba.sql_ip;
+
 var client = {
   user: user,
   database: database,
@@ -119,12 +130,17 @@ app.get("/generic_query", function(req, res) {
 
 
 
-app.get("/test_query", function(req, res) {  
-  var parameters = {} 
-  queryName = 'test_query'
-  // console.log("POOO")
+app.get("/test_query_simple", function(req, res) {  
+  queryName = 'test_query_simple'
   loadAndRunQuery(queryName).then(data => {
     res.json(data);
   });
 });
 
+app.get("/test_query", function(req, res) {  
+  var parameters = {} 
+  queryName = 'test_query'
+  loadAndRunQuery(queryName).then(data => {
+    res.json(data);
+  });
+});

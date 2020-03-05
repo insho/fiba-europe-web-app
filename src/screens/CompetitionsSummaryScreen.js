@@ -17,8 +17,8 @@ import {
   assembleChartDataCollectionSimplewithColors
 } from "../options/ChartAssembly";
 
-const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
-
+// const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+const API_ENDPOINT_URL_GENERIC = '//bold-vortex-250420.appspot.com/generic_query';
 // TODO - Make Global
 function createAPIEndpointParamString(paramObject) {
   return `?${Object.keys(paramObject)
@@ -397,10 +397,15 @@ export default class CompetitionsSummaryScreen extends React.Component {
     const isMobile = (window.innerWidth < window.innerHeight);
 
     var flyOutWidth = '25vw'
+    var chartWidth = '70vw'
+    // var chartHeight = '35vw'    
     if (isMobile) {
       flyOutWidth = '100vw'
+      chartWidth = '100vw'
+      // chartHeight = '55vw'
     }
 
+    
 
     return (
 
@@ -435,9 +440,9 @@ export default class CompetitionsSummaryScreen extends React.Component {
             />
           </div>
 
-          <div style={{ minHeight: '100vh', paddingTop: '2%' }}>
+          <div style={{  paddingTop: '2%' }}>
             {this.state.competitionMatchCountBarChart && (
-              <div style={{ paddingLeft: '2%', maxHeight: '35vh', width: '70vw', paddingTop: '20px', paddingBottom: '1vh' }}>
+              <div style={{ paddingLeft: '2%', maxHeight: '35vh', width: chartWidth, paddingTop: '20px', paddingBottom: '1vh' }}>
 
                 <div className="chart-title-large" >{"Number of Matches"}</div>
 
@@ -488,12 +493,12 @@ export default class CompetitionsSummaryScreen extends React.Component {
             <ReactMarkdown source={this.markdown3_mfdisparity} style={{ paddingTop: '2px' }} />
           </div>
 
-          <div style={{ minHeight: '100vh', paddingTop: '2%' }}>
+          <div style={{ paddingTop: '2%' }}>
 
 
 
             {this.state.competitionFinalScoreBarChart && (
-              <div style={{ paddingLeft: '2%', paddingTop: '2%', maxHeight: '35vh', width: '70vw', paddingTop: '20px', paddingBottom: '5vh' }}>
+              <div style={{ paddingLeft: '2%', paddingTop: '2%', maxHeight: '35vh', width: chartWidth, paddingTop: '20px', paddingBottom: '5vh' }}>
 
                 <div className="chart-title-large" >{"Median Final Score"}</div>
 
@@ -543,12 +548,12 @@ export default class CompetitionsSummaryScreen extends React.Component {
 
 
 
-          <div style={{ minHeight: '100vh', paddingTop: '2%' }}>
+          <div style={{  paddingTop: '2%' }}>
 
 
 
             {this.state.competitionWinPctBarChart && (
-              <div style={{ paddingLeft: '2%', paddingTop: '2%', maxHeight: '35vh', width: '70vw', paddingTop: '20px', paddingBottom: '5vh' }}>
+              <div style={{ paddingLeft: '2%', paddingTop: '2%', maxHeight: '35vh', width: chartWidth, paddingTop: '20px', paddingBottom: '5vh' }}>
 
                 <div className="chart-title-large" >{"Home Team Win Percentage"}</div>
 
@@ -623,13 +628,13 @@ export default class CompetitionsSummaryScreen extends React.Component {
               dropDownItemsListSelectorOne={this.state.predictorDropdownList}
               selectedValueSelectorOne={this.state.selectedPredictor}
               setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangePredictor.bind(this)}
-
+              isMobile={this.isMobile}
               selectedSyles={selectStylesTertiary}
               toggleParentMenu={this.toggleMenu.bind(this)}
               style={{ paddingBottom: '2%' }} />
           </div>
 
-          <div style={{ width: '85vw', paddingTop: '20px', paddingBottom: '5vh' }}>
+          <div style={{ width: '85vw', minHeight:'65vh', paddingTop: '20px', paddingBottom: '5vh' }}>
 
             {this.state.algCompsLineChartWinnerHometeam && (
               <div style={{ paddingBottom: '2%' }}>

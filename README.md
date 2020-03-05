@@ -1,6 +1,8 @@
 # Fiba Basketball Machine Learning - React Web App
 Web app with vizualizations and insights related to my [Fiba Basketball Machine Learning Project](https://github.com/insho/fiba-europe-basketball-project).
 
+**[The app is hosted here](http://fiba-app-dot-bold-vortex-250420.appspot.com/welcome)**
+
 
 ## The Project:
 

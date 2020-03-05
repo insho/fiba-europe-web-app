@@ -1,28 +1,21 @@
 import React, { Component } from "react";
 import $ from "jquery";
-// import $ from "jquery";
 import "../App.css";
 import "./GameSummaryScreen.css";
 import { HashLoader } from 'react-spinners';
 import { chartOptions } from "../options/ChartOptions.js";
-import { Pie, Bar, Line, HorizontalBar } from "react-chartjs-2";
+import {Line } from "react-chartjs-2";
 import 'react-web-tabs/dist/react-web-tabs.css';
-import ReactTable from 'react-table';
-import { ChartModule } from 'chartjs-plugin-labels';
-import ChartBlock from "../components/ChartBlock.js";
 import Select from 'react-select';
 
 import {
-  assembleChartDataCollectionSimple
-  , assembleChartDataCollectionStacked
-  , assembleChartDataCollectionSimpleMultiple
-  , assembleChartDataCollectionGrouped
-  , assemblePivotedPieChart
-  , assemblePivotedPieChartCollection
+   assembleChartDataCollectionSimpleMultiple
 } from "../options/ChartAssembly";
 
 
-const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+// const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+const API_ENDPOINT_URL_GENERIC = '//bold-vortex-250420.appspot.com/generic_query'
+
 
 function createAPIEndpointParamString(paramObject) {
   return `?${Object.keys(paramObject).map(key => `${key}=${paramObject[key]}`).join('&')}`;
@@ -63,9 +56,8 @@ class GameSummaryScreenTabMachineLearning extends Component {
     $.get(API_ENDPOINT_URL_GENERIC + createAPIEndpointParamString({
       queryName: 'GameCumulativePredictionComps',
       matchId: this.props.matchId
-      // dateRange:this.state.selectedDateRange.value
     }), data => {
-      console.log(data)
+      // console.log(data)
       this.setState({
         cumulativePredictionsFinaleScoreHometeamLineChart: {
           data: assembleChartDataCollectionSimpleMultiple(data, 'minute', ['current_score_hometeam', 'final_score_hometeam', 'final_score_hometeam_prediction'], { labels: ["current score", "final score (actual)", "final score (prediciton)"], backgroundColors: ["#64b5f6", "#656565", "#ae4126"], borderColors: ["#64b5f6", "#656565", "#ae4126"] })
