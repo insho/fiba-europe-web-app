@@ -33,8 +33,17 @@ handleMouseDown(e) {
 
 
       render() {
+          const isMobile = this.props.isMobile || false;
+
+    var selectorGroupWidth = '70vw'
+    if(isMobile) {
+      selectorGroupWidth = '120vw'
+    }
+
         return (
-<div id="dropdownselectorgroup-container">
+<div id="dropdownselectorgroup-container"
+  style={{"width":selectorGroupWidth}}
+>
            
 
             <div id="dropdownselectorgroup-container-inner">

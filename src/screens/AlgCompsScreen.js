@@ -12,7 +12,8 @@ import Select from 'react-select';
 import { Line} from "react-chartjs-2";
 import {assembleChartDataCollectionSimpleMultiple} from "../options/ChartAssembly";
 
-const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+// const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+const API_ENDPOINT_URL_GENERIC = '//bold-vortex-250420.appspot.com/generic_query';
 
 function createAPIEndpointParamString(paramObject) {
   return `?${Object.keys(paramObject).map(key => `${key}=${paramObject[key]}`).join('&')}`;
@@ -384,10 +385,22 @@ One remedy is to weight the training data set (sklearn has a package for this). 
                     dropDownItemsListSelectorOne={this.state.metricDropdownList}
                     selectedValueSelectorOne={this.state.selectedMetric}
                     setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeMetric.bind(this)}
-
+                    isMobile={this.isMobile}
                     toggleParentMenu={this.toggleMenu.bind(this)} />
 
-                  <Line data={this.state.algCompsLineChartWinnerHometeam.data}>
+                  <Line data={this.state.algCompsLineChartWinnerHometeam.data}
+                  options = {{
+                    scales: {
+                      xAxes: [{
+                        scaleLabel: {
+                          display: true,
+                          labelString: 'Minute'
+                        }
+                      }]
+                    }     
+                  }}
+                  >
+
                   </Line>
                 </div>
               )}
@@ -422,7 +435,17 @@ One remedy is to weight the training data set (sklearn has a package for this). 
                   <div className="chart-title-large" >{"Algorithm Comparisons - Predicting Home Team Final Score"}</div>
                   <div className="chart-title-small" >{"Adult Male Matches"}</div>
 
-                  <Line data={this.state.algCompsLineChartFinalScoreHometeam.data}>
+                  <Line data={this.state.algCompsLineChartFinalScoreHometeam.data}
+                  options = {{
+                    scales: {
+                      xAxes: [{
+                        scaleLabel: {
+                          display: true,
+                          labelString: 'Minute'
+                        }
+                      }]
+                    }     
+                  }}>
                   </Line>
                 </div>
               )}
@@ -455,6 +478,7 @@ One remedy is to weight the training data set (sklearn has a package for this). 
 
               <DropdownSelectorGroup
                 style={{ "minWidth": "35vw" }}
+                isMobile={this.isMobile}
                 dropDownItemsListSelectorOne={this.state.competitionDropdownList}
                 selectedValueSelectorOne={this.state.selectedCompetition}
                 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeCompetition.bind(this)}
@@ -464,6 +488,7 @@ One remedy is to weight the training data set (sklearn has a package for this). 
 
               <DropdownSelectorGroup
                 style={{ "width": "35vw" }}
+                isMobile={this.isMobile}
                 dropDownItemsListSelectorOne={this.state.matchDropdownList}
                 selectedValueSelectorOne={this.state.selectedMatch}
                 setParentSelectorStateSelectorOne={this.handleDropdownSelectorChangeMatch.bind(this)}
@@ -497,6 +522,16 @@ One remedy is to weight the training data set (sklearn has a package for this). 
 
                     <Line
                       data={this.state.cumulativePredictionsFinaleScoreHometeamLineChart.data}
+                      options = {{
+                        scales: {
+                          xAxes: [{
+                            scaleLabel: {
+                              display: true,
+                              labelString: 'Minute'
+                            }
+                          }]
+                        }     
+                      }}
                     >
                     </Line>
                   </div>

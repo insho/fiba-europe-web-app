@@ -19,7 +19,8 @@ import {
   , assembleChartDataCollectionSingleRowMultipleColumns
 } from "../options/ChartAssembly";
 
-const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+// const API_ENDPOINT_URL_GENERIC = "//localhost:3002/generic_query";
+const API_ENDPOINT_URL_GENERIC = "//bold-vortex-250420.appspot.com/generic_query";
 
 function createAPIEndpointParamString(paramObject) {
   return `?${Object.keys(paramObject).map(key => `${key}=${paramObject[key]}`).join('&')}`;
@@ -350,10 +351,10 @@ free_throw_shots_missed_awayteam\n\
 ```\n\
 "
 
-  markdownFeatureImportance = "Feature Importances indicate the importance/relevance of the input features to the target (output) feature for which the model predicts\n\n\
+  markdownFeatureImportance = "Feature Importances indicate the importance/relevance of the input features to the target (output) feature for which the model is making a prediction\n\n\
 The feature importances plotted below are for algs predicting whether the home team won the match, at the specified period and minute:"
 
-  markdownTuning1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For the purpose of this exercise I refrained from properly tuning any of the algorithms. I opted instead to input the following hyperparameters:\n\n"
+  markdownTuning1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For the purpose of this exercise I refrained from tuning any of the algorithms. I opted instead to input the following hyperparameters as defaults:\n\n"
   markdownTuning2Code = "```python \
 {n_estimators: 200,\n\
  max_depth: 10,\n\
@@ -368,7 +369,7 @@ The feature importances plotted below are for algs predicting whether the home t
 
   markdownFurtherInfo = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Further info regarding the creation of the algorithms can be found here:\n\n\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Creating, Testing and Comparing Machine Learning Algorithms](https://github.com/insho/fiba-europe-basketball-project/blob/master/fiba_part4_making_algs.ipynb)**"
 
-  markdownConclusion1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As one would expect, the most important feature in predicting whether the home team won a match is the home team's current score. The second most important is the away team's current score. This is true for all three algorithms.\n\n\ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We can see that, particularly early in the match, there is a virtual tie between home team and away team current score for Alg A and B. Alg C, on the other hand, clearly favors the home team's current score far more than any other factor, almost twice as much (!) as the away team's final score. I am a bit wary of this result. My first thought is that something eronious is occurring, as the addition of several other less important inputs (like 'players with two fouls for the home team' for example) would cause 'current score home team' to suddenly be so disproportionaly imporant. Alg B certainly does not exhibit this kind of difference. "
+  markdownConclusion1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As one would expect, the most important feature in predicting whether the home team won a match is the home team's current score. The second most important is the away team's current score. This is true for all three algorithms.\n\n\ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We can see that, particularly early in the match, there is a virtual tie between home team and away team current score for Alg A and B. Alg C, on the other hand, clearly favors the home team's current score far more than any other factor, almost twice as much (!) as the away team's final score. I am a bit wary of this result. My first thought is that something eronious is occurring, as it seems unlikely that the addition of several other less important inputs (like 'players with two fouls for the home team' for example) would cause 'current score home team' to suddenly be so disproportionaly imporant. Alg B certainly does not exhibit this kind of difference. "
 
 
   componentWillMount() {
@@ -461,7 +462,7 @@ The feature importances plotted below are for algs predicting whether the home t
                   <ReactMarkdown source={this.markdownTuning1} />
                 </div>
 
-                <div >
+                <div style={{"paddingLeft":"2%"}}>
                   <ReactMarkdown source={this.markdownTuning2Code} style={{ paddingLeft: '10vw', maxHeight: '35vh', width: '70vw', paddingTop: '5px', paddingBottom: '5vh' }} />
                 </div>
 
@@ -495,6 +496,7 @@ The feature importances plotted below are for algs predicting whether the home t
                   selectedValueSelectorTwo={this.state.selectedFeatureImportanceMinute}
                   setParentSelectorStateSelectorTwo={this.handleDropdownSelectorChangeFeatureImportanceMinute.bind(this)}
                   selectedSyles={selectStylesTertiary}
+                  isMobile={this.isMobile}
                   toggleParentMenu={this.toggleMenu.bind(this)} />
 
 
@@ -550,7 +552,7 @@ The feature importances plotted below are for algs predicting whether the home t
                 )}
 
 
-                <div style={{ paddingTop: "10px" }}>
+                <div style={{ "paddingTop": "10px","paddingBottom": "30px" }}>
                   <ReactMarkdown source={this.markdownConclusion1} />
                 </div>
 

@@ -6,12 +6,11 @@ import CompetitionsSummaryScreen from "./screens/CompetitionsSummaryScreen";
 import CompetitionDetailScreen from "./screens/CompetitionDetailScreen";
 import GameSummaryScreen from "./screens/GameSummaryScreen";
 import AlgCompsScreen from "./screens/AlgCompsScreen";
-// import BrandConsistencyScreen from "./screens/BrandConsistencyScreen";
 import AlgOverviewScreen from "./screens/AlgOverviewScreen";
 
+
+
 export default class App extends Component {
-
-
 
 
   render() {
